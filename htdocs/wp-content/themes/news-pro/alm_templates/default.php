@@ -1,5 +1,10 @@
 <?php
 
+remove_shortcode( 'ajax_load_more' );
+add_shortcode('ajax_load_more', function(){
+   return '';
+});
+
 //hack for full post display
 global $wp_query;
 $wp_query->is_singular = true;
