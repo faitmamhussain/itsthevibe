@@ -17,6 +17,7 @@ htdocs/wp-config.php
 htdocs/wp-content/uploads/
 htdocs/wp-content/upgrade/
 htdocs/wp-content/backup-db/
+htdocs/advanced-cache.php
 htdocs/wp-content/advanced-cache.php
 htdocs/wp-content/wp-cache-config.php
 htdocs/wp-content/cache/*
