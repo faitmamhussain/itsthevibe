@@ -128,3 +128,9 @@ function add_infinite_scroll(){
 		echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" posts_per_page="1" max_pages="0" container_type="article" css_classes="post type-post status-publish format-standard entry"]');
 	}
 }
+
+add_action('genesis_entry_footer', 'add_ad_block_after_post', 99999);
+
+function add_ad_block_after_post(){
+	if (function_exists ('adinserter')) echo adinserter (1);
+}
