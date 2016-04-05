@@ -111,3 +111,20 @@ genesis_register_sidebar( array(
 	'name'        => __( 'After Entry', 'news' ),
 	'description' => __( 'This is the after entry section.', 'news' ),
 ) );
+
+add_action('genesis_after_entry', 'add_infinite_scroll', 5);
+
+function add_infinite_scroll(){
+	if(is_singular('post')){
+		$post = get_post();
+		$primary_category = get_post_meta($post->ID, '_yoast_wpseo_primary_category', true);
+
+		if( empty($primary_category) ){
+			$primary_category = wp_get_post_categories($post->ID)[0];
+		}
+
+		$cat = get_category($primary_category);
+
+		echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" posts_per_page="1" max_pages="0" container_type="article" css_classes="post type-post status-publish format-standard entry"]');
+	}
+}
