@@ -447,7 +447,7 @@ Structure and Layout
 
 .content {
 	float: right;
-	width: 778px;
+	width: 828px;
 }
 
 .content-sidebar .content,
@@ -481,7 +481,7 @@ Structure and Layout
 
 .sidebar-primary {
 	float: right;
-	width: 359px;
+	width: 309px;
 }
 
 .sidebar-content .sidebar-primary,
@@ -760,6 +760,24 @@ Widgets
 /*
 Plugins
 ---------------------------------------------------------------------------------------------------- */
+/* AJAX Load More */
+
+.home-page-post .post-image {
+	display: block;
+}
+
+.home-page-post .posted-on {
+	display: inline-block;
+	float: right;
+}
+
+.home-page-post .entry-title {
+	font-size: 20px;
+}
+
+.alm-btn-wrap {
+	clear:both;
+}
 
 /* Genesis eNews Extended
 --------------------------------------------- */
@@ -1035,11 +1053,12 @@ Site Header
 
 .site-header {
 	background-color: #fff;
-	border-bottom: 3px solid #000;
+	border-bottom: 3px solid #e3e3e3;
 	position: fixed;
 	z-index: 99999999;
 	width: 100%;
-	max-width: 1138px;
+	max-width: 1139px;
+	border-right: 1px solid #e3e3e3;
 }
 
 .site-header .wrap {
@@ -1296,6 +1315,10 @@ Content Area
 	border-bottom: 1px solid #e3e3e3;
 	clear: both;
 	padding: 20px 20px 0;
+}
+
+.home-top .featured-content {
+
 }
 
 .home-top .featured-content .entry-title {
@@ -1890,8 +1913,12 @@ Media Queries
 		width: 658px;
 	}
 	
-	.site-header .widget-area {
-		width: 620px;
+	.site-header {
+		max-width: 959px;
+	}
+
+	.title-area {
+		width: 200px;
 	}
 
 	.sidebar-content-sidebar .content,
@@ -1934,6 +1961,11 @@ Media Queries
 		width: 96%;
 	}
 
+	.site-header {
+		max-width: 779px;
+		width: 96%;
+	}
+
 	.content,
 	.content-sidebar-sidebar .content,
 	.content-sidebar-sidebar .content-sidebar-wrap,
@@ -1945,6 +1977,8 @@ Media Queries
 	.sidebar-sidebar-content .content-sidebar-wrap,
 	.site-header .widget-area,
 	.site-inner,
+	.title-area,
+	.site-title,
 	.title-area,
 	.wrap {
 		width: 100%;
@@ -1974,7 +2008,7 @@ Media Queries
 	}
 	
 	.site-header .wrap {
-		padding: 20px 0;
+
 	}
 
 	.genesis-nav-menu li,
@@ -2002,13 +2036,17 @@ Media Queries
 	
 	.site-container,
 	.site-header .search-form {
-		margin: 16px auto ;
+		margin: 0 auto ;
 	}
 
 	.genesis-nav-menu li.right {
 		display: none;
 	}
-	
+
+	.site-inner {
+		margin-top: 116px;
+	}
+
 	.content {
 		border: none;
 	}

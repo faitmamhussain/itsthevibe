@@ -117,17 +117,18 @@ add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 function add_infinite_scroll(){
 	if(is_singular('post')){
 		$post = get_post();
-		$primary_category = get_post_meta($post->ID, '_yoast_wpseo_primary_category', true);
 
-		if( empty($primary_category) ){
-			$primary_category = wp_get_post_categories($post->ID)[0];
-		}
-
-		$cat = get_category($primary_category);
+		$cat = itv_get_primary_category($post);
 
 		echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" container_type="div"]');
 	}
 }
+
+if (!defined('ALM_REPEATER_PATH')){
+	define('ALM_REPEATER_PATH', get_stylesheet_directory().'/' );
+}
+
+add_action('alm_repeater_installed', function(){});
 
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
@@ -145,4 +146,23 @@ new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
 \'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,\'script\',\'dataLayer\',\'GTM-P8TJTK\');</script>';
+}
+
+function itv_get_primary_category($post = null){
+
+	$post = get_post($post);
+
+	if(empty($post)){
+		return false;
+	}
+
+	$primary_category = get_post_meta($post->ID, '_yoast_wpseo_primary_category', true);
+
+	if( empty($primary_category) ){
+		$primary_category = wp_get_post_categories($post->ID)[0];
+	}
+
+	$cat = get_category($primary_category);
+
+	return $cat;
 }
