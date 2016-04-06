@@ -45,8 +45,8 @@ add_theme_support( 'custom-header', array(
 	'header_image'    => '',
 	'header-selector' => '.site-title a',
 	'header-text'     => false,
-	'height'          => 90,
-	'width'           => 260,
+	'height'          => 58,
+	'width'           => 154,
 ) );
 
 //* Add support for additional color style options

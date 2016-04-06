@@ -409,8 +409,9 @@ Structure and Layout
 .site-container {
 	background-color: #fff;
 	border: 1px solid #e3e3e3;
-	margin: 60px auto;
+	margin: 0 auto;
 	max-width: 1140px;
+	border-top: none;
 }
 
 .news-pro-landing .site-container {
@@ -419,6 +420,7 @@ Structure and Layout
 
 .site-inner {
 	clear: both;
+	margin-top: 60px;
 }
 
 /* Column Widths and Positions
@@ -1034,10 +1036,14 @@ Site Header
 .site-header {
 	background-color: #fff;
 	border-bottom: 3px solid #000;
+	position: fixed;
+	z-index: 99999999;
+	width: 100%;
+	max-width: 1138px;
 }
 
 .site-header .wrap {
-	padding: 40px 0;
+
 }
 
 /* Title Area
@@ -1051,8 +1057,7 @@ Site Header
 
 .site-title {
 	font-weight: 700;
-	font-size: 48px;
-	font-weight: 700;
+	font-size: 24px;
 	line-height: 1;
 	margin: 0;
 	text-transform: uppercase;
@@ -1096,7 +1101,7 @@ Site Header
 .header-image .site-title a {
 	background-position: top !important;
 	float: left;
-	min-height: 90px;
+	min-height: 58px;
 	width: 100%;
 }
 
@@ -1109,10 +1114,9 @@ Site Header
 }
 
 .site-header .widget-area {
-	float: right;
+	float: left;
 	padding-right: 40px;
-	text-align: right;
-	width: 800px;
+	text-align: left;
 }
 
 .site-header .widget-area li {
