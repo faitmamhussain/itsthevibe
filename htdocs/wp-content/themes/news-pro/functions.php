@@ -115,7 +115,7 @@ genesis_register_sidebar( array(
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
-	if(is_singular('post')){
+	if(is_singular('post') && ! is_home() && ! is_front_page()){
 		$post = get_post();
 
 		$cat = itv_get_primary_category($post);
@@ -133,7 +133,7 @@ add_action('alm_repeater_installed', function(){});
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
-	if (function_exists ('adinserter')) echo adinserter (1);
+	if(function_exists ('adinserter') && ! is_home() && ! is_front_page()) echo adinserter (1);
 }
 
 add_action('genesis_before', 'add_google_tag_manager', 5);
@@ -166,3 +166,6 @@ function itv_get_primary_category($post = null){
 
 	return $cat;
 }
+
+//* Custom Slideshow
+include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
