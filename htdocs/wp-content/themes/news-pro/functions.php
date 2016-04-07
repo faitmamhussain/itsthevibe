@@ -151,7 +151,7 @@ add_filter( 'genesis_attr_site-header', function($atts){
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
-	if(is_singular('post') && ! is_home() && ! is_front_page()){
+	if(is_singular('post') && ! is_home() && ! is_front_page() && class_exists('AjaxLoadMore')){
 		$post = get_post();
 
 		$cat = itv_get_primary_category($post);

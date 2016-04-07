@@ -98,6 +98,9 @@ function itv_add_slideshow_paged(){
 <?php
 	add_action('genesis_after_entry', function(){
 		if(function_exists ('adinserter')) echo adinserter(7);
+		if(class_exists('AjaxLoadMore')){
+			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
+		}
 	}, 99998);
 }
 
@@ -136,4 +139,9 @@ function itv_add_slideshow_single(){
 	<?php
 		if(function_exists ('adinserter') && ($i+1) != $custom_slide) echo adinserter(7);
 	}
+	add_action('genesis_after_entry', function(){
+		if(class_exists('AjaxLoadMore')){
+			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
+		}
+	}, 99998);
 }
