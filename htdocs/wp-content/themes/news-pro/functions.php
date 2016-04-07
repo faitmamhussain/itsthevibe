@@ -157,7 +157,13 @@ add_action('alm_repeater_installed', function(){});
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
-	if(function_exists ('adinserter') && ! is_home() && ! is_front_page()) echo adinserter (1);
+	$has_slideshows_cat = false;
+	foreach(get_categories() as $cat){
+		if($cat->slug == 'slideshows' || $cat->slug == 'slideshow'){
+			$has_slideshows_cat = true;
+		}
+	}
+	if(function_exists ('adinserter') && ! is_home() && ! is_front_page() && ! $has_slideshows_cat) echo adinserter (1);
 }
 
 add_action('genesis_before', 'add_google_tag_manager', 5);

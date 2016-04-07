@@ -96,6 +96,9 @@ function itv_add_slideshow_paged(){
 	</div>
 </div>
 <?php
+	add_action('genesis_after_entry', function(){
+		if(function_exists ('adinserter')) echo adinserter(7);
+	}, 99998);
 }
 
 function itv_add_slideshow_single(){
@@ -131,6 +134,6 @@ function itv_add_slideshow_single(){
 		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 	</div>
 	<?php
-		if(function_exists ('adinserter') && ($i+1) != $custom_slide) echo adinserter (1);
+		if(function_exists ('adinserter') && ($i+1) != $custom_slide) echo adinserter(7);
 	}
 }
