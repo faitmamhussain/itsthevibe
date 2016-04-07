@@ -1130,7 +1130,7 @@ Site Header
 	background-color: #fff;
 	border-bottom: 3px solid #e3e3e3;
 	position: fixed;
-	z-index: 99999999;
+	z-index: 99990;
 	width: 100%;
 	max-width: 1139px;
 	border-right: 1px solid #e3e3e3;

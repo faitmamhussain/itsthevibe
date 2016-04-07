@@ -11,7 +11,7 @@ if (!defined( 'AD_INSERTER_TITLE'))
   define ('AD_INSERTER_TITLE', 'Ad Inserter');
 
 if (!defined( 'AD_INSERTER_VERSION'))
-  define ('AD_INSERTER_VERSION', '1.6.2');
+  define ('AD_INSERTER_VERSION', '1.6.3');
 
 if (!defined ('AD_INSERTER_BLOCKS'))
   define ('AD_INSERTER_BLOCKS', 16);
@@ -47,6 +47,7 @@ define ('DEFAULT_SYNTAX_HIGHLIGHTER_THEME', 'ad_inserter');
 define ('DEFAULT_BLOCK_CLASS_NAME', 'code-block');
 define ('DEFAULT_MINIMUM_USER_ROLE', 'administrator');
 define ('DEFAULT_PLUGIN_PRIORITY', 99999);
+define ('DEFAULT_PARAGRAPH_TAGS', 'p');
 
 define ('AD_EMPTY_DATA', '');
 define ('AD_ZERO', '0');
@@ -75,6 +76,7 @@ define ('AI_OPTION_PARAGRAPH_NUMBER',            'paragraph_number');
 define ('AI_OPTION_MIN_PARAGRAPHS',              'min_paragraphs');
 define ('AI_OPTION_MIN_WORDS',                   'min_words');
 define ('AI_OPTION_MIN_PARAGRAPH_WORDS',         'min_paragraph_words');
+define ('AI_OPTION_PARAGRAPH_TAGS',              'paragraph_tags');
 define ('AI_OPTION_EXCERPT_NUMBER',              'excerpt_number');
 define ('AI_OPTION_DIRECTION_TYPE',              'direction_type');
 define ('AI_OPTION_ALIGNMENT_TYPE',              'alignment_type');

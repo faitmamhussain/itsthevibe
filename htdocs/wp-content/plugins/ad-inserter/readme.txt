@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: adsense, amazon, clickbank, ad, ads, html, javascript, php, code, widget, sidebar, responsive, rotating, banner, banner rotation, contextual, shortcodes, widgets, header, footer, users, logged in, not logged in, mobile, desktop, phone, tablet, custom css, category, tag, filter, url, skip
 Requires at least: 3.0
 Tested up to: 4.4.2
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv3
 
 Insert any HTML/Javascript/PHP code into Wordpress. Perfect for AdSense or contextual Amazon ads. 16 code blocks, many display options.
@@ -32,6 +32,10 @@ Paragraph number for Automatic Display Options Before and After Paragraph:
 *   1 or more means paragraph number
 
 Paragraphs can be counted from top or from bottom. It is also possible to count only paragraphs that contain/do not contain certain text or count only paragraphs that have some minimum number of words. If more than one text is defined (comma separated) and "contain" is selected then the paragraph must contain ALL texts.
+
+You can also define paragraph tags. Normally only `<p>` tags are used. If you post contains also `<div>` or header tags you can define comma separated list of tags used to count paragraphs (e.g. **p, div, h2, h3**).
+**WARNING:** Each code block you insert on post adds one `<div>` block unelss you use **No wrapping** style. **Before Paragraph** will insert code before `<tag>`, **After Paragraph** will insert code after closing `</tag>`.
+**After Paragraph** display will not work if you specify tag names that have no closing tags!
 
 Additional Display Options:
 
@@ -423,9 +427,13 @@ AD CODE RIGHT
 
 == Changelog ==
 
+= 1.6.3 =
+- Removed deprecated code (fixes PHP 7 deprecated warnings)
+- Added support for paragraphs with div and other HTML tags (h1, h2, h3,...)
+
 = 1.6.2 =
-* Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type)
-* Added support to change plugin processing priority
+- Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type)
+- Added support to change plugin processing priority
 
 = 1.6.1 =
 * Fixed bug: For shortcodes in posts the date was not checked
@@ -587,6 +595,10 @@ AD CODE RIGHT
 
 
 == Upgrade Notice ==
+
+= 1.6.3 =
+Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type);
+Added support to change plugin processing priority
 
 = 1.6.2 =
 Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type);

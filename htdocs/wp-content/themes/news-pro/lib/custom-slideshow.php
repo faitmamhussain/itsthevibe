@@ -43,6 +43,7 @@ function itv_add_slideshow_paged(){
 	$image_credit = empty($post_meta['custom_slide_'.$i.'_image_credit'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_credit'][0];
 	$image_info = empty($post_meta['custom_slide_'.$i.'_image_info'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_info'][0];
 	$image_information_footer = empty($post_meta['custom_slide_'.$i.'_image_information_footer'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_information_footer'][0];
+	$final_page = empty($post_meta['final_page'][0]) ? get_site_url().'/end-slideshow' : $post_meta['final_page'][0];
 
 	if($i == 0){
 		$slide_image = '<a href="'.$post_link.'1">'.wp_get_attachment_image((int)$image, 'full').'</a>';
@@ -85,7 +86,7 @@ function itv_add_slideshow_paged(){
 		<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
 		<div class="slideshow-counter four-sixths"><?php echo $i.'/'.($custom_slide-1); ?></div>
 		<?php if( ($i+1) == $custom_slide ):?>
-			<a class="slideshow-button one-sixth" href="<?php echo get_site_url().'/end-slideshow'?>">Next</a>
+			<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
 		<?php else:?>
 			<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+1);?>">Next</a>
 		<?php endif; ?>

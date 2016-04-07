@@ -395,11 +395,13 @@ function print_settings_form (){
         Paragraph number <input style="border-radius: 5px;" type="text" name="<?php echo AI_OPTION_PARAGRAPH_NUMBER, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="<?php echo $obj->get_paragraph_number() ?>" size="2" maxlength="4" /> &nbsp; 0 means random paragraph, <span title="0.2 means paragraph at 20% of page height, 0.5 means paragraph halfway down the page, 0.9 means paragraph at 90% of page height, etc.">value between 0 and 1 means relative position on page.</span>
       </div>
       <div style="margin: 4px 0 4px 0; ">
-        Counting
+        Count
         <select style="border-radius: 5px;" name="<?php echo AI_OPTION_DIRECTION_TYPE, WP_FORM_FIELD_POSTFIX, $ad_number; ?>">
           <option value="<?php echo AD_DIRECTION_FROM_TOP; ?>" <?php echo ($obj->get_direction_type()==AD_DIRECTION_FROM_TOP) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AD_DIRECTION_FROM_TOP; ?></option>
           <option value="<?php echo AD_DIRECTION_FROM_BOTTOM; ?>" <?php echo ($obj->get_direction_type()==AD_DIRECTION_FROM_BOTTOM) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AD_DIRECTION_FROM_BOTTOM; ?></option>
-        </select>&nbsp;&nbsp;&nbsp;
+        </select>
+        paragraphs with tags
+        <input style="border-radius: 5px;" title="Comma separated HTML tags, usually only 'p' tags are used" type="text" name="<?php echo AI_OPTION_PARAGRAPH_TAGS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="<?php echo $obj->get_paragraph_tags(); ?>" size="14" maxlength="50"/>&nbsp;&nbsp;&nbsp;
         Minimum number of paragraphs <input style="border-radius: 5px;" type="text" name="<?php echo AI_OPTION_MIN_PARAGRAPHS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="<?php echo $obj->get_paragraph_number_minimum() ?>" size="2" maxlength="3" />&nbsp;&nbsp;&nbsp;
       </div>
       <div style="margin: 4px 0 4px 0; ">

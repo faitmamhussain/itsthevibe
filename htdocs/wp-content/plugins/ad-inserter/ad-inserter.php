@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Ad Inserter
-Version: 1.6.2
+Version: 1.6.3
 Description: A simple solution to insert any code into Wordpress. Simply enter any HTML, Javascript or PHP code and select where and how you want to display it.
 Author: Spacetime
 Author URI: http://igorfuna.com/
@@ -10,6 +10,10 @@ Plugin URI: http://igorfuna.com/software/web/ad-inserter-wordpress-plugin
 
 /*
 Change Log
+
+Ad Inserter 1.6.3 - 6 April 2016
+- Removed deprecated code (fixes PHP 7 deprecated warnings)
+- Added support for paragraphs with div and other HTML tags (h1, h2, h3,...)
 
 Ad Inserter 1.6.2 - 2 April 2016
 - Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type)
@@ -1003,7 +1007,7 @@ function ai_content_hook ($content = ''){
     } else continue;
 
 //    Deprecated
-//    if ($obj->display_disabled ($content)) continue;
+    if ($obj->display_disabled ($content)) continue;
 
     if (!$obj->check_category ()) continue;
 
@@ -1093,7 +1097,7 @@ function ai_excerpt_hook ($content = ''){
     }
 
     // Deprecated
-//    if ($obj->display_disabled ($content)) continue;
+    if ($obj->display_disabled ($content)) continue;
 
     if (!$obj->check_category ()) continue;
 

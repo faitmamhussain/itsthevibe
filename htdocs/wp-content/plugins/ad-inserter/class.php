@@ -5,7 +5,9 @@ require_once AD_INSERTER_PLUGIN_DIR.'constants.php';
 abstract class ai_BaseCodeBlock {
   var $wp_options;
 
-  function ai_BaseCodeBlock() {
+//  function ai_BaseCodeBlock() {
+  function __construct () {
+
     $this->wp_options = array ();
 
     $this->wp_options [AI_OPTION_CODE]           = AD_EMPTY_DATA;
@@ -248,11 +250,13 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
 
     var $number;
 
-    function ai_CodeBlock() {
+//    function ai_CodeBlock() {
+    function __construct () {
 
       $this->number = 0;
 
-      parent::ai_BaseCodeBlock();
+//      parent::ai_BaseCodeBlock();
+      parent::__construct();
 
       $this->wp_options [AI_OPTION_NAME]                       = AD_NAME;
       $this->wp_options [AI_OPTION_DISPLAY_TYPE]               = AD_SELECT_NONE;
@@ -260,6 +264,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
       $this->wp_options [AI_OPTION_MIN_PARAGRAPHS]             = AD_ZERO;
       $this->wp_options [AI_OPTION_MIN_WORDS]                  = AD_ZERO;
       $this->wp_options [AI_OPTION_MIN_PARAGRAPH_WORDS]        = AD_ZERO;
+      $this->wp_options [AI_OPTION_PARAGRAPH_TAGS]             = DEFAULT_PARAGRAPH_TAGS;
       $this->wp_options [AI_OPTION_EXCERPT_NUMBER]             = AD_ZERO;
       $this->wp_options [AI_OPTION_DIRECTION_TYPE]             = AD_DIRECTION_FROM_TOP;
       $this->wp_options [AI_OPTION_ALIGNMENT_TYPE]             = AD_ALIGNMENT_NONE;
@@ -316,6 +321,11 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
      if ($option == '') $option = AD_ZERO;
      return $option;
     }
+
+  public function get_paragraph_tags(){
+     $option = isset ($this->wp_options [AI_OPTION_PARAGRAPH_TAGS]) ? $this->wp_options [AI_OPTION_PARAGRAPH_TAGS] : DEFAULT_PARAGRAPH_TAGS;
+     return $option;
+  }
 
    public function get_minimum_paragraph_words(){
      $option = isset ($this->wp_options [AI_OPTION_MIN_PARAGRAPH_WORDS]) ? $this->wp_options [AI_OPTION_MIN_PARAGRAPH_WORDS] : "";
@@ -733,15 +743,32 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
   public function before_paragraph ($content) {
 
     $paragraph_positions = array ();
-    $last_position = - 1;
 
-    $paragraph_start = "<p";
+    $paragraph_tags = trim ($this->get_paragraph_tags());
+    if ($paragraph_tags == '') return $content;
 
-    while (stripos ($content, $paragraph_start, $last_position + 1) !== false) {
-      $last_position = stripos ($content, $paragraph_start, $last_position + 1);
-      if ($content [$last_position + 2] == ">" || $content [$last_position + 2] == " ")
-        $paragraph_positions [] = $last_position;
+    $paragraph_start_strings = explode (",", $paragraph_tags);
+
+    if (count ($paragraph_start_strings) == 0) return $content;
+
+    foreach ($paragraph_start_strings as $paragraph_start_string) {
+      if (trim ($paragraph_start_string) == '') continue;
+
+      $last_position = - 1;
+      $paragraph_start = '<' . trim ($paragraph_start_string);
+      $paragraph_start_len = strlen ($paragraph_start);
+
+      while (stripos ($content, $paragraph_start, $last_position + 1) !== false) {
+        $last_position = stripos ($content, $paragraph_start, $last_position + 1);
+        if ($content [$last_position + $paragraph_start_len] == ">" || $content [$last_position + $paragraph_start_len] == " ")
+          $paragraph_positions [] = $last_position;
+      }
     }
+
+    // Nothing to do
+    if (sizeof ($paragraph_positions) == 0) return $content;
+
+    sort ($paragraph_positions);
 
     $paragraph_min_words = $this->get_minimum_paragraph_words();
     if ($paragraph_min_words != 0) {
@@ -834,14 +861,30 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
   public function after_paragraph ($content) {
 
     $paragraph_positions = array ();
-    $last_position = - 1;
 
-    $paragraph_end = "</p>";
+    $paragraph_tags = trim ($this->get_paragraph_tags());
+    if ($paragraph_tags == '') return $content;
 
-    while (stripos ($content, $paragraph_end, $last_position + 1) !== false){
-      $last_position = stripos ($content, $paragraph_end, $last_position + 1) + 3;
-      $paragraph_positions [] = $last_position;
+    $paragraph_end_strings = explode (",", $paragraph_tags);
+
+    if (count ($paragraph_end_strings) == 0) return $content;
+
+    foreach ($paragraph_end_strings as $paragraph_end_string) {
+      if (trim ($paragraph_end_string) == '') continue;
+
+      $last_position = - 1;
+      $paragraph_end = '</' . trim ($paragraph_end_string) . '>';
+
+      while (stripos ($content, $paragraph_end, $last_position + 1) !== false) {
+        $last_position = stripos ($content, $paragraph_end, $last_position + 1) + strlen ($paragraph_end) - 1;
+        $paragraph_positions [] = $last_position;
+      }
     }
+
+    // Nothing to do
+    if (sizeof ($paragraph_positions) == 0) return $content;
+
+    sort ($paragraph_positions);
 
     $paragraph_min_words = $this->get_minimum_paragraph_words();
     if ($paragraph_min_words != 0) {
@@ -1020,20 +1063,20 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
   }
 
 //  Deprecated
-//  function display_disabled ($content){
+  function display_disabled ($content){
 
-//    $ad_name = $this->get_ad_name();
+    $ad_name = $this->get_ad_name();
 
-//    if (preg_match ("/<!-- +Ad +Inserter +Ad +".($this->number)." +Disabled +-->/i", $content)) return true;
+    if (preg_match ("/<!-- +Ad +Inserter +Ad +".($this->number)." +Disabled +-->/i", $content)) return true;
 
-//    if (preg_match ("/<!-- +disable +adinserter +\* +-->/i", $content)) return true;
+    if (preg_match ("/<!-- +disable +adinserter +\* +-->/i", $content)) return true;
 
-//    if (preg_match ("/<!-- +disable +adinserter +".($this->number)." +-->/i", $content)) return true;
+    if (preg_match ("/<!-- +disable +adinserter +".($this->number)." +-->/i", $content)) return true;
 
-//    if (strpos ($content, "<!-- disable adinserter " . $ad_name . " -->") != false) return true;
+    if (strpos ($content, "<!-- disable adinserter " . $ad_name . " -->") != false) return true;
 
-//    return false;
-//  }
+    return false;
+  }
 
   function check_category () {
 
@@ -1243,8 +1286,10 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
 
 class ai_Block extends ai_CodeBlock {
 
-    public function ai_Block ($number) {
-      parent::ai_CodeBlock();
+//    public function ai_Block ($number) {
+    public function __construct ($number) {
+//      parent::ai_CodeBlock();
+      parent::__construct();
 
       $this->number = $number;
       $this->wp_options [AI_OPTION_NAME] = AD_NAME." ".$number;
@@ -1253,14 +1298,18 @@ class ai_Block extends ai_CodeBlock {
 
 class ai_AdH extends ai_BaseCodeBlock {
 
-  public function ai_AdH() {
-    parent::ai_BaseCodeBlock();
+//  public function ai_AdH() {
+  public function __construct () {
+//    parent::ai_BaseCodeBlock();
+    parent::__construct();
   }
 }
 
 class ai_AdF extends ai_BaseCodeBlock {
 
-  public function ai_AdF() {
-    parent::ai_BaseCodeBlock();
+//  public function ai_AdF() {
+  public function __construct () {
+//    parent::ai_BaseCodeBlock();
+    parent::__construct();
   }
 }
