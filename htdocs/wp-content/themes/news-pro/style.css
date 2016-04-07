@@ -779,6 +779,81 @@ Plugins
 	clear:both;
 }
 
+/* Custom slideshow
+--------------------------------------------- */
+
+.slideshow-wrap .slideshow-navigation {
+	width: 100%;
+	margin-bottom: 20px;
+	min-height: 46px;
+}
+
+.slideshow-wrap .slideshow-navigation h2 {
+	display: inline-block;
+	text-align: center;
+	line-height: 44px;
+}
+
+.slideshow-wrap .slideshow-navigation h2.single {
+	width: 100%;
+}
+
+.slideshow-wrap .slideshow-counter {
+	text-align: center;
+	line-height: 44px;
+	font-size: 20px;
+}
+
+.slideshow-wrap .slideshow-navigation h2,
+.slideshow-wrap .slideshow-counter {
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+.slideshow-wrap .slideshow-button {
+	display: inline-block;
+	padding: 6px 12px;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: #ea1947;
+	color: #fff;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.slideshow-wrap .slideshow-button.slideshow-button-start {
+	width: 100%;
+}
+
+.slideshow-wrap .slideshow-image {
+	text-align: center;
+}
+
+.slideshow-wrap .slideshow-credit {
+	color: #999;
+	font-size: 12px;
+}
+
+.slideshow-wrap .slideshow-credit a {
+	color: #999;
+	font-size: 12px;
+}
+.slideshow-wrap .slideshow-credit a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+
 /* Genesis eNews Extended
 --------------------------------------------- */
 
