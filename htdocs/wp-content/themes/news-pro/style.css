@@ -406,7 +406,7 @@ Structure and Layout
 /* Site Containers
 --------------------------------------------- */
 
-.site-container {
+.site-inner {
 	background-color: #fff;
 	border: 1px solid #e3e3e3;
 	margin: 0 auto;
@@ -414,13 +414,18 @@ Structure and Layout
 	border-top: none;
 }
 
-.news-pro-landing .site-container {
+.news-pro-landing .site-inner {
 	max-width: 960px;
 }
 
 .site-inner {
 	clear: both;
 	margin-top: 60px;
+}
+
+.site-footer {
+	margin: 0 auto;
+	max-width: 1140px;
 }
 
 /* Column Widths and Positions
@@ -856,11 +861,22 @@ Plugins
 
 /* Custom featured posts
 --------------------------------------------- */
-.featured-posts-widget {
+.featured-posts-space {
+	margin-top: 0 !important;
+}
 
+.widget_featured_posts_widget {
+	width: 100%;
+	margin: 60px auto 0;
+	max-width: 1536px;
+}
+
+.featured-posts-widget {
+	height: 512px;
 }
 
 .featured-posts-widget .featured-post {
+	height: 512px;
 	margin: 0;
 	padding: 0;
 	width: 33.3333%;
@@ -873,7 +889,23 @@ Plugins
 }
 
 .featured-posts-widget .featured-post-image {
+	display: block;
+	height: 512px;
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
 
+.featured-posts-widget .featured-post-image img {
+	height: 512px;
+	width: auto;
+	max-width: none;
+	margin: auto;
+	top: -50%;
+	left: -50%;
+	bottom: -50%;
+	right: -50%;
+	position: absolute;
 }
 
 .featured-posts-widget .featured-post-title {
@@ -882,12 +914,18 @@ Plugins
 	left: 0;
 	bottom: 0;
 	padding: 0 8px;
+	min-height: 160px;
+	background: -moz-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0.2) 11%,rgba(0,0,0,0.8) 30%,rgba(0,0,0,0.9) 100%);
+	background: -webkit-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0.2) 11%,rgba(0,0,0,0.8) 30%,rgba(0,0,0,0.9) 100%);
+	background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0.2) 11%,rgba(0,0,0,0.8) 30%,rgba(0,0,0,0.9) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#cc000000',GradientType=0);
 }
 
 .featured-posts-widget .featured-post-title h2 {
-	font-size: 24px;
+	font-size: 30px;
 	color: #fff;
 	font-weight: bold;
+	margin-top: 60px;
 }
 
 /* Genesis eNews Extended
@@ -1165,17 +1203,26 @@ Site Header
 .site-header {
 	background-color: #fff;
 	border-bottom: 3px solid #e3e3e3;
-	position: fixed;
 	z-index: 99990;
 	width: 100%;
 	max-width: 1139px;
 	border-right: 1px solid #e3e3e3;
+	position: fixed;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .site-header .wrap {
 
 }
 
+.site-header.full-width-head {
+	max-width: none;
+	width: 100%;
+	border-right: none;
+}
 /* Title Area
 --------------------------------------------- */
 
@@ -2012,7 +2059,7 @@ Media Queries
 
 @media only screen and (max-width: 1188px) {
 
-	.site-container {
+	.site-inner {
 		max-width: 960px;
 	}
 
@@ -2069,7 +2116,8 @@ Media Queries
 
 @media only screen and (max-width: 1023px) {
 
-	.site-container {
+	.site-inner,
+	.site-footer {
 		max-width:  780px;
 		width: 96%;
 	}
@@ -2147,8 +2195,9 @@ Media Queries
 		padding: 12px;
 	}
 	
-	.site-container,
-	.site-header .search-form {
+	.site-inner,
+	.site-header .search-form,
+	.site-footer {
 		margin: 0 auto ;
 	}
 
@@ -2156,8 +2205,17 @@ Media Queries
 		display: none;
 	}
 
-	.site-inner {
+	.site-inner,
+	.widget_featured_posts_widget {
 		margin-top: 116px;
+	}
+
+	.featured-posts-widget > .featured-post:last-of-type {
+		display: none;
+	}
+
+	.featured-posts-widget .featured-post {
+		width: 50%;
 	}
 
 	.content {
@@ -2312,7 +2370,15 @@ Media Queries
 		text-transform: none;
 		width: 100%;
 	}
-	
+
+	.featured-posts-widget > .featured-post:not(:first-of-type) {
+		display: none;
+	}
+
+	.featured-posts-widget .featured-post {
+		width: 100%;
+	}
+
 	.content #genesis-responsive-slider .flex-direction-nav li .next,
 	.content #genesis-responsive-slider .flex-direction-nav li .prev,
 	.content .slide-excerpt {

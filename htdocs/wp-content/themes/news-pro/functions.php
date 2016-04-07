@@ -136,6 +136,18 @@ add_action( 'genesis_doctype', function(){
 	<?php
 }, 5 );
 
+//make header full width on home page
+add_filter( 'genesis_attr_site-header', function($atts){
+	if(is_front_page()){
+		if(! empty($atts['class'])){
+			$atts['class'] .= ' full-width-head';
+		} else {
+			$atts['class'] = ' full-width-head';
+		}
+	}
+	return $atts;
+}, 100 );
+
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){

@@ -1,7 +1,6 @@
 <?php
 
 
-
 class Featured_Posts_Widget extends WP_Widget
 {
 	private $post_types = array();
@@ -93,3 +92,27 @@ class Featured_Posts_Widget extends WP_Widget
 add_action('widgets_init', function(){
 	register_widget("Featured_Posts_Widget");
 });
+
+//add featured posts after header
+
+genesis_register_widget_area( array(
+	'id' => 'after-header',
+	'name' => 'After Header (Home page)'
+) );
+
+add_action( 'genesis_after_header', function(){
+
+	global $wp_registered_sidebars;
+
+	if ( is_front_page() && ( isset( $wp_registered_sidebars['after-header'] ) && is_active_sidebar( 'after-header' ) ) ) {
+
+		dynamic_sidebar( 'after-header' );
+
+		add_filter('genesis_attr_site-inner', function($atts){
+			if( is_front_page() &&! empty($atts['class']) ){
+				$atts['class'] .= ' featured-posts-space';
+			}
+			return $atts;
+		});
+	}
+}, 14 );
