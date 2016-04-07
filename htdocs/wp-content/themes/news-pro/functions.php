@@ -112,6 +112,30 @@ genesis_register_sidebar( array(
 	'description' => __( 'This is the after entry section.', 'news' ),
 ) );
 
+//add dns lookup
+add_action( 'genesis_doctype', function(){
+	?>
+	<link rel="dns-prefetch" href=“//cdn.itsthevibe.com">
+	<link rel="dns-prefetch" href="//www.itsthevibe.com">
+	<link rel="dns-prefetch" href="//www.google-analytics.com">
+	<link rel="dns-prefetch" href="//www.googletagservices.com">
+	<link rel="dns-prefetch" href="//www.googletagmanager.com">
+	<link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+	<link rel="dns-prefetch" href="//cdn.taboola.com">
+	<link rel="dns-prefetch" href="//pixel.quantserve.com">
+	<link rel="dns-prefetch" href="//web.adblade.com">
+	<link rel="dns-prefetch" href="//www.facebook.com">
+	<link rel="dns-prefetch" href="//platform.twitter.com">
+	<link rel="dns-prefetch" href="//pixel.quantserve.com">
+	<link rel="dns-prefetch" href="//trends.revcontent.com">
+	<link rel="dns-prefetch" href="//cdn.revcontent.com">
+	<link rel="dns-prefetch" href="//labs-cdn.revcontent.com">
+	<link rel="dns-prefetch" href="//publishers.revcontent.com">
+	<?php
+}, 5 );
+
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
