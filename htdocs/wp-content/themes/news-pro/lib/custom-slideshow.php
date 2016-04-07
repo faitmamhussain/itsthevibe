@@ -61,7 +61,7 @@ function itv_add_slideshow_paged(){
 				<a class="slideshow-button one-sixth" href="<?php echo get_site_url().'/end-slideshow'?>">Next</a>
 			<?php else:?>
 				<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+1);?>">Next</a>
-			<? endif; ?>
+			<?php endif; ?>
 		</div>
 	<?php endif;?>
 	<div class="slideshow-image">
