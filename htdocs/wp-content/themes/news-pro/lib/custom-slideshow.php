@@ -76,7 +76,7 @@ function itv_add_slideshow_paged(){
 	</div>
 	<?php if( ! empty($image_info) ):?>
 		<p class="slideshow-info"><?php echo $image_info; ?></p>
-	<?endif;?>
+	<?php endif;?>
 	<?php if( ! empty($image_information_footer) ):?>
 		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 	<?php endif;?>
