@@ -81,17 +81,17 @@ function itv_add_slideshow_paged(){
 		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 	<?php endif;?>
 	<div class="slideshow-navigation">
-	<?php if($i != 0){?>
+	<?php if($i != 0):?>
 		<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
 		<div class="slideshow-counter four-sixths"><?php echo $i.'/'.($custom_slide-1); ?></div>
 		<?php if( ($i+1) == $custom_slide ):?>
 			<a class="slideshow-button one-sixth" href="<?php echo get_site_url().'/end-slideshow'?>">Next</a>
 		<?php else:?>
 			<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+1);?>">Next</a>
-		<? endif; ?>
-	<?php } elseif($i == 0) {?>
+		<?php endif; ?>
+	<?php elseif($i == 0):?>
 		<a class="slideshow-button slideshow-button-start" href="<?php echo $post_link.'1';?>">START SLIDESHOW</a>
-	<?php }?>
+	<?php endif;?>
 	</div>
 </div>
 <?php
