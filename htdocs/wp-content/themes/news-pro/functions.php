@@ -167,5 +167,13 @@ function itv_get_primary_category($post = null){
 	return $cat;
 }
 
+//remove categories from under the post
+remove_action( 'genesis_entry_footer', 'post_meta');
+add_filter( 'genesis_post_categories_shortcode', function(){return '';}, 100 );
+add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100 );
+
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
+
+//* Featured Posts
+include_once( get_stylesheet_directory() . '/lib/featured-posts.php' );

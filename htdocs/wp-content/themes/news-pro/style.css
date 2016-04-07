@@ -447,7 +447,7 @@ Structure and Layout
 
 .content {
 	float: right;
-	width: 828px;
+	width: 778px;
 }
 
 .content-sidebar .content,
@@ -481,7 +481,7 @@ Structure and Layout
 
 .sidebar-primary {
 	float: right;
-	width: 309px;
+	width: 359px;
 }
 
 .sidebar-content .sidebar-primary,
@@ -852,6 +852,42 @@ Plugins
 .slideshow-wrap .slideshow-credit a:hover {
 	text-decoration: underline;
 	color: #000;
+}
+
+/* Custom featured posts
+--------------------------------------------- */
+.featured-posts-widget {
+
+}
+
+.featured-posts-widget .featured-post {
+	margin: 0;
+	padding: 0;
+	width: 33.3333%;
+	float: left;
+	position: relative;
+	text-align: center;
+	overflow: hidden;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.featured-posts-widget .featured-post-image {
+
+}
+
+.featured-posts-widget .featured-post-title {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	padding: 0 8px;
+}
+
+.featured-posts-widget .featured-post-title h2 {
+	font-size: 24px;
+	color: #fff;
+	font-weight: bold;
 }
 
 /* Genesis eNews Extended
@@ -1386,10 +1422,8 @@ Content Area
 --------------------------------------------- */
 
 .home-top {
-	background-color: #f3f3f3;
-	border-bottom: 1px solid #e3e3e3;
 	clear: both;
-	padding: 20px 20px 0;
+	padding: 0;
 }
 
 .home-top .featured-content {
@@ -1470,6 +1504,10 @@ Content Area
 	border-top: 1px dotted #e3e3e3;
 	margin: 0 -40px;
 	padding: 32px 40px 8px;
+}
+
+.entry-footer > p {
+	margin: 0;
 }
 
 .entry-comments-link::before {
