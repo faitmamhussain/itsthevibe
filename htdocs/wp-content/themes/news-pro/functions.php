@@ -148,6 +148,21 @@ add_filter( 'genesis_attr_site-header', function($atts){
 	return $atts;
 }, 100 );
 
+//hide page titles on some pages
+add_action( 'genesis_entry_header', function(){
+	if( is_front_page() || is_page('end-slideshow') ) {
+		itv_remove_page_title();
+	}
+}, 3);
+
+function itv_remove_page_title(){
+	remove_action( 'genesis_entry_header', 'genesis_do_post_format_image', 4 );
+	remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+	remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
+	remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+	remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
+}
+
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
