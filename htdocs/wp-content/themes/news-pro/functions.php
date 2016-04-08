@@ -166,6 +166,7 @@ if (!defined('ALM_REPEATER_PATH')){
 
 add_action('alm_repeater_installed', function(){});
 
+remove_filter( 'post_class', 'genesis_entry_post_class' );
 add_filter( 'post_class', 'itv_entry_post_class' );
 
 function itv_entry_post_class( $classes ) {
@@ -177,7 +178,6 @@ function itv_entry_post_class( $classes ) {
 			$classes = array_diff( $classes, array( 'hentry' ) );
 		}
 	}
-
 	return $classes;
 }
 
