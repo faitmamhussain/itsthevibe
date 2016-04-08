@@ -239,6 +239,15 @@ function revcontent_exit_pop() {
 }
 add_action( 'wp_footer', 'revcontent_exit_pop', 100 );
 
+//connect AjaxLoadMore with MyPostsOrder
+add_filter('alm_modify_query_args', function($args, $slug){
+	if( array_key_exists('section_name', $args) ) {
+		global $wp_query;
+		$wp_query->query_vars['section_name'] = $args['section_name'];
+	}
+	return $args;
+});
+
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
 
