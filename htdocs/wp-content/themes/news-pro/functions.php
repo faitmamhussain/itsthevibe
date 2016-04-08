@@ -150,7 +150,7 @@ add_filter( 'genesis_attr_site-header', function($atts){
 
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
-	if( is_front_page() || is_page('end-slideshow') ) {
+	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
 		itv_remove_page_title();
 	}
 }, 3);
