@@ -112,6 +112,13 @@ genesis_register_sidebar( array(
 	'description' => __( 'This is the after entry section.', 'news' ),
 ) );
 
+//add foter navigation menu
+add_theme_support ( 'genesis-menus' , array (
+	'primary'   => __( 'Primary Navigation Menu', 'genesis' ),
+	'secondary' => __( 'Secondary Navigation Menu', 'genesis' ),
+	'footer'    => __( 'Footer Navigation Menu', 'genesis' )
+) );
+
 //add dns lookup
 add_action( 'genesis_doctype', function(){
 	?>
@@ -199,8 +206,9 @@ function itv_entry_post_class( $classes ) {
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
+	global $post;
 	$has_slideshows_cat = false;
-	foreach(get_categories() as $cat){
+	foreach(wp_get_post_categories($post->ID) as $cat){
 		if($cat->slug == 'slideshows' || $cat->slug == 'slideshow'){
 			$has_slideshows_cat = true;
 		}
@@ -253,6 +261,20 @@ function revcontent_exit_pop() {
 	}
 }
 add_action( 'wp_footer', 'revcontent_exit_pop', 100 );
+
+//remove genesis footer
+remove_action( 'genesis_footer', 'genesis_do_footer' );
+add_action('genesis_footer', function(){
+	echo '<div class="footer-menu-wrap">';
+	genesis_nav_menu( array(
+		'theme_location' => 'footer',
+		'container'       => 'div',
+		'container_class' => 'wrap',
+		'menu_class'     => 'menu genesis-nav-menu menu-footer',
+		'depth'           => 1
+	) );
+	echo '</div>';
+});
 
 //connect AjaxLoadMore with MyPostsOrder
 add_filter('alm_modify_query_args', function($args, $slug){

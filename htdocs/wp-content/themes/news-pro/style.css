@@ -1442,6 +1442,16 @@ Site Navigation
 	border-bottom: 1px solid #e3e3e3;
 }
 
+/* Footer Navigation
+--------------------------------------------- */
+.site-footer .genesis-nav-menu a {
+	border: none;
+}
+
+.site-footer .genesis-nav-menu > .menu-item > a {
+	text-transform: inherit;
+}
+
 /* Responsive Menu
 --------------------------------------------- */
 
@@ -1818,7 +1828,7 @@ Site Footer
 	border-top: 1px solid #333;
 	color: #999;
 	font-size: 14px;
-	padding: 40px 0;
+	padding: 0;
 	text-align: center;
 }
 
@@ -1834,6 +1844,9 @@ Site Footer
 	margin-bottom: 0;
 }
 
+.site-footer .wrap > * {
+	display: inline-block;
+}
 
 /*
 Theme Colors
