@@ -873,7 +873,7 @@ Plugins
 .widget_featured_posts_widget {
 	width: 100%;
 	margin: 60px auto 0;
-	max-width: 1536px;
+	max-width: 1950px;
 }
 
 .featured-posts-widget {
@@ -902,13 +902,10 @@ Plugins
 }
 
 .featured-posts-widget .featured-post-image img {
-	height: 512px;
 	width: auto;
 	max-width: none;
 	margin: auto;
-	top: -50%;
 	left: -50%;
-	bottom: -50%;
 	right: -50%;
 	position: absolute;
 }
@@ -2382,6 +2379,10 @@ Media Queries
 
 	.featured-posts-widget .featured-post {
 		width: 100%;
+	}
+
+	.featured-posts-widget .featured-post-image img {
+		min-height: 512px;
 	}
 
 	.content #genesis-responsive-slider .flex-direction-nav li .next,

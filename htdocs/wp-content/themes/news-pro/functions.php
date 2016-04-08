@@ -136,15 +136,15 @@ add_action( 'genesis_doctype', function(){
 	<?php
 }, 5 );
 
-//make header full width on home page
+//make header full width on all pages
 add_filter( 'genesis_attr_site-header', function($atts){
-	if(is_front_page()){
+//	if(is_front_page()){
 		if(! empty($atts['class'])){
 			$atts['class'] .= ' full-width-head';
 		} else {
 			$atts['class'] = ' full-width-head';
 		}
-	}
+//	}
 	return $atts;
 }, 100 );
 
