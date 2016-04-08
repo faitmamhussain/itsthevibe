@@ -166,6 +166,21 @@ if (!defined('ALM_REPEATER_PATH')){
 
 add_action('alm_repeater_installed', function(){});
 
+add_filter( 'post_class', 'itv_entry_post_class' );
+
+function itv_entry_post_class( $classes ) {
+	if( ! in_array('entry', $classes) ){
+		$classes[] = 'entry';
+
+		//* Remove "hentry" from post class array, if HTML5
+		if ( genesis_html5() ){
+			$classes = array_diff( $classes, array( 'hentry' ) );
+		}
+	}
+
+	return $classes;
+}
+
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
@@ -181,8 +196,7 @@ function add_ad_block_after_post(){
 add_action('genesis_before', 'add_google_tag_manager', 5);
 
 function add_google_tag_manager(){
-	echo '<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P8TJTK"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	echo '<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P8TJTK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
 new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=

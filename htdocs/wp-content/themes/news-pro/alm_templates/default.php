@@ -5,11 +5,11 @@ add_shortcode('ajax_load_more', function(){
    return '';
 });
 
+do_action( 'genesis_before_entry' );
+
 //hack for full post display
 global $wp_query;
 $wp_query->is_singular = true;
-
-do_action( 'genesis_before_entry' );
 
 printf( '<article %s>', genesis_attr( 'entry' ) );
 
@@ -37,6 +37,8 @@ do_action( 'genesis_after_entry_content' );
 do_action( 'genesis_entry_footer' );
 
 echo '</article>';
+
+$wp_query->is_singular = false;
 
 do_action( 'genesis_after_entry' );
 ?>
