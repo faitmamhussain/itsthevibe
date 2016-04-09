@@ -253,7 +253,7 @@ add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100
 
 //add revcontent exit pop (desktop only)
 function revcontent_exit_pop() {
-	$script = '<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=29260&p=21367&k=f70853a271747e8e1f3ffef5a48ea50a20beed84&d=itsthevibe.com&t=false&i=none&x=false&z=10"></script>';
+	$script = '<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=29260&p=21367&k=f70853a271747e8e1f3ffef5a48ea50a20beed84&d=itsthevibe.com&t=false&i=none&x=true&z=10"></script>';
 	if(class_exists('MobileSmartShortcodes')){
 		echo do_shortcode('[is_desktop]'.$script.'[/is_desktop]');
 	} else {
