@@ -496,6 +496,9 @@ Structure and Layout
 .sidebar-primary {
 	float: right;
 	width: 359px;
+	position: fixed;
+	left: 50%;
+	margin-left: 210px;
 }
 
 .sidebar-content .sidebar-primary,
@@ -782,7 +785,7 @@ Plugins
 
 .home-page-post .posted-on {
 	display: inline-block;
-	float: right;
+	margin-left: 10px;
 }
 
 .home-page-post .entry-title {
@@ -2133,6 +2136,7 @@ Media Queries
 	
 	.sidebar-primary {
 		width: 300px;
+		margin-left: 179px;
 	}
 	
 	.footer-widgets-1,
@@ -2169,6 +2173,10 @@ Media Queries
 	.site-header {
 		max-width: 779px;
 		width: 96%;
+	}
+
+	.sidebar-primary {
+		display: none;
 	}
 
 	.content,
