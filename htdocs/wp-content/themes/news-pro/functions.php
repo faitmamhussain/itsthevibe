@@ -210,8 +210,10 @@ function itv_entry_post_class( $classes ) {
 add_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
 
 function itv_facebook_share(){
-	$shareURL = get_permalink();
-	include('lib/fb/FB-share-like.php');
+	if(! is_home() && ! is_front_page() && ! is_page()){
+		$shareURL = get_permalink();
+		include('lib/fb/FB-share-like.php');
+	}
 }
 
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
