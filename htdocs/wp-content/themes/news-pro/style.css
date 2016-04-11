@@ -1234,7 +1234,8 @@ Site Header
 
 .title-area {
 	float: left;
-	padding-left: 40px;
+	padding-left: 20px;
+	padding-right: 10px;
 	width: 300px;
 }
 
@@ -1298,7 +1299,6 @@ Site Header
 
 .site-header .widget-area {
 	float: left;
-	padding-right: 40px;
 	text-align: left;
 }
 
@@ -1311,6 +1311,26 @@ Site Header
 	margin-top: 24px;
 }
 
+.site-header .widget_nav_menu {
+	float: left;
+}
+
+.site-header .header-widget-area {
+	width: calc(100% - 300px);
+}
+
+.site-header .header-widget-area .widget_text {
+	float: right;
+}
+
+.site-header .header-social-icons {
+	float: right;
+	font-size: 36px;
+}
+
+.site-header .header-social-icons a {
+	color: #000;
+}
 
 /*
 Site Navigation
@@ -1335,7 +1355,7 @@ Site Navigation
 	border-right: 1px solid #e3e3e3;
 	color: #000;
 	display: block;
-	padding: 20px 24px;
+	padding: 20px 16px;
 	position: relative;
 }
 
@@ -1461,6 +1481,7 @@ Site Navigation
 	display: none;
 	margin-bottom: -1px;
 	text-align: center;
+	padding: 9px;
 }
 
 .site-header .responsive-menu-icon {
@@ -2097,7 +2118,11 @@ Media Queries
 	}
 
 	.title-area {
-		width: 200px;
+		width: 190px;
+	}
+
+	.site-header .header-widget-area {
+		width: calc(100% - 190px);
 	}
 
 	.sidebar-content-sidebar .content,
@@ -2211,7 +2236,7 @@ Media Queries
 	.genesis-nav-menu > .first > a,
 	.genesis-nav-menu > .last > a {
 		border: none;
-		padding: 12px;
+		padding: 20px 12px;
 	}
 	
 	.site-inner,
