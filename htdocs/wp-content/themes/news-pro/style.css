@@ -808,7 +808,7 @@ Plugins
 .slideshow-wrap .slideshow-navigation h2 {
 	display: inline-block;
 	text-align: center;
-	line-height: 44px;
+	line-height: 52px;
 }
 
 .slideshow-wrap .slideshow-navigation h2.single {
@@ -817,7 +817,7 @@ Plugins
 
 .slideshow-wrap .slideshow-counter {
 	text-align: center;
-	line-height: 44px;
+	line-height: 52px;
 	font-size: 20px;
 }
 
@@ -829,7 +829,7 @@ Plugins
 
 .slideshow-wrap .slideshow-button {
 	display: inline-block;
-	padding: 6px 12px;
+	padding: 10px 12px;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -842,7 +842,7 @@ Plugins
 	user-select: none;
 	background-image: none;
 	border: 1px solid transparent;
-	border-radius: 4px;
+	border-radius: 6px;
 	background-color: #ea1947;
 	color: #fff;
 	font-size: 20px;

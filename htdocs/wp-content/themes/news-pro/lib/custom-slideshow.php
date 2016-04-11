@@ -2,18 +2,35 @@
 
 add_action('genesis_before_entry', function(){
 	$post = get_post();
+	$has_slideshows_cat = false;
+	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
+	foreach($cats as $slug){
+		if($slug == 'slideshows' || $slug == 'slideshow'){
+			$has_slideshows_cat = true;
+		}
+	}
 
-	$slideshow_type = get_post_meta($post->ID, 'slideshow_format', true);
-	$custom_slide = get_post_meta($post->ID, 'custom_slide', true);
+	if($has_slideshows_cat){
 
-	if( ($slideshow_type == 'single' || $slideshow_type == 'paged') && ! empty($custom_slide) ) {
+		$slideshow_type = get_post_meta($post->ID, 'slideshow_format', true);
+		$custom_slide = get_post_meta($post->ID, 'custom_slide', true);
 
-		remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
+		if( ($slideshow_type == 'single' || $slideshow_type == 'paged') && ! empty($custom_slide) ) {
 
-		if($slideshow_type == 'paged'){
-			add_action('genesis_entry_content', 'itv_add_slideshow_paged');
-		} elseif($slideshow_type == 'single') {
-			add_action('genesis_entry_content', 'itv_add_slideshow_single');
+			remove_action( 'genesis_entry_content', 'genesis_do_post_image', 8 );
+			remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
+			remove_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
+			remove_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
+
+			remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
+			remove_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
+			remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
+
+			if($slideshow_type == 'paged'){
+				add_action('genesis_entry_content', 'itv_add_slideshow_paged');
+			} elseif($slideshow_type == 'single') {
+				add_action('genesis_entry_content', 'itv_add_slideshow_single');
+			}
 		}
 	}
 });
@@ -29,7 +46,7 @@ function itv_add_slideshow_paged(){
 
 	$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
 
-	if( is_numeric($last_url_segment) && $last_url_segment <= $custom_slide ) {
+	if( is_single() && is_numeric($last_url_segment) && $last_url_segment <= $custom_slide ) {
 		$i = $last_url_segment;
 	} else {
 		$i = 0;
@@ -44,6 +61,7 @@ function itv_add_slideshow_paged(){
 	$image_info = empty($post_meta['custom_slide_'.$i.'_image_info'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_info'][0];
 	$image_information_footer = empty($post_meta['custom_slide_'.$i.'_image_information_footer'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_information_footer'][0];
 	$final_page = empty($post_meta['final_page'][0]) ? get_site_url().'/end-slideshow' : $post_meta['final_page'][0];
+	$shareURL = $post_link.$i;
 
 	if($i == 0){
 		$slide_image = '<a href="'.$post_link.'1">'.wp_get_attachment_image((int)$image, 'full').'</a>';
@@ -81,6 +99,9 @@ function itv_add_slideshow_paged(){
 	<?php if( ! empty($image_information_footer) ):?>
 		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 	<?php endif;?>
+	<div class="slideshow-share">
+		<?php include_once('fb/FB-share-like.php')?>
+	</div>
 	<div class="slideshow-navigation">
 	<?php if($i != 0):?>
 		<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>

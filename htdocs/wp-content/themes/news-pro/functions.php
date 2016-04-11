@@ -25,6 +25,7 @@ function news_load_scripts() {
 
 	wp_enqueue_script( 'news-responsive-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0' );
 	wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ), '1.0.0' );
 
 	wp_enqueue_style( 'dashicons' );
 
@@ -204,18 +205,19 @@ function itv_entry_post_class( $classes ) {
 	return $classes;
 }
 
+//add facebook share button before every single post
+
+add_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
+
+function itv_facebook_share(){
+	$shareURL = get_permalink();
+	include('lib/fb/FB-share-like.php');
+}
+
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
-	global $post;
-	$has_slideshows_cat = false;
-	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
-	foreach($cats as $slug){
-		if($slug == 'slideshows' || $slug == 'slideshow'){
-			$has_slideshows_cat = true;
-		}
-	}
-	if(function_exists ('adinserter') && ! is_home() && ! is_front_page() && ! $has_slideshows_cat) echo adinserter (1);
+	if(function_exists ('adinserter') && ! is_home() && ! is_front_page() ) echo adinserter (1);
 }
 
 add_action('genesis_before', 'add_google_tag_manager', 5);
@@ -255,7 +257,7 @@ add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100
 
 //add revcontent exit pop (desktop only)
 function revcontent_exit_pop() {
-	$script = '<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=29260&p=21367&k=f70853a271747e8e1f3ffef5a48ea50a20beed84&d=itsthevibe.com&t=false&i=none&x=false&z=10"></script>';
+	$script = '<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=29260&p=21367&k=f70853a271747e8e1f3ffef5a48ea50a20beed84&d=itsthevibe.com&t=false&i=none&x=true&z=10"></script>';
 	if(class_exists('MobileSmartShortcodes')){
 		echo do_shortcode('[is_desktop]'.$script.'[/is_desktop]');
 	} else {
@@ -263,6 +265,29 @@ function revcontent_exit_pop() {
 	}
 }
 add_action( 'wp_footer', 'revcontent_exit_pop', 100 );
+
+//facebook init
+function itv_facebook_init(){
+	?><script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '769715033160116',
+				xfbml      : true,
+				version    : 'v2.5'
+			});
+		};
+
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script><?php
+}
+
+add_action('genesis_before', 'itv_facebook_init');
 
 //remove genesis footer
 remove_action( 'genesis_footer', 'genesis_do_footer' );
