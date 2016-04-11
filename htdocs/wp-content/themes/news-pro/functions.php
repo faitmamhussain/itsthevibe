@@ -210,7 +210,7 @@ function itv_entry_post_class( $classes ) {
 add_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
 
 function itv_facebook_share(){
-	if(! is_home() && ! is_front_page() && ! is_page()){
+	if(is_single() && ! is_home() && ! is_front_page() && ! is_page()){
 		$shareURL = get_permalink();
 		include('lib/fb/FB-share-like.php');
 	}
@@ -273,7 +273,7 @@ function itv_facebook_init(){
 	?><script>
 		window.fbAsyncInit = function() {
 			FB.init({
-				appId      : '769715033160116',
+				appId      : '<?php echo (strpos(get_site_url(),".dev")) ? "771002713031348" : "769715033160116"; ?>',
 				xfbml      : true,
 				version    : 'v2.5'
 			});

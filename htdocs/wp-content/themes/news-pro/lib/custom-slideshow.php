@@ -100,7 +100,7 @@ function itv_add_slideshow_paged(){
 		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 	<?php endif;?>
 	<div class="slideshow-share">
-		<?php include_once('fb/FB-share-like.php')?>
+		<?php if(is_single())include_once('fb/FB-share-like.php');?>
 	</div>
 	<div class="slideshow-navigation">
 	<?php if($i != 0):?>
