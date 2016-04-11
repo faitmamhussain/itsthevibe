@@ -1336,6 +1336,29 @@ Site Header
 }
 
 /*
+Styles for revcontent ads
+---------------------------------------------------------------------------------------------------- */
+
+.rc-uid-17295.rc-g-dl h3 {font-family:'Oswald',sans-serif!important; font-weight:500!important; font-size:20px!important; color:#444444!important; text-transform:uppercase!important; margin-left:5px!important; margin-bottom:3px!important;}
+.rc-uid-17295.rc-g-d h3 {font-family:'Oswald',sans-serif!important; font-weight:500!important; font-size:20px!important; color:#444444!important; text-transform:uppercase!important; margin-left:5px!important; margin-bottom:3px!important;}
+.rc-uid-17295.rc-g-t h3 {font-family:'Playfair Display',serif!important; font-weight:700!important; font-size:20px!important; color:#444444!important; text-transform:none!important; margin-left:5px!important;}
+.rc-uid-17295.rc-g-p h3 {font-family:'Playfair Display',serif!important; font-weight:700!important; font-size:20px!important; color:#444444!important; text-transform:none!important;}
+
+.rc-uid-17295.rc-g-dl .rc-headline {font-family:'Oswald',sans-serif!important; font-size:18px!important; line-height:140%!important; font-weight:500!important; color:#444444!important; text-transform:uppercase!important; margin-bottom:10px!important;}
+.rc-uid-17295.rc-g-d .rc-headline {font-family:'Oswald',sans-serif!important; font-size:18px!important; line-height:140%!important; font-weight:500!important; color:#444444!important; text-transform:uppercase!important; margin-bottom:10px!important;}
+.rc-uid-17295.rc-g-t .rc-headline {font-family:'Playfair Display',serif!important; font-size:17px!important; line-height:normal!important; font-weight:700!important; color:#444444!important; margin-bottom:7px!important;}
+.rc-uid-17295.rc-g-p .rc-headline {font-family:'Playfair Display',serif!important; font-size:17px!important; line-height:normal!important; font-weight:700!important; color:#444444!important; margin-bottom:5px!important;}
+
+.rc-uid-17295.rc-g-dl .rc-text-top.rc-branding {position:relative!important; top:34px!important}
+.rc-uid-17295.rc-g-d .rc-text-top.rc-branding {position:relative!important; top:34px!important}
+.rc-uid-17295.rc-g-t .rc-text-top.rc-branding {position:relative!important; top:33px!important}
+.rc-uid-17295.rc-g-p .rc-text-top.rc-branding {position:relative!important; top:33px!important}
+
+.rc-uid-17295 .rc-item:hover .rc-headline {text-decoration:none!important}
+.rc-uid-17295.rc-g-dl .rc-item:hover .rc-headline {color:#e50020!important;}
+.rc-uid-17295.rc-g-d .rc-item:hover .rc-headline {color:#e50020!important;}
+
+/*
 Site Navigation
 ---------------------------------------------------------------------------------------------------- */
 
