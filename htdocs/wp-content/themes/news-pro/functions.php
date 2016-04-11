@@ -123,7 +123,7 @@ add_theme_support ( 'genesis-menus' , array (
 //add dns lookup
 add_action( 'genesis_doctype', function(){
 	?>
-	<link rel="dns-prefetch" href=“//cdn.itsthevibe.com">
+	<link rel="dns-prefetch" href="//cdn.itsthevibe.com">
 	<link rel="dns-prefetch" href="//www.itsthevibe.com">
 	<link rel="dns-prefetch" href="//www.google-analytics.com">
 	<link rel="dns-prefetch" href="//www.googletagservices.com">
@@ -209,8 +209,9 @@ add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 function add_ad_block_after_post(){
 	global $post;
 	$has_slideshows_cat = false;
-	foreach(wp_get_post_categories($post->ID) as $cat){
-		if($cat->slug == 'slideshows' || $cat->slug == 'slideshow'){
+	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
+	foreach($cats as $slug){
+		if($slug == 'slideshows' || $slug == 'slideshow'){
 			$has_slideshows_cat = true;
 		}
 	}
