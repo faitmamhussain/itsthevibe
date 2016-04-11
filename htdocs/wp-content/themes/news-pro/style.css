@@ -1358,6 +1358,13 @@ Styles for revcontent ads
 .rc-uid-17295.rc-g-dl .rc-item:hover .rc-headline {color:#e50020!important;}
 .rc-uid-17295.rc-g-d .rc-item:hover .rc-headline {color:#e50020!important;}
 
+.rc-content {
+	font-family: 'PT Sans', 'Raleway', sans-serif;
+}
+
+.rc-item .rc-content .rc-headline {
+	font-size: 20px;
+}
 /*
 Site Navigation
 ---------------------------------------------------------------------------------------------------- */
