@@ -17,19 +17,25 @@ add_action('genesis_before_entry', function(){
 
 		if( ($slideshow_type == 'single' || $slideshow_type == 'paged') && ! empty($custom_slide) ) {
 
-			remove_action( 'genesis_entry_content', 'genesis_do_post_image', 8 );
-			remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
-			remove_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
-			remove_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
+			$url = $_SERVER['REQUEST_URI'];
+
+			$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
+
+			if(is_single() && is_numeric($last_url_segment)) {
+				remove_action( 'genesis_entry_content', 'genesis_do_post_image', 8 );
+				remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
+				remove_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
+				remove_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
+			}
 
 			remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
 			remove_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 			remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 			if($slideshow_type == 'paged'){
-				add_action('genesis_entry_content', 'itv_add_slideshow_paged');
+				add_action('genesis_entry_content', 'itv_add_slideshow_paged', 11);
 			} elseif($slideshow_type == 'single') {
-				add_action('genesis_entry_content', 'itv_add_slideshow_single');
+				add_action('genesis_entry_content', 'itv_add_slideshow_single', 11);
 			}
 		}
 	}
@@ -46,77 +52,78 @@ function itv_add_slideshow_paged(){
 
 	$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
 
-	if( is_single() && is_numeric($last_url_segment) && $last_url_segment <= $custom_slide ) {
-		$i = $last_url_segment;
-	} else {
-		$i = 0;
-	}
-
 	$post_link = get_permalink();
-	$back = ($i-1) > 0 ? $i-1 : '';
-	$image_title = empty($post_meta['custom_slide_'.$i.'_image_title'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_title'][0];
-	$image = empty($post_meta['custom_slide_'.$i.'_image'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image'][0];
-	$image_credit_text = empty($post_meta['custom_slide_'.$i.'_image_credit_text'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_credit_text'][0];
-	$image_credit = empty($post_meta['custom_slide_'.$i.'_image_credit'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_credit'][0];
-	$image_info = empty($post_meta['custom_slide_'.$i.'_image_info'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_info'][0];
-	$image_information_footer = empty($post_meta['custom_slide_'.$i.'_image_information_footer'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_information_footer'][0];
-	$final_page = empty($post_meta['final_page'][0]) ? get_site_url().'/end-slideshow' : $post_meta['final_page'][0];
-	$shareURL = $post_link.$i;
 
-	if($i == 0){
-		$slide_image = '<a href="'.$post_link.'1">'.wp_get_attachment_image((int)$image, 'full').'</a>';
-	} elseif( ! empty($image_credit) ){
-		$slide_image = '<a href="'.$image_credit.'" target="_blank">'.wp_get_attachment_image((int)$image, 'full').'</a>';
-	} else {
-		$slide_image = wp_get_attachment_image((int)$image, 'full');
-	}
+	if( is_single() && is_numeric($last_url_segment) && $last_url_segment <= $custom_slide ) {
+
+		$i = $last_url_segment - 1;
+
+		$back = ($i-1) > 0 ? $i : '';
+		$image_title = empty($post_meta['custom_slide_'.$i.'_image_title'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_title'][0];
+		$image = empty($post_meta['custom_slide_'.$i.'_image'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image'][0];
+		$image_credit_text = empty($post_meta['custom_slide_'.$i.'_image_credit_text'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_credit_text'][0];
+		$image_credit = empty($post_meta['custom_slide_'.$i.'_image_credit'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_credit'][0];
+		$image_info = empty($post_meta['custom_slide_'.$i.'_image_info'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_info'][0];
+		$image_information_footer = empty($post_meta['custom_slide_'.$i.'_image_information_footer'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_information_footer'][0];
+		$final_page = empty($post_meta['final_page'][0]) ? get_site_url().'/end-slideshow' : $post_meta['final_page'][0];
+		$shareURL = $post_link.$i;
+
+		$slide_image = '<a href="'.$post_link.($i+2).'">'.wp_get_attachment_image((int)$image, 'full').'</a>';
+
 		?>
-<div class="slideshow-wrap">
-	<?php if($i != 0):?>
-		<div class="slideshow-navigation">
-			<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
-			<h2 class="four-sixths"><?php echo $image_title;?></h2>
-			<?php if( ($i+1) == $custom_slide ):?>
-				<a class="slideshow-button one-sixth" href="<?php echo get_site_url().'/end-slideshow'?>">Next</a>
-			<?php else:?>
-				<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+1);?>">Next</a>
-			<?php endif; ?>
+		<div class="slideshow-wrap">
+			<div class="slideshow-navigation">
+				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
+				<h2 class="four-sixths"><?php echo $image_title;?></h2>
+				<?php if( ($i+1) == $custom_slide ):?>
+					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
+				<?php else:?>
+					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>">Next</a>
+				<?php endif; ?>
+			</div>
+			<div class="slideshow-image">
+				<?php echo $slide_image; ?>
+				<?php if( ! empty($image_credit) ):?>
+					<p class="slideshow-credit">
+						<a href="<?php echo $image_credit;?>"><?php echo (! empty($image_credit_text)) ? $image_credit_text : $image_credit;?></a>
+					</p>
+				<?php elseif(! empty($image_credit_text)):?>
+					<p class="slideshow-credit"><?php echo $image_credit_text;?></p>
+				<?php endif;?>
+			</div>
+			<?php if( ! empty($image_info) ):?>
+				<p class="slideshow-info"><?php echo $image_info; ?></p>
+			<?php endif;?>
+			<?php if( ! empty($image_information_footer) ):?>
+				<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
+			<?php endif;?>
+			<div class="slideshow-share">
+				<?php if(is_single())include_once('fb/FB-share-like.php');?>
+			</div>
+			<div class="slideshow-navigation">
+				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
+				<div class="slideshow-counter four-sixths"><?php echo ($i+1).'/'.$custom_slide; ?></div>
+				<?php if( ($i+1) == $custom_slide ):?>
+					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
+				<?php else:?>
+					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>">Next</a>
+				<?php endif; ?>
+			</div>
 		</div>
-	<?php endif;?>
-	<div class="slideshow-image">
-		<?php echo $slide_image; ?>
-		<?php if( ! empty($image_credit) ):?>
-			<p class="slideshow-credit">
-				<a href="<?php echo $image_credit;?>" target="_blank"><?php echo (! empty($image_credit_text)) ? $image_credit_text : $image_credit;?></a>
-			</p>
-		<?php elseif(! empty($image_credit_text)):?>
-			<p class="slideshow-credit"><?php echo $image_credit_text;?></p>
-		<?php endif;?>
-	</div>
-	<?php if( ! empty($image_info) ):?>
-		<p class="slideshow-info"><?php echo $image_info; ?></p>
-	<?php endif;?>
-	<?php if( ! empty($image_information_footer) ):?>
-		<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
-	<?php endif;?>
-	<div class="slideshow-share">
-		<?php if(is_single())include_once('fb/FB-share-like.php');?>
-	</div>
-	<div class="slideshow-navigation">
-	<?php if($i != 0):?>
-		<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
-		<div class="slideshow-counter four-sixths"><?php echo $i.'/'.($custom_slide-1); ?></div>
-		<?php if( ($i+1) == $custom_slide ):?>
-			<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
-		<?php else:?>
-			<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+1);?>">Next</a>
-		<?php endif; ?>
-	<?php elseif($i == 0):?>
-		<a class="slideshow-button slideshow-button-start" href="<?php echo $post_link.'1';?>">START SLIDESHOW</a>
-	<?php endif;?>
-	</div>
-</div>
-<?php
+		<?php
+	} else {
+		?>
+		<div class="slideshow-wrap">
+			<div class="slideshow-share">
+				<?php if(is_single())include_once('fb/FB-share-like.php');?>
+			</div>
+			<div class="slideshow-navigation">
+				<a class="slideshow-button slideshow-button-start" href="<?php echo $post_link.'1';?>">START SLIDESHOW</a>
+			</div>
+		</div>
+		<?php
+	}
+
 	add_action('genesis_after_entry', function(){
 		if(function_exists ('adinserter')) echo adinserter(7);
 		if(class_exists('AjaxLoadMore') && is_singular()){
@@ -145,7 +152,7 @@ function itv_add_slideshow_single(){
 			<h2 class="single"><?php echo $image_title;?></h2>
 		</div>
 		<div class="slideshow-image">
-			<a href="<?php echo $image_credit;?>" target="_blank"><?php echo wp_get_attachment_image((int)$image, 'full');?></a>
+			<?php echo wp_get_attachment_image((int)$image, 'full');?>
 			<?php if( ! empty($image_credit) ):?>
 				<p class="slideshow-credit">
 					<a href="<?php echo $image_credit;?>" target="_blank"><?php echo (! empty($image_credit_text)) ? $image_credit_text : $image_credit;?></a>
