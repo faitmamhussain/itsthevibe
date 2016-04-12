@@ -164,6 +164,11 @@ add_action( 'genesis_entry_header', function(){
 	}
 }, 3);
 
+//Remove post tags from all posts
+add_filter('genesis_post_meta', function($post_meta){
+	return str_replace('[post_tags]', '', $post_meta);
+});
+
 function itv_remove_page_title(){
 	remove_action( 'genesis_entry_header', 'genesis_do_post_format_image', 4 );
 	remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
