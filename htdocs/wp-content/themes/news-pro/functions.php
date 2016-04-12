@@ -319,7 +319,7 @@ add_filter('alm_modify_query_args', function($args, $slug){
 	return $args;
 });
 
-add_action('genesis_doctype', function(){
+add_action( 'genesis_doctype', function(){
 	global $thisPageType;
 	$pageChecks = array(
 		'ITV_Home' 			=> is_front_page(),
@@ -330,7 +330,7 @@ add_action('genesis_doctype', function(){
 		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page('End Slideshow') && !is_page('404'))
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));
-});
+}, 1 );
 
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
