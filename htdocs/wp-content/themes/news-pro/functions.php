@@ -313,11 +313,17 @@ add_action('genesis_footer', function(){
 //connect AjaxLoadMore with MyPostsOrder
 add_filter('alm_modify_query_args', function($args, $slug){
 	if( array_key_exists('section_name', $args) ) {
-		global $wp_query;
-		$wp_query->query_vars['section_name'] = $args['section_name'];
+		global $wp_query, $paged;
+		$wp_query->query_vars = $args;
+
+		if(isset($args['paged'])){
+			$paged = $args['paged'];
+		}
 	}
 	return $args;
 });
+
+remove_filter('post_limits', 'mpo_change_limit' );
 
 add_action('genesis_doctype', function(){
 	global $thisPageType;
