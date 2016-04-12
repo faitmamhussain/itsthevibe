@@ -221,6 +221,23 @@ function itv_facebook_share(){
 	}
 }
 
+/* Display Featured Image on top of single post if content has no images */
+add_action( 'genesis_entry_content', 'add_featured_image_to_post', 8 );
+function add_featured_image_to_post() {
+	global $itv_has_slideshows_cat;
+
+	if ( is_singular() && empty($itv_has_slideshows_cat) && ! is_page() ){
+
+		$content = get_the_content();
+		$img_pos = strpos($content, 'img');
+
+		//check if there is img tag or shortcode in beginning
+		if(empty($img_pos) || $img_pos > 100) {
+			the_post_thumbnail('post-image');
+		}
+	}
+}
+
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
