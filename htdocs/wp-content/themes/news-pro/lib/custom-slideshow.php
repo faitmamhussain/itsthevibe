@@ -1,16 +1,17 @@
 <?php
 
 add_action('genesis_before_entry', function(){
+	global $itv_has_slideshows_cat;
 	$post = get_post();
-	$has_slideshows_cat = false;
+	$itv_has_slideshows_cat = false;
 	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
 	foreach($cats as $slug){
 		if($slug == 'slideshows' || $slug == 'slideshow'){
-			$has_slideshows_cat = true;
+			$itv_has_slideshows_cat = true;
 		}
 	}
 
-	if($has_slideshows_cat){
+	if($itv_has_slideshows_cat){
 
 		$slideshow_type = get_post_meta($post->ID, 'slideshow_format', true);
 		$custom_slide = get_post_meta($post->ID, 'custom_slide', true);
@@ -40,6 +41,18 @@ add_action('genesis_before_entry', function(){
 		}
 	}
 });
+
+add_action('genesis_after_entry', function(){
+	global $itv_has_slideshows_cat;
+	if(empty($itv_has_slideshows_cat)){
+		$itv_has_slideshows_cat = false;
+	}
+	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
+	if($itv_has_slideshows_cat && function_exists ('adinserter')) echo adinserter(7);
+	if($itv_has_slideshows_cat && class_exists('AjaxLoadMore') && is_singular()){
+		echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
+	}
+}, 99998);
 
 function itv_add_slideshow_paged(){
 	$post = get_post();
@@ -123,14 +136,6 @@ function itv_add_slideshow_paged(){
 		</div>
 		<?php
 	}
-
-	add_action('genesis_after_entry', function(){
-		include('fb/FB-comments.php');
-		if(function_exists ('adinserter')) echo adinserter(7);
-		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
-		}
-	}, 99998);
 }
 
 function itv_add_slideshow_single(){
@@ -168,10 +173,4 @@ function itv_add_slideshow_single(){
 	<?php
 		if(function_exists ('adinserter') && ($i+1) != $custom_slide) echo adinserter(7);
 	}
-	add_action('genesis_after_entry', function(){
-		include('fb/FB-comments.php');
-		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
-		}
-	}, 99998);
 }
