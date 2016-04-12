@@ -128,7 +128,7 @@ function itv_add_slideshow_paged(){
 		include('fb/FB-comments.php');
 		if(function_exists ('adinserter')) echo adinserter(7);
 		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
+			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
 		}
 	}, 99998);
 }
@@ -171,7 +171,7 @@ function itv_add_slideshow_single(){
 	add_action('genesis_after_entry', function(){
 		include('fb/FB-comments.php');
 		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
+			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
 		}
 	}, 99998);
 }
