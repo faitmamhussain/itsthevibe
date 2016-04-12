@@ -43,10 +43,13 @@ function deactivate() {
 add_action('init','init_feeds');
 function init_feeds() {
 	add_action('admin_menu', 'feeds_menu');
-	add_shortcode('publishfeeds', 'displayfeeds');
+	add_shortcode('mypubslishfeeds', 'displayfeeds');
 	// register_cpt_practicearea();
 	
 	add_action( 'admin_enqueue_scripts', 'feeds_ui_scripts' );
+
+        //hook in to the publsh_post action to run when a post is published
+        add_action('pending_to_publish', 'remove_default_category', 10, 2);
 }
 
 function feeds_menu(){
@@ -58,8 +61,8 @@ function feeds_ui_scripts() {
 	wp_enqueue_script( 'ui-js', plugins_url() . '/feeds/addmore.js', array(), '0.1', true  );
 }
 
-
-/* function register_cpt_practicearea() {
+/*
+function register_cpt_practicearea() {
 
         $labels = array( 
             'name' => _x( 'Feeds', 'feeds' ),
@@ -115,14 +118,34 @@ function create_pra_taxonomies() {
             'hierarchical' => true
         )
     );
-} */
+}
+
+*/
+
+function remove_default_category($ID, $post) {
+    
+    //get all categories for the post
+    $categories = wp_get_object_terms($ID, 'category');
+    
+    //if there is more than one category set, check to see if one of them is the default
+    if (count($categories) > 1) { 
+        foreach ($categories as $key => $category) {
+            //if category is the default, then remove it
+            if ($category->name == "Uncategorized") {
+                wp_remove_object_terms($ID, 'uncategorized', 'category');
+         
+            }
+        }
+    }
+}
+
 
 function addFeed() {
 	global $wpdb;
 	$args = array(
 		'hide_empty' => false, 
 	);	
-	$taxonomy = 'feeds_txnmy';
+	$taxonomy = 'category';
 	$terms = get_terms($taxonomy, $args); // Get all terms of a taxonomy
 
 	if(isset($_GET['delete'])){ 
@@ -199,15 +222,18 @@ function addFeed() {
 				$msg['message'] = "<script> window.location='?page=imp-feeds&exists=1'; </script>";
 			}else{
 				// insert posts
-
+                                $imagedownloadcontent = $entry->description;
+                                
+                                $content= $entry->description;
+                                $content = preg_replace("/<img[^>]+\>/i", " ", $content);
                                 $doc = new DOMDocument();
-				$doc->loadHTML($entry->description);
+				$doc->loadHTML($imagedownloadcontent);
 				$xpath = new DOMXPath($doc);
 				$src = $xpath->evaluate("string(//img/@src)");
 				
 				$post_id = wp_insert_post(array(
 					'post_type'       => "post",
-					'post_content'    => $entry->description, // description
+					'post_content'    => $content , // description
 					'post_title'      => $entry->title, // title
 					'post_name'       => $entry->title, // i.e. 'GA'; this is for the URL
 					'post_status'     => "pending",
@@ -237,11 +263,15 @@ function addFeed() {
 				wp_update_attachment_metadata( $attach_id, $attach_data );
 				add_post_meta($post_id, '_thumbnail_id', $attach_id, true);
 
+                                $wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 5), array('%d', '%d'));
+                                $wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 4), array('%d', '%d'));
+                                $wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
+
 				/**
 					set category to posts 
-					$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'feeds_txnmy');
-					$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'feeds_txnmy', true );
-					$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'feeds_txnmy');
+					$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
+					$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
+					$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
 				*/
 				if ( is_wp_error( $post_id ) ) {
 					$msg['message'] = "<script> window.location='?page=imp-feeds&craete=0'; </script>";
