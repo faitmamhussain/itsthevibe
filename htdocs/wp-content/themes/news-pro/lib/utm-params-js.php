@@ -105,6 +105,9 @@
         $(function() {
             var utm_source_value = 'utm_source'.getParamValue() || getCookie('itv_utm_source') || 'itv';
 
+            //save utm_source to cookies
+            setCookie('itv_utm_source', utm_source_value);
+
             //Callback function fired when the alm ajax request was finished.
             //We use it to update the href attributes properly.
             function setupParams(){
