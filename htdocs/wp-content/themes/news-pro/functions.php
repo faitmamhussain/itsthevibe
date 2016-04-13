@@ -323,14 +323,24 @@ add_action( 'genesis_doctype', function(){
 	global $thisPageType;
 	$pageChecks = array(
 		'ITV_Home' 			=> is_front_page(),
-		'ITV_404' 			=> is_page('404'),
+		'ITV_404' 			=> is_page('404page'),
 		'ITV_Category'		=> is_category(),
 		'ITV_Slideshow' 	=> in_category('slideshows'),
 		'ITV_End_Slideshow' => is_page('End Slideshow'),
-		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page('End Slideshow') && !is_page('404'))
+		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page())
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));
 }, 1 );
+
+add_action( 'wp_head', function(){
+	global $thisPageType;
+	//JS code for setting utm-params, mobile detection and helpers.
+	include_once(get_stylesheet_directory() . '/lib/utm-params-js.php');
+	if($thisPageType == 'ITV_Article'){
+		//Included only on article pages. JS code to fire virtual pageviews.
+		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
+	}
+}, 10);
 
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
