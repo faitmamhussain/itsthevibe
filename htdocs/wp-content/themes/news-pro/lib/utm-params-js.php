@@ -113,7 +113,7 @@
                     var pageType = '<?php echo $thisPageType ?>';
                     if(_this.data('url')){
                         if(utm_source_value == 'itv' && pageType == 'ITV_404'){
-                            utm_source_value = '404';
+                            utm_source_value = pageType;
                         }
                         $(this).attr("href", _this.data('url')
                             + '?utm_source=' + utm_source_value
