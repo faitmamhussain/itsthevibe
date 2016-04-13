@@ -303,6 +303,9 @@ img {
 	width: auto; /* IE8 */
 }
 
+.text-center {
+	text-align: center;
+}
 /* Forms
 --------------------------------------------- */
 
@@ -860,6 +863,7 @@ Plugins
 .slideshow-wrap .slideshow-credit {
 	color: #999;
 	font-size: 12px;
+	margin-top: 1em;
 }
 
 .slideshow-wrap .slideshow-credit a {

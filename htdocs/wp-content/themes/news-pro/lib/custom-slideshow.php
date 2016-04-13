@@ -3,13 +3,7 @@
 add_action('genesis_before_entry', function(){
 	global $itv_has_slideshows_cat;
 	$post = get_post();
-	$itv_has_slideshows_cat = false;
-	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
-	foreach($cats as $slug){
-		if($slug == 'slideshows' || $slug == 'slideshow'){
-			$itv_has_slideshows_cat = true;
-		}
-	}
+	$itv_has_slideshows_cat = in_category('slideshows', $post);
 
 	if($itv_has_slideshows_cat){
 
@@ -27,6 +21,8 @@ add_action('genesis_before_entry', function(){
 				remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
 				remove_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
 				remove_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
+			} else {
+				add_filter( 'the_content', 'add_start_slideshow_link', 20 );
 			}
 
 			remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
@@ -41,6 +37,15 @@ add_action('genesis_before_entry', function(){
 		}
 	}
 });
+
+function add_start_slideshow_link($content){
+	if ( is_singular() && ! is_page() ){
+		$content = preg_replace_callback("/<img[^>]+>/i", function($matches){
+			return '<a href="1">'.$matches[0].'</a>';
+		}, $content);
+	}
+	return $content;
+}
 
 add_action('genesis_after_entry', function(){
 	global $itv_has_slideshows_cat;
