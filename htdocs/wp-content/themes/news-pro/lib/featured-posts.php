@@ -60,7 +60,7 @@ class Featured_Posts_Widget extends WP_Widget
 		if ($title) {
 			echo $before_title . $title . $after_title;
 		}
-		echo "<div class=\"featured-posts-widget\">";
+		echo "<div class=\"featured-posts-widget swiper-container\"><div class=\"swiper-wrapper\">";
 		wp_reset_query();
 		global $wp_query;
 		$old_query = $wp_query;
@@ -73,7 +73,7 @@ class Featured_Posts_Widget extends WP_Widget
 		while ($FeaturedPost_query->have_posts()) {
 			$FeaturedPost_query->the_post();
 			?>
-			<a href="<?php echo get_permalink(); ?>" class="featured-post">
+			<a href="<?php echo get_permalink(); ?>" class="featured-post swiper-slide">
 				<div class="featured-post-image"><?php the_post_thumbnail('full');?></div>
 				<div class="featured-post-title">
 					<h2><?php echo get_the_title();?></h2>
@@ -83,7 +83,30 @@ class Featured_Posts_Widget extends WP_Widget
 		}
 		wp_reset_query();
 		$wp_query = $old_query;
-		echo "</div>";
+		echo "</div><div class=\"swiper-button-next swiper-button-white\"></div><div class=\"swiper-button-prev swiper-button-white\"></div></div>";
+		?>
+		<script>
+			jQuery( document ).ready(function( $ ) {
+				var swiper = new Swiper('.swiper-container', {
+					slidesPerView: 3,
+					grabCursor: true,
+					mousewheelControl: true,
+					loop: true,
+					keyboardControl: true,
+					nextButton: '.swiper-button-next',
+					prevButton: '.swiper-button-prev',
+					breakpoints: {
+						600: {
+							slidesPerView: 1,
+						},
+						1023: {
+							slidesPerView: 2,
+						},
+					}
+				});
+			});
+		</script>
+		<?php
 		echo $after_widget;
 		// outputs the content of the widget
 	}
