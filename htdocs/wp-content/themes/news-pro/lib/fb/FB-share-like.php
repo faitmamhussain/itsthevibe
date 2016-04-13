@@ -31,7 +31,7 @@
 }
 
 .fb-share-wrap .fb-share-container .fb-button:hover {
-	background-color: #4964B3;
+	background-color: #2c4692;
 }
 
 .fb-share-wrap .fb-share-container .fb-button .text {
@@ -55,7 +55,6 @@
 	font-size: 40px !important;
 	display: inline-block;
 	margin: 6px 20px;
-	color: white;
 	vertical-align: middle;
 }
 
@@ -84,10 +83,10 @@
 			   data-layout="link"
 			   data-domain="itsthevibe"<?php echo (!empty($shareURL)) ? ' data-share-url="'.$shareURL.'"' : '';?>>
 				<span class="text">
-					<i class="fa fa-facebook facebook-icon"></i>
+					<i class="fa fa-facebook-square facebook-icon"></i>
 					<span class="no-hide">Share</span>
-					<span class="hide-1" style="position:static; visibility:visible;">This Story</span>
-					<span class="hide-2" style="position:static; visibility:visible;">On Facebook</span>
+					<span class="hide-1" style="position:static; visibility:visible;">this</span>
+					<span class="hide-2" style="position:static; visibility:visible;">on Facebook</span>
 				</span>
 			</a>
 		</div>

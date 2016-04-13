@@ -1,16 +1,11 @@
 <?php
 
 add_action('genesis_before_entry', function(){
+	global $itv_has_slideshows_cat;
 	$post = get_post();
-	$has_slideshows_cat = false;
-	$cats = wp_get_post_categories($post->ID, array('fields' => 'slugs'));
-	foreach($cats as $slug){
-		if($slug == 'slideshows' || $slug == 'slideshow'){
-			$has_slideshows_cat = true;
-		}
-	}
+	$itv_has_slideshows_cat = in_category('slideshows', $post);
 
-	if($has_slideshows_cat){
+	if($itv_has_slideshows_cat){
 
 		$slideshow_type = get_post_meta($post->ID, 'slideshow_format', true);
 		$custom_slide = get_post_meta($post->ID, 'custom_slide', true);
@@ -26,6 +21,8 @@ add_action('genesis_before_entry', function(){
 				remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
 				remove_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
 				remove_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
+			} else {
+				add_filter( 'the_content', 'add_start_slideshow_link', 20 );
 			}
 
 			remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
@@ -40,6 +37,27 @@ add_action('genesis_before_entry', function(){
 		}
 	}
 });
+
+function add_start_slideshow_link($content){
+	if ( is_singular() && ! is_page() ){
+		$content = preg_replace_callback("/<img[^>]+>/i", function($matches){
+			return '<a href="1">'.$matches[0].'</a>';
+		}, $content);
+	}
+	return $content;
+}
+
+add_action('genesis_after_entry', function(){
+	global $itv_has_slideshows_cat;
+	if(empty($itv_has_slideshows_cat)){
+		$itv_has_slideshows_cat = false;
+	}
+	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
+	if($itv_has_slideshows_cat && function_exists ('adinserter')) echo adinserter(7);
+	if($itv_has_slideshows_cat && class_exists('AjaxLoadMore') && is_singular()){
+		echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
+	}
+}, 99998);
 
 function itv_add_slideshow_paged(){
 	$post = get_post();
@@ -73,12 +91,12 @@ function itv_add_slideshow_paged(){
 		?>
 		<div class="slideshow-wrap">
 			<div class="slideshow-navigation">
-				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
+				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<h2 class="four-sixths"><?php echo $image_title;?></h2>
 				<?php if( ($i+1) == $custom_slide ):?>
-					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
+					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php else:?>
-					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>">Next</a>
+					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php endif; ?>
 			</div>
 			<div class="slideshow-image">
@@ -101,12 +119,12 @@ function itv_add_slideshow_paged(){
 				<?php if(is_single())include_once('fb/FB-share-like.php');?>
 			</div>
 			<div class="slideshow-navigation">
-				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>">Back</a>
-				<div class="slideshow-counter four-sixths"><?php echo ($i+1).'/'.$custom_slide; ?></div>
+				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
+				<div class="slideshow-counter four-sixths"><?php echo ($i+1).' of '.$custom_slide; ?></div>
 				<?php if( ($i+1) == $custom_slide ):?>
-					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>">Next</a>
+					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php else:?>
-					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>">Next</a>
+					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -123,14 +141,6 @@ function itv_add_slideshow_paged(){
 		</div>
 		<?php
 	}
-
-	add_action('genesis_after_entry', function(){
-		include('fb/FB-comments.php');
-		if(function_exists ('adinserter')) echo adinserter(7);
-		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
-		}
-	}, 99998);
 }
 
 function itv_add_slideshow_single(){
@@ -168,10 +178,4 @@ function itv_add_slideshow_single(){
 	<?php
 		if(function_exists ('adinserter') && ($i+1) != $custom_slide) echo adinserter(7);
 	}
-	add_action('genesis_after_entry', function(){
-		include('fb/FB-comments.php');
-		if(class_exists('AjaxLoadMore') && is_singular()){
-			echo do_shortcode('[ajax_load_more post_type="post" category="slideshows" posts_per_page="9" repeater="repeater" max_pages="0" container_type="div" meta_key="_thumbnail_id" meta_value="" meta_compare="EXISTS" meta_type="DECIMAL"]');
-		}
-	}, 99998);
 }
