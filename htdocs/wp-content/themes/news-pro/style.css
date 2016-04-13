@@ -826,8 +826,7 @@ Plugins
 
 .slideshow-wrap .slideshow-navigation h2,
 .slideshow-wrap .slideshow-counter {
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
+
 }
 
 .slideshow-wrap .slideshow-button {
@@ -843,13 +842,15 @@ Plugins
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 6px;
-	background-color: #ea1947;
-	color: #fff;
+	color: #ea1947;
 	font-size: 20px;
 	font-weight: 700;
+}
+
+.slideshow-wrap .slideshow-button > span {
+	vertical-align: super;
 }
 
 .slideshow-wrap .slideshow-button.slideshow-button-start {
