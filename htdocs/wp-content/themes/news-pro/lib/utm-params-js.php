@@ -103,6 +103,15 @@
 
     (function ($) {
         $(function() {
+
+            var itvtargeting = ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term', 'test'];
+            for(var x = 0; x < itvtargeting.length; x++){
+                var targetValue = itvtargeting[x].getParamValue();
+                if( targetValue != null && targetValue != 'undefined' && targetValue != '' ){
+                    setCookie('itv_'+itvtargeting[x], targetValue);
+                }
+            }
+
             var utm_source_value = 'utm_source'.getParamValue() || getCookie('itv_utm_source') || 'itv';
 
             //save utm_source to cookies
