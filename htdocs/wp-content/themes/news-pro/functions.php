@@ -368,6 +368,27 @@ add_action('wp_head', function(){
 	}
 }, 10);
 
+function get_permalink_with_utm(){
+	$url = get_permalink();
+	$itv_targeting = array(
+		'utm_source',
+		'utm_campaign',
+		'utm_medium',
+		'utm_content',
+		'utm_term',
+		'test'
+	);
+
+	foreach($itv_targeting as $target){
+		$param = isset($_COOKIE['itv_'.$target]) ? $_COOKIE['itv_'.$target] : false;
+		if(!empty($param)){
+			$url = add_query_arg($target, $param, $url);
+		}
+	}
+
+	return $url;
+}
+
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
 

@@ -17,8 +17,9 @@ $title = apply_filters( 'single_post_title', $title);
 $sep = apply_filters( 'document_title_separator', '-' );
 $title = $title.' '.$sep.' '.get_bloginfo( 'name', 'display' );
 
+$anchor_url = get_permalink_with_utm();
 $atts = array(
-    'data-anchor-url' => get_permalink(),
+    'data-anchor-url' => $anchor_url,
     'data-anchor-title' => $title
 );
 

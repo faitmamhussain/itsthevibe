@@ -1,9 +1,8 @@
 <script type="text/javascript">
     (function ($) {
         $(function() {
-
             function sendVirtualPageView(alm){
-                var elem = $(alm.content).find('.anchor_post').last();
+                var elem = $(alm.content).find('.alm-reveal').last().find('article');
                 if(elem.length > 0){
                     dataLayer.push({
                         'event': 'VirtualPageview',
@@ -12,7 +11,6 @@
                     });
                 }
             }
-
             $.fn.almComplete = sendVirtualPageView;
         });
     })(jQuery);
