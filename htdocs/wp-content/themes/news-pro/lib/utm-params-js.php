@@ -1,4 +1,4 @@
-<?php global $thisPageType; ?>
+<?php global $thisPageType, $post; ?>
 <script type="text/javascript">
     //querystring params
     if( typeof String.prototype.getParamValue === "undefined" ){
@@ -46,6 +46,12 @@
         };
     }
 
+
+    //arrays
+    function isInArray(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
     //cookies
     function setCookie(cname,cvalue) {
         document.cookie = cname+"="+cvalue+"; path=/";
@@ -74,6 +80,14 @@
 
     if(utm_source_value == ''){
         utm_source_value = 'itv';
+    }
+
+    var explicitCheck;
+    if((page_type == 'ITV_Article' ||  page_type == 'ITV_Slideshow') && isInArray('explicit', post_tags)){
+        explicitCheck = 'true';
+    }
+    else{
+        explicitCheck = 'false'
     }
 
     //save utm params to cookies
