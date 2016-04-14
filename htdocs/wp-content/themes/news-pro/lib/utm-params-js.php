@@ -61,6 +61,30 @@
         return '';
     }
 
+    var utm_source_value = 'utm_source'.getParamValue() || getCookie('itv_utm_source');
+    var utm_campaign_value = 'utm_campaign'.getParamValue() || getCookie('itv_utm_campaign');
+    var utm_medium_value = 'utm_medium'.getParamValue() || getCookie('itv_utm_medium');
+    var utm_term_value = 'utm_term'.getParamValue() || getCookie('itv_utm_term');
+    var utm_content_value = 'utm_content'.getParamValue() || getCookie('itv_utm_content');
+    var test_value = 'test'.getParamValue() || getCookie('itv_test');
+    var page_type = '<?php echo $thisPageType; ?>';
+    var post_tags =  new Array("<?php echo implode('","',  preg_replace('/[^a-zA-Z 0-9]+/', '', wp_get_post_tags($post->ID, array('fields' => 'names'))) ); ?>");
+    var post_id = '<?php echo get_the_ID(); ?>';
+    var post_slug = '<?php echo substr($post->post_name, 0, 40); ?>';
+
+    if(utm_source_value == ''){
+        utm_source_value = 'itv';
+    }
+
+    //save utm params to cookies
+    var itvtargeting = ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term', 'test'];
+    for(var x = 0; x < itvtargeting.length; x++){
+        var targetValue = itvtargeting[x].getParamValue();
+        if( targetValue != null && targetValue != 'undefined' && targetValue != '' ){
+            setCookie('itv_'+itvtargeting[x], targetValue);
+        }
+    }
+
     //viewport check
     var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -103,20 +127,6 @@
 
     (function ($) {
         $(function() {
-
-            var itvtargeting = ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term', 'test'];
-            for(var x = 0; x < itvtargeting.length; x++){
-                var targetValue = itvtargeting[x].getParamValue();
-                if( targetValue != null && targetValue != 'undefined' && targetValue != '' ){
-                    setCookie('itv_'+itvtargeting[x], targetValue);
-                }
-            }
-
-            var utm_source_value = 'utm_source'.getParamValue() || getCookie('itv_utm_source') || 'itv';
-
-            //save utm_source to cookies
-            setCookie('itv_utm_source', utm_source_value);
-
             //Callback function fired when the alm ajax request was finished.
             //We use it to update the href attributes properly.
             function setupParams(){
