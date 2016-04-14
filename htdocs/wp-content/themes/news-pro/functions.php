@@ -354,13 +354,17 @@ add_action('genesis_doctype', function(){
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));
 }, 1 );
 
-add_action( 'wp_head', function(){
+add_action('wp_head', function(){
 	global $thisPageType;
 	//JS code for setting utm-params, mobile detection and helpers.
 	include_once(get_stylesheet_directory() . '/lib/utm-params-js.php');
 	if($thisPageType == 'ITV_Article'){
 		//Included only on article pages. JS code to fire virtual pageviews.
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
+	}
+
+	if($thisPageType == 'ITV_Slideshow'){
+		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
 	}
 }, 10);
 

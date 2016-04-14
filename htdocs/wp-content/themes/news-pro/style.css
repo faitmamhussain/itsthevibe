@@ -1359,6 +1359,82 @@ Site Header
 }
 
 /*
+	Styles for slide show custom header widget
+*/
+.site-header{
+	-webkit-transition: opacity .5s ease;
+	-moz-transition: opacity .5s ease;
+	-ms-transition: opacity .5s ease;
+	-o-transition: opacity .5s ease;
+	transition: opacity .5s ease;
+}
+.site-header section.widget.widget_text:last-of-type{
+	display: none;
+}
+.site-header.slideshow-header{
+	opacity: 0.8;
+}
+.site-header.slideshow-header:hover{
+	opacity: 1;
+}
+.site-header.slideshow-header .widget{
+	display: none;
+}
+.site-header.slideshow-header section.widget.widget_text:last-of-type{
+	display: block !important;
+	float: none;
+}
+
+.slideshow-header h1.slideshow-post-title{
+	font-size: 30px;
+	margin: 0;
+}
+.slideshow-header .slideshow-menu-left{
+	display: inline-block;
+	width: 65%;
+	vertical-align: middle;
+}
+.slideshow-header .slideshow-menu-right{
+	display: inline-block;
+	width: 35%;
+	vertical-align: middle;
+}
+
+.slideshow-header .slideshow-menu-right .header-social-icons{
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.slideshow-header a.slideshow-button{
+	display: inline-block;
+	padding: 5px 5px;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid transparent;
+	border-radius: 6px;
+	color: #ea1947;
+	font-size: 20px;
+	font-weight: 700;
+}
+.slideshow-header a.slideshow-button > i{
+	vertical-align: middle;
+}
+
+/*
+	END Styles for slide show custom header widget
+*/
+
+
+/*
 Styles for revcontent ads
 ---------------------------------------------------------------------------------------------------- */
 
@@ -2366,6 +2442,12 @@ Media Queries
 		border: none;
 	}
 
+	.slideshow-header h1.slideshow-post-title{
+		display: none;
+	}
+	.slideshow-header .slideshow-menu-right{
+		width: 100%;
+	}
 }
 
 @media only screen and (max-width: 600px) {
