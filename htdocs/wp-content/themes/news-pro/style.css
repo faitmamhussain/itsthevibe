@@ -825,6 +825,11 @@ Plugins
 
 .home-page-post .entry-title {
 	font-size: 20px;
+	margin-top: 2px;
+}
+
+.home-page-post .post-description {
+	margin-top: 8px;
 }
 
 .alm-btn-wrap {
@@ -982,6 +987,35 @@ Plugins
 	margin-top: 60px;
 }
 
+.featured-posts-widget .featured-post-button {
+	display: none;
+}
+
+.featured-posts-widget:hover .featured-post-button,
+.featured-posts-widget:active .featured-post-button,
+.featured-posts-widget:focus .featured-post-button {
+	display: block;
+}
+
+.featured-posts-widget .swiper-button-white {
+	background-color: rgba(0,0,0,.3);
+	width: 50px;
+	height: 80px;
+	color: transparent;
+	-webkit-transition: background .22s;
+	transition: background .22s;
+	outline: 0;
+	border-radius: 4px;
+}
+
+.featured-posts-widget .swiper-button-white:hover {
+	background-color: #303030;
+}
+
+.featured-posts-widget .featured-post:hover .featured-post-title {
+	text-decoration: underline;
+	color: #fff;
+}
 /* Genesis eNews Extended
 --------------------------------------------- */
 
