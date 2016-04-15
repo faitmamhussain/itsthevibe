@@ -935,6 +935,7 @@ Plugins
 .widget_featured_posts_widget {
 	width: 100%;
 	max-width: 1950px;
+	margin: 0 auto;
 }
 
 .featured-posts-widget {
