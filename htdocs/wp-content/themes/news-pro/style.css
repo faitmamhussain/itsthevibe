@@ -243,10 +243,13 @@ cite {
 	visibility:hidden !important;
 }
 
+.itv_ad_widget {
+	text-align: center;
+}
+
 h4.ad-header {
 	clear: both;
 	color: rgb(100,100,100);
-	float: left;
 	font-weight: 700;
 	font-size: 10px;
 	letter-spacing: 2px;
@@ -2389,7 +2392,7 @@ Media Queries
 	}
 
 	.site-inner,
-	.widget_featured_posts_widget {
+	.site-header + section {
 		margin-top: 135px;
 	}
 
