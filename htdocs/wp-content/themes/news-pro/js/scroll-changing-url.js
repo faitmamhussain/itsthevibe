@@ -41,4 +41,16 @@ jQuery( document ).ready(function( $ ) {
             }
         });
     }
+
+    //stick second sidebar section (wait while first ad loads)
+    setTimeout(function() {
+        var elem = $('.sidebar-primary section:nth-child(2)');
+        if(elem.length){
+            var elemOffset = elem.position().top;
+            var controller = new ScrollMagic.Controller();
+            var scene = new ScrollMagic.Scene({offset: elemOffset})
+                .setPin(".sidebar-primary section:nth-child(2)")
+                .addTo(controller);
+        }
+    }, 2000);
 });

@@ -521,13 +521,13 @@ Structure and Layout
 .sidebar-primary {
 	float: right;
 	width: 359px;
-	position: fixed;
-	left: 50%;
-	margin-left: 210px;
+	/*position: fixed;*/
+	/*left: 50%;*/
+	/*margin-left: 210px;*/
 }
 
 .site-container.has-left-sidebar .sidebar-primary {
-	margin-left: 298px;
+	/*margin-left: 298px;*/
 }
 
 .sidebar-content .sidebar-primary,
@@ -2311,7 +2311,7 @@ Media Queries
 
 	.site-container.has-left-sidebar .sidebar-primary {
 		width: 300px;
-		margin-left: 267px;
+		/*margin-left: 267px;*/
 	}
 
 }
@@ -2324,7 +2324,7 @@ Media Queries
 	}
 
 	.content-sidebar-sidebar .content-sidebar-wrap,
-	.sidebar-content-sidebar .content-sidebar-wrap,
+	/*.sidebar-content-sidebar .content-sidebar-wrap,*/
 	.sidebar-sidebar-content .content-sidebar-wrap {
 		width: 780px;
 	}
@@ -2353,11 +2353,11 @@ Media Queries
 	
 	.sidebar-primary {
 		width: 300px;
-		margin-left: 179px;
+		/*margin-left: 179px;*/
 	}
 
 	.site-container.has-left-sidebar .sidebar-primary {
-		margin-left: 267px;
+		/*margin-left: 267px;*/
 	}
 	
 	.footer-widgets-1,
