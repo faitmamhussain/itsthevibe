@@ -27,6 +27,10 @@ jQuery( document ).ready(function( $ ) {
                         window.history.pushState('','', hash);
                     }
                     currentHash = hash;
+                    
+                    if(typeof(refreshSidebarMidAd) == "function"){
+                        refreshSidebarMidAd();
+                    }
                 }
             });
 
