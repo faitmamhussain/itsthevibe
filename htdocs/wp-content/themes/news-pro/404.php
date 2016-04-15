@@ -23,4 +23,5 @@ $args = array(
 
 $wp_query = new WP_Query($args);
 $wp_query->is_404 = true;
+$wp_query->is_page = true;
 genesis();
