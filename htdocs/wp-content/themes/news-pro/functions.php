@@ -24,9 +24,10 @@ add_action( 'wp_enqueue_scripts', 'news_load_scripts' );
 function news_load_scripts() {
 
 	wp_enqueue_script( 'news-responsive-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'Swiper', '//cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js' );
+	wp_enqueue_script( 'ScrollMagic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js' );
 	wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ), '1.0.0' );
 	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ), '1.0.0' );
-	wp_enqueue_script( 'Swiper', '//cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js' );
 
 	wp_enqueue_style( 'dashicons' );
 
@@ -144,6 +145,7 @@ add_action( 'genesis_doctype', function(){
 	<link rel="dns-prefetch" href="//cdn.revcontent.com">
 	<link rel="dns-prefetch" href="//labs-cdn.revcontent.com">
 	<link rel="dns-prefetch" href="//publishers.revcontent.com">
+	<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 	<?php
 }, 5 );
 
@@ -158,6 +160,18 @@ add_filter( 'genesis_attr_site-header', function($atts){
 //	}
 	return $atts;
 }, 100 );
+
+//add fixes for floating left sidebar
+add_filter("genesis_attr_site-container", function($attributes, $context){
+
+	$site_layout = genesis_site_layout();
+
+	if ( $site_layout == 'sidebar-content-sidebar' && strpos($attributes['class'], 'site-container') !== false ){
+		$attributes['class'] .= ' has-left-sidebar';
+	}
+
+	return $attributes;
+});
 
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){

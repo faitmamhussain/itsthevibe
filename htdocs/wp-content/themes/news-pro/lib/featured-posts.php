@@ -83,7 +83,7 @@ class Featured_Posts_Widget extends WP_Widget
 		}
 		wp_reset_query();
 		$wp_query = $old_query;
-		echo "</div><div class=\"swiper-button-next swiper-button-white\"></div><div class=\"swiper-button-prev swiper-button-white\"></div></div>";
+		echo "</div><div class=\"featured-post-button\"><div class=\"swiper-button-next swiper-button-white\"></div></div><div class=\"featured-post-button\"><div class=\"swiper-button-prev swiper-button-white\"></div></div></div>";
 		?>
 		<script>
 			jQuery( document ).ready(function( $ ) {
