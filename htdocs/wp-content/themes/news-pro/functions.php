@@ -159,6 +159,18 @@ add_filter( 'genesis_attr_site-header', function($atts){
 	return $atts;
 }, 100 );
 
+//add fixes for floating left sidebar
+add_filter("genesis_attr_site-container", function($attributes, $context){
+
+	$site_layout = genesis_site_layout();
+
+	if ( $site_layout == 'sidebar-content-sidebar' && strpos($attributes['class'], 'site-container') !== false ){
+		$attributes['class'] .= ' has-left-sidebar';
+	}
+
+	return $attributes;
+});
+
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
 	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
