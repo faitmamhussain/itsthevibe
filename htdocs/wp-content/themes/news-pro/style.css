@@ -2614,9 +2614,6 @@ Media Queries
 	.genesis-nav-menu li:first-of-type{
 		display: inline-block;
 	}
-	header.site-header .title-area{
-		display: none;
-	}
 }
 
 @media only screen and (max-width: 600px) {
