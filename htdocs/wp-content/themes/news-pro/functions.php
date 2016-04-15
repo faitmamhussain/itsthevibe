@@ -216,7 +216,7 @@ function itv_entry_post_class( $classes ) {
 add_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
 
 function itv_facebook_share(){
-	if(is_single() && ! is_page() && ! is_home() && ! is_front_page()){
+	if(is_single() && ! is_page() && ! is_home() && ! is_front_page() && ! is_404()){
 		$shareURL = get_permalink();
 		include('lib/fb/FB-share-like.php');
 	}
