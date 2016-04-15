@@ -1592,6 +1592,10 @@ Site Navigation
 	border-bottom: 1px solid #e3e3e3;
 }
 
+.genesis-nav-menu li:first-of-type{
+	display: none;
+}
+
 /* Secondary Navigation
 --------------------------------------------- */
 
@@ -1623,6 +1627,7 @@ Site Navigation
 
 .site-header .responsive-menu-icon {
 	border-bottom: none;
+	width: 58px;
 }
 
 .responsive-menu-icon::before {
@@ -2593,4 +2598,35 @@ Media Queries
 		font-size: 26px;
 	}
 
+	main.content > article.entry,
+	div.alm-reveal article.entry{
+		padding: 0;
+	}
+
+	main.content{
+		padding: 15px;
+	}
+
+	a.post-image img{
+		width: 100%;
+	}
+
+	header.site-header .title-area{
+		display: none;
+	}
+
+	.site-inner,
+	.widget_featured_posts_widget,
+	.site-header + section{
+		margin-top: 60px;
+	}
+
+	article a img.alignleft{
+		margin-right: 0;
+		float: none;
+		width: 100%;
+	}
+	.genesis-nav-menu li:first-of-type{
+		display: inline-block;
+	}
 }
