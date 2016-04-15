@@ -52,11 +52,11 @@ add_action('genesis_after_entry', function(){
 	if(empty($itv_has_slideshows_cat)){
 		$itv_has_slideshows_cat = false;
 	}
-	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
 	if($itv_has_slideshows_cat && function_exists ('adinserter')) echo adinserter(7);
 	if($itv_has_slideshows_cat && class_exists('AjaxLoadMore') && is_singular()){
 		echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
 	}
+	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
 }, 99998);
 
 function itv_add_slideshow_paged(){

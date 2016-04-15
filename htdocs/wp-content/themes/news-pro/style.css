@@ -836,6 +836,10 @@ Plugins
 	clear:both;
 }
 
+#ajax-load-more {
+	border-bottom: 1px solid #e3e3e3;
+}
+
 /* Custom slideshow
 --------------------------------------------- */
 
