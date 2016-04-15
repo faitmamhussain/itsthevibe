@@ -10,12 +10,17 @@
  * @license GPL-2.0+
  * @link    http://my.studiopress.com/themes/genesis/
  */
+global $wp_query, $thisPageType;
 
 //* Remove default loop
-remove_action( 'genesis_loop', 'genesis_do_loop' );
-
 remove_action( 'genesis_loop', 'genesis_404' );
+$args = array(
+    'name'        => '404page',
+    'post_type'   => 'page',
+    'post_status' => 'publish',
+    'numberposts' => 1
+);
 
-$URL= get_bloginfo('url'); header("Location: ".$URL."/404page/");
-
+$wp_query = new WP_Query($args);
+$wp_query->is_404 = true;
 genesis();

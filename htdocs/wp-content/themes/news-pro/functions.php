@@ -345,11 +345,11 @@ add_action('genesis_doctype', function(){
 	global $thisPageType;
 	$pageChecks = array(
 		'ITV_Home' 			=> is_front_page(),
-		'ITV_404' 			=> is_page('404page'),
+		'ITV_404' 			=> (is_page('404page') || is_404()),
 		'ITV_Category'		=> is_category(),
 		'ITV_Slideshow' 	=> in_category('slideshows'),
 		'ITV_End_Slideshow' => is_page('End Slideshow'),
-		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page())
+		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page() && !is_404())
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));
 }, 1 );
