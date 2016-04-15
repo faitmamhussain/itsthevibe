@@ -2596,7 +2596,10 @@ Media Queries
 	}
 }
 
-@media only screen and (max-width: 740px) {
+@media only screen and (max-width: 760px) {
+	.site-inner {
+		margin-top: 124px;
+	}
 	.genesis-nav-menu.responsive-menu .menu-item,
 	.responsive-menu-icon {
 		display: block;
