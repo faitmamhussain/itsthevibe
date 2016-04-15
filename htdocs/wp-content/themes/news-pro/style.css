@@ -1648,10 +1648,6 @@ Site Navigation
 	border-bottom: 1px solid #e3e3e3;
 }
 
-.genesis-nav-menu li:first-of-type{
-	display: none;
-}
-
 /* Secondary Navigation
 --------------------------------------------- */
 
@@ -2611,9 +2607,6 @@ Media Queries
 		text-transform: none;
 	}
 
-	.genesis-nav-menu li:first-of-type{
-		display: inline-block;
-	}
 	header.site-header .title-area{
 		padding-bottom: 0;
 		padding-top: 5px;
