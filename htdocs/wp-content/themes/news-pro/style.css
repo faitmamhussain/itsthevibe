@@ -2771,12 +2771,6 @@ Media Queries
 		width: 100%;
 	}
 
-	.site-inner,
-	.widget_featured_posts_widget,
-	.site-header + section{
-		margin-top: 60px;
-	}
-
 	article a img.alignleft{
 		margin-right: 0;
 		float: none;
