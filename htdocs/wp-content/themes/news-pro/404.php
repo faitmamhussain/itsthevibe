@@ -24,4 +24,6 @@ $args = array(
 $wp_query = new WP_Query($args);
 $wp_query->is_404 = true;
 $wp_query->is_page = true;
+$wp_query->is_single = false;
+$wp_query->is_singular = true;
 genesis();
