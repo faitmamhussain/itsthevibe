@@ -2293,21 +2293,32 @@ Media Queries
 
 @media only screen and (max-width: 1330px) {
 
+	.site-container.has-left-sidebar .sidebar-secondary {
+		display: none;
+	}
+
 	.site-container.has-left-sidebar .site-inner,
 	.site-container.has-left-sidebar .site-footer {
-		max-width: 960px;
+		position: relative;
+		left: 0;
+		top: 0;
+	}
+
+	.site-container.has-left-sidebar .site-inner,
+	.site-container.has-left-sidebar .site-footer {
+		/*max-width: 960px;*/
 	}
 
 	.site-container.has-left-sidebar .sidebar-content-sidebar .content-sidebar-wrap {
-		width: 780px;
+		/*width: 780px;*/
 	}
 
 	.site-container.has-left-sidebar .content {
-		width: 658px;
+		/*width: 658px;*/
 	}
 
 	.site-container.has-left-sidebar .sidebar-primary {
-		width: 300px;
+		/*width: 300px;*/
 		/*margin-left: 267px;*/
 	}
 
@@ -2317,21 +2328,21 @@ Media Queries
 
 	.site-inner,
 	.site-footer {
-		max-width: 960px;
+		/*max-width: 1081px;*/
 	}
 
 	.content-sidebar-sidebar .content-sidebar-wrap,
 	/*.sidebar-content-sidebar .content-sidebar-wrap,*/
 	.sidebar-sidebar-content .content-sidebar-wrap {
-		width: 780px;
+		/*width: 780px;*/
 	}
 
 	.content {
-		width: 658px;
+		/*width: 658px;*/
 	}
 	
 	.site-header {
-		max-width: 959px;
+		/*max-width: 959px;*/
 	}
 
 	.title-area {
@@ -2349,7 +2360,7 @@ Media Queries
 	}
 	
 	.sidebar-primary {
-		width: 300px;
+		width: 356px;
 		/*margin-left: 179px;*/
 	}
 
@@ -2382,15 +2393,16 @@ Media Queries
 
 @media only screen and (max-width: 1150px) {
 
-	.site-container.has-left-sidebar .site-inner,
-	.site-container.has-left-sidebar .site-footer {
+	.site-inner,
+	.site-footer {
 		max-width:  780px;
 		position: relative;
 		left: 0;
 		top: 0;
+		margin: 60px auto 0;
 	}
 
-	.site-container.has-left-sidebar .sidebar-primary,
+	.sidebar-primary,
 	.site-container.has-left-sidebar .sidebar-secondary {
 		display: none;
 	}
@@ -2400,8 +2412,6 @@ Media Queries
 	.site-container.has-left-sidebar .content-sidebar-sidebar .content-sidebar-wrap,
 	.site-container.has-left-sidebar .sidebar-content-sidebar .content,
 	.site-container.has-left-sidebar .sidebar-content-sidebar .content-sidebar-wrap,
-	.site-container.has-left-sidebar .sidebar-primary,
-	.site-container.has-left-sidebar .sidebar-secondary,
 	.site-container.has-left-sidebar .sidebar-sidebar-content .content,
 	.site-container.has-left-sidebar .sidebar-sidebar-content .content-sidebar-wrap,
 	.site-container.has-left-sidebar .site-inner,
