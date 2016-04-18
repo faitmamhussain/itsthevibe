@@ -90,6 +90,7 @@ function itv_add_slideshow_paged(){
 
 		?>
 		<div class="slideshow-wrap">
+			<?php if(function_exists ('adinserter')) echo adinserter(11); ?>
 			<div class="slideshow-navigation">
 				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<h2 class="four-sixths"><?php echo $image_title;?></h2>
