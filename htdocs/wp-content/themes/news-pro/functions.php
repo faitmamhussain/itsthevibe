@@ -162,7 +162,7 @@ add_filter( 'genesis_attr_site-header', function($atts){
 }, 100 );
 
 //add fixes for floating left sidebar
-add_filter("genesis_attr_site-container", function($attributes, $context){
+add_filter("genesis_attr_site-container", function($attributes){
 
 	$site_layout = genesis_site_layout();
 
