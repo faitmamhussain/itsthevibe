@@ -453,7 +453,7 @@ Structure and Layout
 .site-container.has-left-sidebar .site-inner,
 .site-container.has-left-sidebar .site-footer {
 	position: relative;
-	left: 88px;
+	left: 100px;
 	top: 0;
 }
 
@@ -548,12 +548,12 @@ Structure and Layout
 .sidebar-secondary {
 	float: left;
 	font-size: 14px;
-	width: 177px;
+	width: 200px;
 }
 
 .site-container.has-left-sidebar .sidebar-secondary {
 	position: fixed;
-	margin-left: -178px;
+	margin-left: -200px;
 	float: none;
 }
 
