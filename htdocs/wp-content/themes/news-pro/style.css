@@ -808,6 +808,10 @@ Widgets
 .featured-content p {
 	margin-bottom: 20px;
 }
+.one-third a img{
+	width: 255px;
+	height: 255px;
+}
 
 /*
 Plugins
