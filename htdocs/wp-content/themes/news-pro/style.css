@@ -458,8 +458,8 @@ Structure and Layout
 }
 
 .site-footer {
-	margin: 0 auto;
-	max-width: 1140px;
+	margin: 0 0 0 362px;
+	max-width: 780px;
 }
 
 /* Column Widths and Positions
