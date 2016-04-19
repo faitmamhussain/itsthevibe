@@ -436,10 +436,8 @@ Structure and Layout
 
 .site-inner {
 	background-color: #fff;
-	border: 1px solid #e3e3e3;
 	margin: 0 auto;
 	max-width: 1140px;
-	border-top: none;
 }
 
 .news-pro-landing .site-inner {
@@ -496,8 +494,6 @@ Structure and Layout
 }
 
 .sidebar-content-sidebar .content {
-	border-left: 1px solid #e3e3e3;
-	border-right: 1px solid #e3e3e3;
 	float: left;
 }
 
@@ -853,10 +849,6 @@ Plugins
 
 .alm-btn-wrap {
 	clear:both;
-}
-
-#ajax-load-more {
-	border-bottom: 1px solid #e3e3e3;
 }
 
 /* Custom slideshow
