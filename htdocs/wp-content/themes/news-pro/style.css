@@ -2627,12 +2627,12 @@ Media Queries
 		text-transform: none;
 	}
 
-	.slideshow-header .title-area{
+	.site-header .title-area{
 		float: left;
 		width: 115px;
 		padding: 6px 0 0 0;
 	}
-	.slideshow-header .site-title a {
+	.site-header .site-title a {
 		min-height: 50px;
 		background-size: contain !important;
 	}
@@ -2641,8 +2641,12 @@ Media Queries
 		float: right;
 		width: auto;
 	}
-	.slideshow-header{
-		padding: 0 20px;
+	.site-header{
+		padding: 0 10px;
+	}
+	.site-inner,
+	.site-header + section {
+		margin-top: 61px;
 	}
 }
 
