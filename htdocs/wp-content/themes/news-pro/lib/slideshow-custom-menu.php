@@ -15,6 +15,7 @@
             }
 
             function handleScroll(){
+
                 var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
                 var content = $('header.entry-header').offset().top;
 
