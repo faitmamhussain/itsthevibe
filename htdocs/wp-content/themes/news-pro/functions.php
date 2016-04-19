@@ -377,9 +377,10 @@ add_action('wp_head', function(){
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
 	}
 
-	if($thisPageType == 'ITV_Slideshow'){
+	if( !isMobile() || ( isMobile() && $thisPageType == 'ITV_Slideshow' ) ){
 		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
 	}
+
 }, 10);
 
 function get_permalink_with_utm(){
@@ -409,6 +410,8 @@ add_shortcode('slideshow-share', function($atts, $content){
 	$post_title = substr($post_title_full, 0, (40 - 3));
 	$post_title = preg_replace('/ [^ ]*$/', ' ...', $post_title);
 
+	global $thisPageType;
+
 	ob_start(); ?>
 	<div class="slideshow-menu-left">
 		<h1 class="slideshow-post-title"><?php echo $post_title; ?></h1>
@@ -427,19 +430,25 @@ add_shortcode('slideshow-share', function($atts, $content){
 			<a href="http://pinterest.com/pin/create/button/?url=<?php echo urlencode($shareURL); ?>&description=<?php echo urlencode($post_title_full); ?>" target="_blank">
 				<i class="fa fa-fw fa-pinterest"></i>
 			</a>
-			<a href=whatsapp://send?text=<?php echo urlencode($post_title_full.' | '.$shareURL); ?>">
+			<a href="whatsapp://send?text=<?php echo urlencode($post_title_full.' | '.$shareURL); ?>">
 				<i class="fa fa-fw fa-whatsapp"></i>
 			</a>
 		</div>
+		<?php if($thisPageType == 'ITV_Slideshow'){ ?>
 		<a class="slideshow-button" href="#">
 			<span>Next</span>
 			<i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i>
 		</a>
+		<?php } ?>
 	</div>
 	<?php
 	$html = ob_get_clean();
 	return $html;
 });
+
+function isMobile() {
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+}
 
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
