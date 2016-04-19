@@ -173,6 +173,15 @@ add_filter("genesis_attr_site-container", function($attributes){
 	return $attributes;
 });
 
+/** Force sidebar-content-sidebar layout */
+add_filter( 'genesis_pre_get_option_site_layout', 'child_do_layout' );
+function child_do_layout( $opt ) {
+	if ( in_category('slideshows') || is_category('slideshows')) { // Modify the conditions to apply the layout to here
+		$opt = 'sidebar-content-sidebar'; // You can change this to any Genesis layout
+		return $opt;
+	}
+}
+
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
 	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
