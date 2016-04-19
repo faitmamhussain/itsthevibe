@@ -817,7 +817,7 @@ Widgets
 }
 .home .one-third .post-description .category,
 .home .one-third .post-description .posted-on{
-	display: block;
+	display: inline-block;
 }
 .one-third .entry-title,
 .rc-item .rc-headline{
