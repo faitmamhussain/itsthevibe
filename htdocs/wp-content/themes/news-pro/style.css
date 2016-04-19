@@ -815,6 +815,18 @@ Widgets
 .one-third, .rc-branding-label{
 	padding: 10px 0;
 }
+.one-third .post-description .category,
+.one-third .post-description .posted-on{
+	display: none;
+}
+.home .one-third .post-description .category,
+.home .one-third .post-description .posted-on{
+	display: block;
+}
+.one-third .entry-title,
+.rc-item .rc-headline{
+	padding-top: 8px;
+}
 
 /*
 Plugins
