@@ -2429,7 +2429,23 @@ Media Queries
 }
 
 @media only screen and (max-width: 1023px) {
-
+	.genesis-nav-menu.responsive-menu .menu-item,
+	.responsive-menu-icon {
+		display: block;
+	}
+	.site-header .title-area, .site-header .widget-area{
+		display: inline-block;
+		vertical-align: top;
+	}
+	.site-header .title-area{
+		max-width: 40%;
+	}
+	.site-header .widget-area{
+		max-width: 60%;
+	}
+	.genesis-nav-menu.responsive-menu > .menu-item > .sub-menu, .genesis-nav-menu.responsive-menu {
+		display: none;
+	}
 	.site-inner,
 	.site-footer {
 		max-width:  780px;
@@ -2440,11 +2456,9 @@ Media Queries
 		left: 0;
 		top: 0;
 	}
-
 	.site-header {
 		max-width: 779px;
 	}
-
 	.sidebar-primary,
 	.site-container.has-left-sidebar .sidebar-secondary {
 		display: none;
@@ -2534,7 +2548,7 @@ Media Queries
 
 	.site-inner,
 	.site-header + section {
-		margin-top: 135px;
+		margin-top: 77px;
 	}
 
 	/*.featured-posts-widget > .featured-post:last-of-type {*/
@@ -2597,16 +2611,9 @@ Media Queries
 }
 
 @media only screen and (max-width: 760px) {
-	.site-inner {
+	/*.site-inner {
 		margin-top: 124px;
-	}
-	.genesis-nav-menu.responsive-menu .menu-item,
-	.responsive-menu-icon {
-		display: block;
-	}
-	.genesis-nav-menu.responsive-menu > .menu-item > .sub-menu, .genesis-nav-menu.responsive-menu {
-		display: none;
-	}
+	}*/
 	.genesis-nav-menu.responsive-menu li.current-menu-item > a,
 	.genesis-nav-menu.responsive-menu .sub-menu li.current-menu-item > a:hover,
 	.genesis-nav-menu.responsive-menu li a,
@@ -2620,9 +2627,22 @@ Media Queries
 		text-transform: none;
 	}
 
-	header.site-header .title-area{
-		padding-bottom: 0;
-		padding-top: 5px;
+	.slideshow-header .title-area{
+		float: left;
+		width: 115px;
+		padding: 6px 0 0 0;
+	}
+	.slideshow-header .site-title a {
+		min-height: 50px;
+		background-size: contain !important;
+	}
+	.slideshow-header div.header-widget-area{
+		display: block !important;
+		float: right;
+		width: auto;
+	}
+	.slideshow-header{
+		padding: 0 20px;
 	}
 }
 
@@ -2756,10 +2776,6 @@ Media Queries
 		border: none;
 	}
 	
-	.header-image .site-header .site-title a {
-		background-size: contain !important;
-	}
-	
 	.entry-title {
 		font-size: 26px;
 	}
@@ -2781,5 +2797,21 @@ Media Queries
 		margin-right: 0;
 		float: none;
 		width: 100%;
+	}
+	.slideshow-header .header-widget-area,
+	.slideshow-header .title-area{
+		max-width: none;
+	}
+}
+
+@media only screen and (max-width: 480px){
+	.slideshow-header .title-area{
+		display: none;
+	}
+	.slideshow-header div.header-widget-area{
+		float: none;
+	}
+	.site-header.slideshow-header{
+		padding: 0;
 	}
 }

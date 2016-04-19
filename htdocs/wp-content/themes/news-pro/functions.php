@@ -403,6 +403,44 @@ function get_permalink_with_utm(){
 	return $url;
 }
 
+add_shortcode('slideshow-share', function($atts, $content){
+	$shareURL = get_site_url() . strtok($_SERVER["REQUEST_URI"],'?');
+	$post_title_full = get_the_title();
+	$post_title = substr($post_title_full, 0, (40 - 3));
+	$post_title = preg_replace('/ [^ ]*$/', ' ...', $post_title);
+
+	ob_start(); ?>
+	<div class="slideshow-menu-left">
+		<h1 class="slideshow-post-title"><?php echo $post_title; ?></h1>
+	</div><!--
+ --><div class="slideshow-menu-right">
+		<div class="header-social-icons">
+			<a  href="#" data-href="<?php echo $shareURL;?>"
+				data-layout="link" data-domain="itsthevibe"
+				data-share-url="<?php echo $shareURL;?>"
+				class="fb-share-button button-facebook">
+				<i class="fa fa-fw fa-facebook"></i>
+			</a>
+			<a href="http://twitter.com/share?text=<?php echo urlencode($post_title_full); ?>&url=<?php echo urlencode($shareURL); ?>" target="_blank">
+				<i class="fa fa-fw fa-twitter"></i>
+			</a>
+			<a href="http://pinterest.com/pin/create/button/?url=<?php echo urlencode($shareURL); ?>&description=<?php echo urlencode($post_title_full); ?>" target="_blank">
+				<i class="fa fa-fw fa-pinterest"></i>
+			</a>
+			<a href=whatsapp://send?text=<?php echo urlencode($post_title_full.' | '.$shareURL); ?>">
+				<i class="fa fa-fw fa-whatsapp"></i>
+			</a>
+		</div>
+		<a class="slideshow-button" href="#">
+			<span>Next</span>
+			<i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i>
+		</a>
+	</div>
+	<?php
+	$html = ob_get_clean();
+	return $html;
+});
+
 //* Custom Slideshow
 include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
 

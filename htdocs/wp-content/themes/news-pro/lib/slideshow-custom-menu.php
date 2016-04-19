@@ -5,15 +5,11 @@
             var headerElem = $('header.site-header');
             var nextButton = $('.slideshow-menu-right a.slideshow-button');
 
-            setupPostTitleAndHref();
+            setupPostHref();
             handleScroll();
             $(window).scroll(handleScroll);
 
-            function setupPostTitleAndHref(){
-                var trimmedString = $('article header h1.entry-title').text().substr(0, 47);
-                trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...';
-                headerElem.find('h1.slideshow-post-title').text(trimmedString);
-
+            function setupPostHref(){
                 var href = $('.slideshow-navigation a').last().attr('href');
                 nextButton.attr('href', href);
             }

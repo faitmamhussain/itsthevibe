@@ -30,9 +30,9 @@ function show_button(selector, mode, animatecount, gatrack) {
         jQuery.getJSON("http://graph.facebook.com/" + url).done(function(data) {
             if (typeof data.shares !== 'undefined' && data.shares !== null && data.shares > 0) {
                 if (data.shares > 0) data.shares = data.shares + 1000;
-          
+
                 var shares = formatNumber(data.shares);
-         
+
                 if (animatecount) {
                     jQuery(selector + ' .counter .value').html(data.shares);
                 } else {
@@ -77,7 +77,7 @@ function show_button(selector, mode, animatecount, gatrack) {
             }
 
             recalc_button(selector);
-						
+
         });
     }
 
@@ -101,7 +101,7 @@ function show_button(selector, mode, animatecount, gatrack) {
         });
     })
 
-    
+
     recalc_button(selector);
 
 }
