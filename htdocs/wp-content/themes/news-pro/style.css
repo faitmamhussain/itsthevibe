@@ -256,6 +256,7 @@ h4.ad-header {
 	text-align: center;
 	text-transform: uppercase;
 	width: 100%;
+    margin-bottom: 5px;
 }
 
 /* Headings
@@ -491,7 +492,6 @@ Structure and Layout
 
 .content-sidebar .content,
 .content-sidebar-sidebar .content {
-	border-right: 1px solid #e3e3e3;
 	float: left;
 }
 
@@ -1969,7 +1969,6 @@ Sidebars
 
 .sidebar .widget {
 	background-color: #fff;
-	border-bottom: 1px solid #e3e3e3;
 	padding: 20px;
 }
 

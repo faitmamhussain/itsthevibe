@@ -43,4 +43,3 @@ do_action( 'genesis_after_entry' );
 
 $wp_query->is_singular = false;
 $wp_query->is_single = false;
-?>
