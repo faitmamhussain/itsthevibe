@@ -12,9 +12,6 @@
 
 	$cat = itv_get_primary_category($post);
 
-	if( $cat->slug == 'slideshows' )
-		continue;
-
 	echo '<div class="home-page-post one-third'.(($counter % 3 == 1) ? ' first' : '').'">';
 ?>
 	<a

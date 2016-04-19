@@ -812,6 +812,9 @@ Widgets
 	width: 255px;
 	height: 255px;
 }
+.one-third, .rc-branding-label{
+	padding: 10px 0;
+}
 
 /*
 Plugins
