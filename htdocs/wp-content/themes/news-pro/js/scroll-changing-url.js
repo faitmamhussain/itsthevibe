@@ -42,15 +42,32 @@ jQuery( document ).ready(function( $ ) {
         });
     }
 
-    //stick second sidebar section (wait while first ad loads)
-    setTimeout(function() {
-        var elem = $('.sidebar-primary section:nth-child(2)');
-        if(elem.length){
-            var elemOffset = elem.position().top;
-            var controller = new ScrollMagic.Controller();
-            var scene = new ScrollMagic.Scene({offset: elemOffset})
-                .setPin(".sidebar-primary section:nth-child(2)")
-                .addTo(controller);
+    $(window).on('scroll', function(){
+        var sidebarElem = $('.sidebar-primary');
+        var mainContent = $('main.content');
+        if((document.body.clientHeight+$(window).scrollTop()-110) > sidebarElem.height()){
+            if(sidebarElem.css('position') !== 'fixed'){
+                sidebarElem.css({
+                    'left': mainContent.offset().left+mainContent.width()+3+'px',
+                    'position' : 'fixed',
+                    'bottom': 0
+                });
+            }
         }
-    }, 2000);
+        else{
+            sidebarElem.css({
+                'position' : 'static'
+            });
+        }
+    });
+
+    $(window).on('resize', function(){
+        var sidebarElem = $('.sidebar-primary');
+        var mainContent = $('main.content');
+        if(sidebarElem.css('position') == 'fixed'){
+            sidebarElem.css({
+                'left': mainContent.offset().left+mainContent.width()+3+'px'
+            });
+        }
+    });
 });
