@@ -173,15 +173,6 @@ add_filter("genesis_attr_site-container", function($attributes){
 	return $attributes;
 });
 
-/** Force sidebar-content-sidebar layout */
-add_filter( 'genesis_pre_get_option_site_layout', 'child_do_layout' );
-function child_do_layout( $opt ) {
-	if ( in_category('slideshows') || is_category('slideshows')) { // Modify the conditions to apply the layout to here
-		$opt = 'sidebar-content-sidebar'; // You can change this to any Genesis layout
-		return $opt;
-	}
-}
-
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
 	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
@@ -386,7 +377,7 @@ add_action('wp_head', function(){
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
 	}
 
-	if( !isMobile() || ( isMobile() && $thisPageType == 'ITV_Slideshow' ) ){
+	if( !isMobile() || ( isMobile() && in_category('slideshows') && is_single() ) ){
 		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
 	}
 
@@ -443,7 +434,7 @@ add_shortcode('slideshow-share', function($atts, $content){
 				<i class="fa fa-fw fa-whatsapp"></i>
 			</a>
 		</div>
-		<?php if($thisPageType == 'ITV_Slideshow'){ ?>
+		<?php if(in_category('slideshows') && is_single()){ ?>
 		<a class="slideshow-button" href="#">
 			<span>Next</span>
 			<i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i>
