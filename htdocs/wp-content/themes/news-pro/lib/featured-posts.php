@@ -90,18 +90,18 @@ class Featured_Posts_Widget extends WP_Widget
 				var swiper = new Swiper('.swiper-container', {
 					slidesPerView: 3,
 					grabCursor: true,
-					mousewheelControl: true,
+					mousewheelControl: false,
 					loop: true,
 					keyboardControl: true,
 					nextButton: '.swiper-button-next',
 					prevButton: '.swiper-button-prev',
 					breakpoints: {
 						600: {
-							slidesPerView: 1,
+							slidesPerView: 1
 						},
 						1023: {
-							slidesPerView: 2,
-						},
+							slidesPerView: 2
+						}
 					}
 				});
 			});
