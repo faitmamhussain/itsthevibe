@@ -388,8 +388,14 @@ add_action('wp_head', function(){
 	if( !isMobile() || ( isMobile() && in_category('slideshows') && is_single() ) ){
 		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
 	}
-
 }, 10);
+
+function kill_slideshows_redirect() {
+	if (in_category('slideshows')) {
+		add_action('redirect_canonical','__return_false');
+	}
+}
+add_action('template_redirect','kill_slideshows_redirect',1);
 
 function get_permalink_with_utm(){
 	$url = get_permalink();
