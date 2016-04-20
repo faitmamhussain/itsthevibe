@@ -94,8 +94,9 @@ function itv_add_slideshow_paged(){
 			<?php if(function_exists ('adinserter')) echo adinserter(11); ?>
 
 			<div class="slideshow-navigation">
-				<a class="slideshow-button one-sixth first back" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
+				<a class="slideshow-button one-sixth first back desktop-only" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<h2 class="four-sixths"><?php echo $image_title;?></h2>
+				<a class="slideshow-button one-sixth first back mobile-only" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<?php if( ($i+1) == $custom_slide ):?>
 					<a class="slideshow-button one-sixth next" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php else:?>
