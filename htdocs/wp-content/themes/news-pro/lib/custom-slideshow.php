@@ -90,7 +90,9 @@ function itv_add_slideshow_paged(){
 
 		?>
 		<div class="slideshow-wrap">
+
 			<?php if(function_exists ('adinserter')) echo adinserter(11); ?>
+
 			<div class="slideshow-navigation">
 				<a class="slideshow-button one-sixth first back" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<h2 class="four-sixths"><?php echo $image_title;?></h2>
@@ -120,12 +122,12 @@ function itv_add_slideshow_paged(){
 				<?php if(is_single())include_once('fb/FB-share-like.php');?>
 			</div>
 			<div class="slideshow-navigation">
-				<a class="slideshow-button one-sixth first" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
+				<a class="slideshow-button one-sixth first back" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<div class="slideshow-counter four-sixths"><?php echo ($i+1).' of '.$custom_slide; ?></div>
 				<?php if( ($i+1) == $custom_slide ):?>
-					<a class="slideshow-button one-sixth" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
+					<a class="slideshow-button one-sixth next" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php else:?>
-					<a class="slideshow-button one-sixth" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
+					<a class="slideshow-button one-sixth next" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 				<?php endif; ?>
 			</div>
 		</div>

@@ -15,15 +15,16 @@
             }
 
             function handleScroll(){
+	            if($('header.entry-header').length > 0){
+		            var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
+		            var content = $('header.entry-header').offset().top;
 
-                var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
-                var content = $('header.entry-header').offset().top;
-
-                if(headerBottom > content){
-                    showSlideshowHeader();
-                }else{
-                    hideSlideshowHeader();
-                }
+		            if(headerBottom > content){
+			            showSlideshowHeader();
+		            }else{
+			            hideSlideshowHeader();
+		            }
+	            }
             }
 
             function showSlideshowHeader(){
