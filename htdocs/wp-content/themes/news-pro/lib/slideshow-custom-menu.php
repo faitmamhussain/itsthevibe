@@ -37,6 +37,7 @@
                     headerElem.removeClass('slideshow-header');
                 }
             }
+
         });
     })(jQuery);
 </script>

@@ -21,4 +21,26 @@ jQuery(function( $ ){
 		});
 	});
 
+	/* Scroling menu */
+	var lastScrollTop = 0;
+
+	$(window).scroll(function(event){
+
+	   var st = $(this).scrollTop();
+
+	   if (st > lastScrollTop){
+
+	   		if( $('.site-header').is(":visible") )
+	   			$('.site-header').slideUp(200);
+	       
+
+	   } else {
+
+	   		if( $('.site-header').is(":hidden") )
+	   			$('.site-header').slideDown(200);
+
+	   }
+	   lastScrollTop = st;
+	});
+
 });
