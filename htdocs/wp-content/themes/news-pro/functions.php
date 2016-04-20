@@ -410,7 +410,7 @@ add_action('wp_head', function(){
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
 	}
 
-	if( !isMobile() || ( isMobile() && in_category('slideshows') && is_single() ) ){
+	if( !isMobile() || ( in_category('slideshows') && is_single() ) ){
 		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
 	}
 }, 10);
