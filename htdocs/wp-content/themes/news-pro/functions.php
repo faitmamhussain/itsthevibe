@@ -245,7 +245,7 @@ function itv_entry_post_class( $classes ) {
 }
 
 //add facebook share button before every single post
-add_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
+add_action( 'genesis_before_entry' , 'itv_facebook_share' );
 
 function itv_facebook_share(){
 	if(is_single() && ! is_page() && ! is_home() && ! is_front_page() && ! is_404()){
@@ -255,7 +255,7 @@ function itv_facebook_share(){
 }
 
 //add facebook share button after every single post
-add_action( 'genesis_after_entry_content' , 'itv_social_share_buttons' );
+add_action( 'genesis_after_entry' , 'itv_social_share_buttons' );
 
 function itv_social_share_buttons(){
 

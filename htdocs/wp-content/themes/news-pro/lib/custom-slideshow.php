@@ -25,7 +25,7 @@ add_action('genesis_before_entry', function(){
 				add_filter( 'the_content', 'add_start_slideshow_link', 20 );
 			}
 
-			remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
+			//remove_action( 'genesis_before_entry_content' , 'itv_facebook_share' );
 			remove_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 			remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 

@@ -1,4 +1,7 @@
 <style type="text/css">
+	.post-share-buttons{
+		margin: 20px;
+	}
 	.post-share-buttons a{
 		display: inline-block;
 	    vertical-align: top;
