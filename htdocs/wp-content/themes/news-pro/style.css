@@ -2424,10 +2424,10 @@ Media Queries
 	.genesis-nav-menu.responsive-menu > .menu-item > .sub-menu, .genesis-nav-menu.responsive-menu {
 		display: none;
 	}
-	.site-inner,
+	/*.site-inner,
 	.site-footer {
 		max-width:  780px;
-	}
+	}*/
 
 	.site-container.has-left-sidebar .site-inner {
 		position: relative;
