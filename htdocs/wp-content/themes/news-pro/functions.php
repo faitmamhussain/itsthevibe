@@ -244,6 +244,21 @@ function itv_facebook_share(){
 	}
 }
 
+//add facebook share button after every single post
+add_action( 'genesis_after_entry_content' , 'itv_social_share_buttons' );
+
+function itv_social_share_buttons(){
+
+	if(is_single() && ! is_page() && ! is_home() && ! is_front_page() && ! is_404()){
+
+		$shareURL = get_permalink();
+		$post_title_full = get_the_title();
+		include('lib/social-share-buttons.php');
+		
+	}
+
+}
+
 /* Display Featured Image on top of single post if content has no images */
 add_filter( 'the_content', 'add_featured_image_to_post' );
 function add_featured_image_to_post($content) {

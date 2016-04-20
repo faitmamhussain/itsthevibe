@@ -43,4 +43,13 @@ jQuery(function( $ ){
 	   lastScrollTop = st;
 	});
 
+	$('.share-button-toggle-icon').click(function(event){
+
+		event.preventDefault();
+
+		$(this).toggleClass('open');
+		$('.post-share-buttons .twitter-share-button,.post-share-buttons .pinterest-share-button,.post-share-buttons .whatsapp-share-button').fadeToggle().css("display", "inline-block");
+
+	});
+
 });
