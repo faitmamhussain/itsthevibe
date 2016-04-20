@@ -2782,6 +2782,14 @@ Media Queries
 		max-width: none;
 	}
 
+    .slideshow-wrap .slideshow-navigation {
+        margin-top: 20px;
+    }
+    .slideshow-wrap .slideshow-navigation h2{
+        font-size: 20px;
+        line-height: 30px;
+    }
+
     .slideshow-wrap .slideshow-button.desktop-only{
         display: none;
     }
