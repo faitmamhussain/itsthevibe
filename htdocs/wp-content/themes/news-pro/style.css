@@ -900,6 +900,9 @@ Plugins
 	font-size: 20px;
 	font-weight: 700;
 }
+.slideshow-wrap .slideshow-button.mobile-only{
+    display: none;
+}
 
 .slideshow-wrap .slideshow-button.slideshow-button-start {
 	background-color: #ea1947;
@@ -2778,11 +2781,33 @@ Media Queries
 		max-width: none;
 	}
 
-    .slideshow-wrap .slideshow-button.next span{
-        margin-left: 30px;
+    .slideshow-wrap .slideshow-navigation {
+        margin-top: 20px;
     }
-    .slideshow-wrap .slideshow-button.back span{
-        margin-right: 35px;
+    .slideshow-wrap .slideshow-navigation h2{
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .slideshow-wrap .slideshow-button.desktop-only{
+        display: none;
+    }
+    .slideshow-wrap .slideshow-button.mobile-only{
+        display: inherit;
+    }
+    .slideshow-wrap .slideshow-button.next{
+        float: right;
+        padding-right: 0;
+    }
+    .slideshow-wrap .slideshow-button.back{
+        float: left;
+        padding-left: 0;
+    }
+    .slideshow-wrap .slideshow-button.back, .slideshow-wrap .slideshow-button.next{
+        width: 22%;
+    }
+    .slideshow-wrap .slideshow-counter{
+        width: 55%;
     }
 }
 

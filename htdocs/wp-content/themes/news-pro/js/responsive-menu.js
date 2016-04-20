@@ -30,15 +30,27 @@ jQuery(function( $ ){
 
 	   if (st > lastScrollTop){
 
-	   		if( $('.site-header').is(":visible") )
-	   			$('.site-header').slideUp(200);
-	       
+	   		if( $('.site-header').is(":visible") ){
+                $('.site-header').slideUp(200, function(){
+                    if($('.sidebar-secondary').length){
+                        $('.sidebar-secondary').css({
+                            'top': $('.site-container').offset().top
+                        });
+                    }
+                });
+            }
 
 	   } else {
 
-	   		if( $('.site-header').is(":hidden") )
-	   			$('.site-header').slideDown(200);
-
+	   		if( $('.site-header').is(":hidden") ) {
+                $('.site-header').slideDown(200, function () {
+                    if($('.sidebar-secondary').length){
+                        $('.sidebar-secondary').css({
+                            'top': $('main.content').offset().top
+                        });
+                    }
+                });
+            }
 	   }
 	   lastScrollTop = st;
 	});

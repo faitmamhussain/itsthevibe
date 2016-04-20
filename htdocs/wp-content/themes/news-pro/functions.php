@@ -173,12 +173,22 @@ add_filter("genesis_attr_site-container", function($attributes){
 });
 
 /** Force sidebar-content-sidebar layout */
-add_filter( 'genesis_pre_get_option_site_layout', 'child_do_layout' );
-function child_do_layout( $opt ) {
-	if ( in_category('slideshows') || is_category('slideshows')) { // Modify the conditions to apply the layout to here
-		$opt = 'sidebar-content-sidebar'; // You can change this to any Genesis layout
-		return $opt;
+add_filter( 'genesis_pre_get_option_site_layout', 'itv_slideshow_layout' );
+function itv_slideshow_layout( $opt ) {
+	if ( in_category('slideshows') && !is_category()){ // Modify the conditions to apply the layout to here
+		$utm_source = (isset($_GET['utm_source']) ? strtolower($_GET['utm_source']) : strtolower($_COOKIE['itv_utm_source']));
+
+		$url = $_SERVER['REQUEST_URI'];
+		$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
+		$first_page_allowed_source = ['taboola', 'outbrain', 'adblade', 'revcontent'];
+		$second_page_allowed_source = ['pinterest', 'fb', 'gemini', 'google', 'yahoo'];
+
+		//page 1
+		if(is_page('end-slideshow') || (!is_numeric($last_url_segment) && in_array($utm_source, $first_page_allowed_source)) || (is_numeric($last_url_segment) && in_array($utm_source, $second_page_allowed_source))){
+			$opt = 'sidebar-content-sidebar'; // You can change this to any Genesis
+		}
 	}
+	return $opt;
 }
 
 //hide page titles on some pages
