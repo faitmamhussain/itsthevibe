@@ -24,36 +24,45 @@ jQuery(function( $ ){
 	/* Scroling menu */
 	var lastScrollTop = 0;
 
-	$(window).scroll(function(event){
+	if( !detectmob() ){
 
-	   var st = $(this).scrollTop();
+		$(window).scroll(function(event){
 
-	   if (st > lastScrollTop){
+			if( !$('body').hasClass('home') ){
 
-	   		if( $('.site-header').is(":visible") ){
-                $('.site-header').slideUp(200, function(){
-                    if($('.sidebar-secondary').length){
-                        $('.sidebar-secondary').css({
-                            'top': $('.site-container').offset().top
-                        });
-                    }
-                });
-            }
+				var st = $(this).scrollTop();
 
-	   } else {
+			   if (st > lastScrollTop){
 
-	   		if( $('.site-header').is(":hidden") ) {
-                $('.site-header').slideDown(200, function () {
-                    if($('.sidebar-secondary').length){
-                        $('.sidebar-secondary').css({
-                            'top': $('main.content').offset().top
-                        });
-                    }
-                });
-            }
-	   }
-	   lastScrollTop = st;
-	});
+			   		if( $('.site-header').is(":visible") ){
+		                $('.site-header').slideUp(200, function(){
+		                    if($('.sidebar-secondary').length){
+		                        $('.sidebar-secondary').css({
+		                            'top': $('.site-container').offset().top
+		                        });
+		                    }
+		                });
+		            }
+
+			   } else {
+
+			   		if( $('.site-header').is(":hidden") ) {
+		                $('.site-header').slideDown(200, function () {
+		                    if($('.sidebar-secondary').length){
+		                        $('.sidebar-secondary').css({
+		                            'top': $('main.content').offset().top
+		                        });
+		                    }
+		                });
+		            }
+			   }
+			   lastScrollTop = st;
+
+			} 
+
+		});
+
+	}
 
 	$('.share-button-toggle-icon').click(function(event){
 
@@ -63,5 +72,21 @@ jQuery(function( $ ){
 		$('.post-share-buttons .twitter-share-button,.post-share-buttons .pinterest-share-button,.post-share-buttons .whatsapp-share-button').fadeToggle().css("display", "inline-block");
 
 	});
+
+	function detectmob() { 
+	 	
+	 	 if(typeof window.orientation !== 'undefined'){
+
+	 	 	return true;
+
+	 	 }else{
+
+	 	 	return false;
+	 	 	
+	 	 }
+
+	 	
+
+	}
 
 });

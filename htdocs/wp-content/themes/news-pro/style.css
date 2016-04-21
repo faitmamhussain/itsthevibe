@@ -1035,6 +1035,17 @@ Plugins
 	text-decoration: underline;
 	color: #fff;
 }
+.mobile-nav:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.mobile-nav p.prev-post{
+	float: left;
+}
+.mobile-nav p.next-post{
+	float: right;
+}
 /* Genesis eNews Extended
 --------------------------------------------- */
 
@@ -2809,6 +2820,9 @@ Media Queries
     .slideshow-wrap .slideshow-counter{
         width: 55%;
     }
+    .post-share-buttons{
+    	margin: 10px 0 20px 0 !important;
+    }
 }
 
 @media only screen and (max-width: 480px){
@@ -2820,5 +2834,25 @@ Media Queries
 	}
 	.site-header.slideshow-header{
 		padding: 0;
+	}
+	.post-share-buttons .fb-share-button{
+		font-size: 18px;
+	}
+	.site-header .header-social-icons{
+		font-size: 28px;
+	}
+	.post-share-buttons .twitter-share-button, .post-share-buttons .pinterest-share-button, .post-share-buttons .whatsapp-share-button{
+		margin-top: 10px;
+	}
+	.facebook-icon{
+		margin: 6px 10px !important;
+	}
+	.post-share-buttons a{
+		padding-right: 10px !important;
+	}
+}
+@media only screen and (max-width: 360px){
+	.post-share-buttons .fb-share-button .hide-1,.post-share-buttons .fb-share-button .hide-2{
+		display: none;
 	}
 }
