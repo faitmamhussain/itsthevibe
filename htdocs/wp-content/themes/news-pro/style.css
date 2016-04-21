@@ -1035,6 +1035,17 @@ Plugins
 	text-decoration: underline;
 	color: #fff;
 }
+.mobile-nav:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.mobile-nav p.prev-post{
+	float: left;
+}
+.mobile-nav p.next-post{
+	float: right;
+}
 /* Genesis eNews Extended
 --------------------------------------------- */
 
