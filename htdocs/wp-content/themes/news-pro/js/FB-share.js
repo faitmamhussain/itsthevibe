@@ -5,7 +5,7 @@ jQuery(document).on('click', '.button-facebook', function(event) {
     event.preventDefault;
     var jQuerythis = jQuery(this);
     var popwidth = 626;
-    var popheight = 256;
+    var popheight = 456;
     var url = '';
 
     if (typeof jQuery(this).attr('data-domain') !== typeof undefined && jQuery(this).attr('data-domain') === 'itsthevibe') {
