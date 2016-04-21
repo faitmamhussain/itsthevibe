@@ -1040,6 +1040,19 @@ Plugins
 	display: block;
 	clear: both;
 }
+.mobile-nav p{
+	padding: 5px 5px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+	font-size: 20px;
+    font-weight: 700;
+	color: #ea1947;
+}
+.mobile-nav .fa{
+	vertical-align: middle;
+	cursor: pointer;
+}
 .mobile-nav p.prev-post{
 	float: left;
 }
