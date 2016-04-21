@@ -2810,7 +2810,7 @@ Media Queries
         width: 55%;
     }
     .post-share-buttons{
-    	margin-bottom: 20px;
+    	margin: 10px 0 20px 0 !important;
     }
 }
 
@@ -2830,12 +2830,18 @@ Media Queries
 	.site-header .header-social-icons{
 		font-size: 28px;
 	}
-}
-@media only screen and (max-width: 390px){
-	.post-share-buttons .fb-share-button .hide-1{
-		display: none;
-	}
 	.post-share-buttons .twitter-share-button, .post-share-buttons .pinterest-share-button, .post-share-buttons .whatsapp-share-button{
 		margin-top: 10px;
+	}
+	.facebook-icon{
+		margin: 6px 10px !important;
+	}
+	.post-share-buttons a{
+		padding-right: 10px !important;
+	}
+}
+@media only screen and (max-width: 360px){
+	.post-share-buttons .fb-share-button .hide-1,.post-share-buttons .fb-share-button .hide-2{
+		display: none;
 	}
 }
