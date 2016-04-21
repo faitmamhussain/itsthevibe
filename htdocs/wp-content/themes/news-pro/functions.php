@@ -23,10 +23,24 @@ add_theme_support( 'genesis-responsive-viewport' );
 add_action( 'wp_enqueue_scripts', 'news_load_scripts' );
 function news_load_scripts() {
 
+	global $thisPageType, $post;
+
 	wp_enqueue_script( 'news-responsive-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0' );
 	wp_enqueue_script( 'Swiper', '//cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js' );
 	wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ), '1.0.0' );
 	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ), '1.0.0' );
+
+	//JS code for setting utm-params, mobile detection and helpers.
+	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'jquery' ), '1.0.0' );
+	$translation_array = [
+		'id' => $post->ID,
+		'slug' => substr($post->post_name, 0, 40),
+		'type' => $thisPageType,
+		'tags' => preg_replace('/[^a-zA-Z 0-9]+/', '', wp_get_post_tags($post->ID, array('fields' => 'names')))
+	];
+	wp_localize_script( 'utm-params', 'post', $translation_array );
+	wp_enqueue_script( 'utm-params');
+	wp_enqueue_script( 'itv.ads.config', get_bloginfo( 'stylesheet_directory' ) . '/js/itv.ads.config.js', array( 'jquery' ), '1.0.0' );
 
 	wp_enqueue_style( 'dashicons' );
 
@@ -406,8 +420,7 @@ add_action('genesis_doctype', function(){
 
 add_action('wp_head', function(){
 	global $thisPageType;
-	//JS code for setting utm-params, mobile detection and helpers.
-	include_once(get_stylesheet_directory() . '/lib/utm-params-js.php');
+
 	if($thisPageType == 'ITV_Article'){
 		//Included only on article pages. JS code to fire virtual pageviews.
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
@@ -607,3 +620,9 @@ include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
 
 //* Featured Posts
 include_once( get_stylesheet_directory() . '/lib/featured-posts.php' );
+
+//TODO need to replace this hotfix
+function itv_insert_after_body(){
+	echo '<script type="text/javascript" async>DeclareITV();</script>';
+}
+add_action( 'genesis_after_header', 'itv_insert_after_body', 10 );
