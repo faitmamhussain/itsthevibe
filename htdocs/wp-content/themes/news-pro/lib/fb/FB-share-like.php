@@ -16,8 +16,7 @@
 .fb-share-wrap .fb-share-container {
 	display: table;
 	height: 54px;
-	margin: 15px;
-	width: 98%;
+	width: 100%;
 }
 
 .fb-share-wrap .fb-share-container .fb-button {
