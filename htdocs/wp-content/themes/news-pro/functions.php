@@ -583,12 +583,21 @@ if( isMobile() ){
 	function mobile_nav(){
 		?>
 		<div class="mobile-nav" >
+
+			<?php if( get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
 			<p class="prev-post" >
-				<?php echo get_previous_post_link( $format = '%link', $link = '< Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
+				<span class="fa fa-2x fa-chevron-left" ></span>
+				<?php echo get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
 			</p>
+			<?php } ?>
+
+			<?php if( get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
 			<p class="next-post" >
-				<?php echo get_next_post_link( $format = '%link', $link = 'Next post >', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
+				<?php echo get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
+				<span class="fa fa-2x fa-chevron-right" ></span>
 			</p>
+			<?php } ?>
+
 		</div>
 		<?php
 	}
