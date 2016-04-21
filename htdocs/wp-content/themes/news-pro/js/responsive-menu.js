@@ -24,41 +24,45 @@ jQuery(function( $ ){
 	/* Scroling menu */
 	var lastScrollTop = 0;
 
-	$(window).scroll(function(event){
+	if( !detectmob() ){
 
-		if( !$('body').hasClass('home') ){
+		$(window).scroll(function(event){
 
-			var st = $(this).scrollTop();
+			if( !$('body').hasClass('home') ){
 
-		   if (st > lastScrollTop){
+				var st = $(this).scrollTop();
 
-		   		if( $('.site-header').is(":visible") ){
-	                $('.site-header').slideUp(200, function(){
-	                    if($('.sidebar-secondary').length){
-	                        $('.sidebar-secondary').css({
-	                            'top': $('.site-container').offset().top
-	                        });
-	                    }
-	                });
-	            }
+			   if (st > lastScrollTop){
 
-		   } else {
+			   		if( $('.site-header').is(":visible") ){
+		                $('.site-header').slideUp(200, function(){
+		                    if($('.sidebar-secondary').length){
+		                        $('.sidebar-secondary').css({
+		                            'top': $('.site-container').offset().top
+		                        });
+		                    }
+		                });
+		            }
 
-		   		if( $('.site-header').is(":hidden") ) {
-	                $('.site-header').slideDown(200, function () {
-	                    if($('.sidebar-secondary').length){
-	                        $('.sidebar-secondary').css({
-	                            'top': $('main.content').offset().top
-	                        });
-	                    }
-	                });
-	            }
-		   }
-		   lastScrollTop = st;
+			   } else {
 
-		} 
+			   		if( $('.site-header').is(":hidden") ) {
+		                $('.site-header').slideDown(200, function () {
+		                    if($('.sidebar-secondary').length){
+		                        $('.sidebar-secondary').css({
+		                            'top': $('main.content').offset().top
+		                        });
+		                    }
+		                });
+		            }
+			   }
+			   lastScrollTop = st;
 
-	});
+			} 
+
+		});
+
+	}
 
 	$('.share-button-toggle-icon').click(function(event){
 
@@ -68,5 +72,21 @@ jQuery(function( $ ){
 		$('.post-share-buttons .twitter-share-button,.post-share-buttons .pinterest-share-button,.post-share-buttons .whatsapp-share-button').fadeToggle().css("display", "inline-block");
 
 	});
+
+	function detectmob() { 
+	 if( navigator.userAgent.match(/Android/i)
+	 || navigator.userAgent.match(/webOS/i)
+	 || navigator.userAgent.match(/iPhone/i)
+	 || navigator.userAgent.match(/iPad/i)
+	 || navigator.userAgent.match(/iPod/i)
+	 || navigator.userAgent.match(/BlackBerry/i)
+	 || navigator.userAgent.match(/Windows Phone/i)
+	 ){
+	    return true;
+	 }
+	 else {
+	    return false;
+	  }
+	}
 
 });

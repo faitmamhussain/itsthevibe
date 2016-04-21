@@ -214,13 +214,36 @@ add_filter('genesis_post_meta', function($post_meta){
 add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
-	if(is_singular('post') && ! is_home() && ! is_front_page() && class_exists('AjaxLoadMore')){
-		$post = get_post();
 
+	if( is_singular('post') && ! is_home() && ! is_front_page() ){
+
+		$post = get_post();
 		$cat = itv_get_primary_category($post);
 
-		echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" container_type="div"]');
+		//if( class_exists('AjaxLoadMore') )
+			//echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" container_type="div"]');
+	
 	}
+}
+
+add_action('genesis_entry_footer', 'test', 99999);
+
+function test(){
+
+	?>
+		<div class="navigation">
+		<div class="alignleft">
+		<?php previous_post_link('&laquo; &laquo; %',
+		 'Toward The Past: ', 'yes'); ?>
+		</div>
+		<div class="alignright">
+		<?php next_post_link('% &raquo; &raquo; ',
+		 'Toward The Future: ', 'yes'); ?>
+		</div>
+		</div> <!-- end navigation -->
+
+	<?php
+
 }
 
 if (!defined('ALM_REPEATER_PATH')){
