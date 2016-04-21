@@ -163,6 +163,8 @@ add_action( 'genesis_doctype', function(){
 	<link rel="dns-prefetch" href="//labs-cdn.revcontent.com">
 	<link rel="dns-prefetch" href="//publishers.revcontent.com">
 	<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+	<meta property="og:image:width" content="650" />
+	<meta property="og:image:height" content="650" />
 	<?php
 }, 5 );
 
