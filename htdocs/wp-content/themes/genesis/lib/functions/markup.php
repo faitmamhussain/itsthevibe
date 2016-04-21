@@ -120,19 +120,21 @@ function genesis_attr( $context, $attributes = array() ) {
     $output = '';
 
     //* Cycle through attributes, build tag attribute string
-    foreach ( $attributes as $key => $value ) {
+	if(is_array($attributes)){
+		foreach ( $attributes as $key => $value ) {
 
-		if ( ! $value ) {
-			continue;
+			if ( ! $value ) {
+				continue;
+			}
+
+			if ( true === $value ) {
+				$output .= esc_html( $key ) . ' ';
+			} else {
+				$output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
+			}
+
 		}
-
-		if ( true === $value ) {
-			$output .= esc_html( $key ) . ' ';
-		} else {
-			$output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
-		}
-
-    }
+	}
 
     $output = apply_filters( "genesis_attr_{$context}_output", $output, $attributes, $context );
 
