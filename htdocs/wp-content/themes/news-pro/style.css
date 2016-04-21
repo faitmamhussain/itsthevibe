@@ -2821,4 +2821,10 @@ Media Queries
 	.site-header.slideshow-header{
 		padding: 0;
 	}
+	.post-share-buttons .fb-share-button .hide-1, .post-share-buttons .fb-share-button .hide-2{
+		display: none;
+	}
+	.post-share-buttons .twitter-share-button, .post-share-buttons .pinterest-share-button, .post-share-buttons .whatsapp-share-button{
+		margin-top: 10px;
+	}
 }
