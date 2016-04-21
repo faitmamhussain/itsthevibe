@@ -1,6 +1,6 @@
 <style type="text/css">
 	.post-share-buttons{
-		margin: 20px;
+		margin: 20px 20px 5px 20px;
 	}
 	.post-share-buttons a{
 		display: inline-block;

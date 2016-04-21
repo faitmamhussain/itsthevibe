@@ -2809,6 +2809,9 @@ Media Queries
     .slideshow-wrap .slideshow-counter{
         width: 55%;
     }
+    .post-share-buttons{
+    	margin-bottom: 20px;
+    }
 }
 
 @media only screen and (max-width: 480px){
@@ -2821,7 +2824,15 @@ Media Queries
 	.site-header.slideshow-header{
 		padding: 0;
 	}
-	.post-share-buttons .fb-share-button .hide-1, .post-share-buttons .fb-share-button .hide-2{
+	.post-share-buttons .fb-share-button{
+		font-size: 18px;
+	}
+	.site-header .header-social-icons{
+		font-size: 28px;
+	}
+}
+@media only screen and (max-width: 390px){
+	.post-share-buttons .fb-share-button .hide-1{
 		display: none;
 	}
 	.post-share-buttons .twitter-share-button, .post-share-buttons .pinterest-share-button, .post-share-buttons .whatsapp-share-button{
