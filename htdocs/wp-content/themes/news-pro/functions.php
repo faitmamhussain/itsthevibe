@@ -30,6 +30,10 @@ function news_load_scripts() {
 	wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ), '1.0.0' );
 	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ), '1.0.0' );
 
+	if( !isMobile() || ( in_category('slideshows') && is_single() ) )
+		wp_enqueue_script( 'slideshow-custom-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow-custom-menu.js', array( 'jquery' ), '1.0.0' );
+
+
 	//JS code for setting utm-params, mobile detection and helpers.
 	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'jquery' ), '1.0.0' );
 	$translation_array = [
@@ -426,9 +430,10 @@ add_action('wp_head', function(){
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
 	}
 
-	if( !isMobile() || ( in_category('slideshows') && is_single() ) ){
-		include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
-	}
+	// if( !isMobile() || ( in_category('slideshows') && is_single() ) ){
+	// 	include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
+	// }
+
 }, 10);
 
 function kill_slideshows_redirect() {
