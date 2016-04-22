@@ -94,30 +94,11 @@ jQuery(function( $ ){
     handleScroll();
     //$(window).scroll(handleScroll);
 
-    window.addEventListener("touchstart", function(){
+  	window.addEventListener("touchstart", handleScrollTouc, false);
+  	window.addEventListener( "touchmove", handleScrollTouc, false);
+  	window.addEventListener("touchcancel", handleScrollTouc, false);
 
-		if($('header.entry-header').length > 0)
-			headerElem.addClass('slideshow-header');
-
-	}, false);
-
-  	window.addEventListener("touchend", function(){
-
-  		if($('header.entry-header').length > 0 && $('header.site-header').offset().top == 0 )
-  			headerElem.removeClass('slideshow-header');
-
-  	}, false);
-
-  	window.addEventListener("touchcancel", function(){
-
-  		if($('header.entry-header').length > 0 && $('header.site-header').offset().top == 0 )
-  			headerElem.removeClass('slideshow-header');
-
-  	}, false);
-
-  	 window.addEventListener( "scroll", handleScroll, false);
-
-  	//window.addEventListener("touchmove", handleScroll, false);
+  	window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -126,9 +107,8 @@ jQuery(function( $ ){
 
     function handleScroll(){
 
-    	console.log( $('header.site-header').offset().top );
-
         if($('header.entry-header').length > 0){
+
             var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
             var content = $('header.entry-header').offset().top;
 
@@ -151,5 +131,21 @@ jQuery(function( $ ){
             headerElem.removeClass('slideshow-header');
         }
     }
+
+    function handleScrollTouc(){
+
+        if($('header.entry-header').length > 0){
+
+            var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
+            var content = $('header.entry-header').offset().top;
+
+            if( $(window).scrollTop() > 0 ){
+	            showSlideshowHeader();
+            }else{
+	            hideSlideshowHeader();
+            }
+        }
+
+  	}
 
 });
