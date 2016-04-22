@@ -1464,13 +1464,13 @@ Site Header
 /*
 	Styles for slide show custom header widget
 */
-.site-header{
+/*.site-header{
 	-webkit-transition: opacity .5s ease;
 	-moz-transition: opacity .5s ease;
 	-ms-transition: opacity .5s ease;
 	-o-transition: opacity .5s ease;
 	transition: opacity .5s ease;
-}
+}*/
 .site-header section.widget.widget_text:last-of-type{
 	display: none;
 }
