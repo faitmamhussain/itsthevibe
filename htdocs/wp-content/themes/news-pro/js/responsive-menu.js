@@ -24,45 +24,45 @@ jQuery(function( $ ){
 	/* Scroling menu */
 	var lastScrollTop = 0;
 
-	if( !detectmob() && window.innerWidth > 1023 ){
+	// if( !detectmob() && window.innerWidth > 1023 ){
 
-		$(window).scroll(function(event){
+	// 	$(window).scroll(function(event){
 
-			if( !$('body').hasClass('home') ){
+	// 		if( !$('body').hasClass('home') ){
 
-				var st = $(this).scrollTop();
+	// 			var st = $(this).scrollTop();
 
-			   if (st > lastScrollTop){
+	// 		   if (st > lastScrollTop){
 
-			   		if( $('.site-header').is(":visible") ){
-		                $('.site-header').slideUp(200, function(){
-		                    if($('.sidebar-secondary').length){
-		                        $('.sidebar-secondary').css({
-		                            'top': $('.site-container').offset().top
-		                        });
-		                    }
-		                });
-		            }
+	// 		   		if( $('.site-header').is(":visible") ){
+	// 	                $('.site-header').slideUp(200, function(){
+	// 	                    if($('.sidebar-secondary').length){
+	// 	                        $('.sidebar-secondary').css({
+	// 	                            'top': $('.site-container').offset().top
+	// 	                        });
+	// 	                    }
+	// 	                });
+	// 	            }
 
-			   } else {
+	// 		   } else {
 
-			   		if( $('.site-header').is(":hidden") ) {
-		                $('.site-header').slideDown(200, function () {
-		                    if($('.sidebar-secondary').length){
-		                        $('.sidebar-secondary').css({
-		                            'top': $('main.content').offset().top
-		                        });
-		                    }
-		                });
-		            }
-			   }
-			   lastScrollTop = st;
+	// 		   		if( $('.site-header').is(":hidden") ) {
+	// 	                $('.site-header').slideDown(200, function () {
+	// 	                    if($('.sidebar-secondary').length){
+	// 	                        $('.sidebar-secondary').css({
+	// 	                            'top': $('main.content').offset().top
+	// 	                        });
+	// 	                    }
+	// 	                });
+	// 	            }
+	// 		   }
+	// 		   lastScrollTop = st;
 
-			} 
+	// 		} 
 
-		});
+	// 	});
 
-	}
+	// }
 
 	$('.share-button-toggle-icon').click(function(event){
 
