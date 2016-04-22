@@ -92,7 +92,11 @@ jQuery(function( $ ){
 
     setupPostHref();
     handleScroll();
-    $(window).scroll(handleScroll);
+    //$(window).scroll(handleScroll);
+
+    window.addEventListener( "scroll", handleScroll);
+	document.addEventListener("touchmove", handleScroll);
+
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
