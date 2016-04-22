@@ -34,13 +34,13 @@ function getRundomId() {
 }
 
 function TaboolaAds() {
-    this.BelowPost = function (forceSafe, forceNC) {
+    this.BelowPost = function (forceSafe, forceNS) {
         var term = this_utm_term;
         if (forceSafe) {
             term = 'Safe';
         }
-        if (forceNC) {
-            term = 'NC';
+        if (forceNS) {
+            term = 'NS';
         }
 
         if (!isMobile()) {
@@ -59,13 +59,13 @@ function TaboolaAds() {
         }
     };
 
-    this.BelowSlideshow = function (forceSafe, forceNC) {
+    this.BelowSlideshow = function (forceSafe, forceNS) {
         var term = this_utm_term;
         if (forceSafe) {
             term = 'Safe';
         }
-        if (forceNC) {
-            term = 'NC';
+        if (forceNS) {
+            term = 'NS';
         }
         if (!isMobile()) {
             document.write('<div id="taboola-below-gallery-thumbnails"></div>' +
