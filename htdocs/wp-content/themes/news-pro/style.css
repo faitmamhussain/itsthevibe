@@ -247,6 +247,11 @@ cite {
 	text-align: center;
 }
 
+.home .itv_ad_widget:first-child{
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
 h4.ad-header {
 	clear: both;
 	color: rgb(100,100,100);
@@ -2617,6 +2622,10 @@ Media Queries
 	.itv_ad_widget p, .itv_ad_widget div{
 		width: 100%;
 	}
+    .home .itv_ad_widget:first-child{
+        margin-top: 80px;
+    }
+
 	.entry-content p,
 	.post-share-buttons{
 		text-align: left;
@@ -2672,6 +2681,10 @@ Media Queries
 	.site-header + section {
 		margin-top: 61px;
 	}
+
+    .home .itv_ad_widget:first-child{
+        margin-top: 70px;
+    }
 }
 
 @media only screen and (max-width: 600px) {
