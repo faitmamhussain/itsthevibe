@@ -2620,6 +2620,9 @@ Media Queries
 	.entry-content p{
 		text-align: left;
 	}
+	.fb-like-and-share{
+		margin: 10px 20px;
+	}
 }
 
 @media only screen and (max-width: 760px) {
