@@ -140,7 +140,7 @@ jQuery(function( $ ){
             var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
             var content = $('header.entry-header').offset().top;
 
-            if( $(window).scrollTop() >= 30 ){
+            if( $(window).scrollTop() > 0 ){
 	            showSlideshowHeader();
             }else{
 	            hideSlideshowHeader();
