@@ -92,14 +92,12 @@ jQuery(function( $ ){
 
     setupPostHref();
     handleScroll();
-    //$(window).scroll(handleScroll);
+    $(window).scroll(handleScroll);
 
-    window.addEventListener( "scroll", handleScroll, false);
-	window.addEventListener("touchstart", handleScroll, false);
-  	window.addEventListener("touchend", handleScroll, false);
-  	window.addEventListener("touchcancel", handleScroll, false);
-  	window.addEventListener("touchmove", handleScroll, false);
+  	window.addEventListener("touchstart", handleScrollTouc, false);
+  	window.addEventListener( "touchmove", handleScrollTouc, false);
 
+  	//window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -107,7 +105,9 @@ jQuery(function( $ ){
     }
 
     function handleScroll(){
+
         if($('header.entry-header').length > 0){
+
             var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
             var content = $('header.entry-header').offset().top;
 
@@ -130,5 +130,20 @@ jQuery(function( $ ){
             headerElem.removeClass('slideshow-header');
         }
     }
+
+    function handleScrollTouc(){
+
+		if($('header.entry-header').length > 0){
+
+            var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
+            var content = $('header.entry-header').offset().top;
+
+            if( $(window).scrollTop() > 0 ){
+	            showSlideshowHeader();
+            }else{
+	            hideSlideshowHeader();
+            }
+        }
+  	}
 
 });
