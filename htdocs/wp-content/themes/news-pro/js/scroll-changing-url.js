@@ -46,7 +46,14 @@ jQuery( document ).ready(function( $ ) {
     setTimeout(function() {
         var elem = $('.sidebar-primary section:nth-child(2)');
         if(elem.length){
-            var elemOffset = elem.position().top - 50;
+            var addHeight = 0;
+            if($('.site-header').length){
+                addHeight += $('.site-header').height();
+            }
+            if($('#wpadminbar').length){
+                addHeight += $('#wpadminbar').height()
+            }
+            var elemOffset = elem.position().top - addHeight;
             var controller = new ScrollMagic.Controller();
             var scene = new ScrollMagic.Scene({offset: elemOffset})
                 .setPin(".sidebar-primary section:nth-child(2)")
