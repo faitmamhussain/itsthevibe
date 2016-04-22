@@ -117,8 +117,8 @@ jQuery(function( $ ){
 
   	}, false);
 
-  // 	if( !detectmob() && window.innerWidth > 1023 )
-		// window.addEventListener( "scroll", handleScroll, false);
+  	if( !detectmob() && window.innerWidth > 1023 )
+		window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
