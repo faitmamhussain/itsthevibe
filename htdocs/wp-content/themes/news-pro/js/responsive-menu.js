@@ -92,13 +92,12 @@ jQuery(function( $ ){
 
     setupPostHref();
     handleScroll();
-    //$(window).scroll(handleScroll);
+    $(window).scroll(handleScroll);
 
   	window.addEventListener("touchstart", handleScrollTouc, false);
   	window.addEventListener( "touchmove", handleScrollTouc, false);
-  	window.addEventListener("touchcancel", handleScrollTouc, false);
 
-  	window.addEventListener( "scroll", handleScroll, false);
+  	//window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -134,7 +133,7 @@ jQuery(function( $ ){
 
     function handleScrollTouc(){
 
-        if($('header.entry-header').length > 0){
+		if($('header.entry-header').length > 0){
 
             var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
             var content = $('header.entry-header').offset().top;
@@ -145,7 +144,6 @@ jQuery(function( $ ){
 	            hideSlideshowHeader();
             }
         }
-
   	}
 
 });
