@@ -46,7 +46,7 @@ jQuery( document ).ready(function( $ ) {
     setTimeout(function() {
         var elem = $('.sidebar-primary section:nth-child(2)');
         if(elem.length){
-            var elemOffset = elem.position().top;
+            var elemOffset = elem.position().top - 50;
             var controller = new ScrollMagic.Controller();
             var scene = new ScrollMagic.Scene({offset: elemOffset})
                 .setPin(".sidebar-primary section:nth-child(2)")
