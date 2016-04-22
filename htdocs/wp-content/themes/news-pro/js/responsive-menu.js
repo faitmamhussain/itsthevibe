@@ -94,21 +94,10 @@ jQuery(function( $ ){
     handleScroll();
     //$(window).scroll(handleScroll);
 
-  	window.addEventListener("touchstart", function(){
+  	window.addEventListener("touchstart", handleScrollTouc, false);
+  	window.addEventListener("touchmove", handleScrollTouc, false);
 
-  		handleScrollTouc();
-
-  		setTimeout(function(){
-
-  			handleScrollTouc();
-
-  		},200);
-
-
-  	}, false);
-  	window.addEventListener( "touchmove", function(){
-
-  		handleScrollTouc();
+  	window.addEventListener( "touchend", function(){
 
   		setTimeout(function(){
 
@@ -117,12 +106,19 @@ jQuery(function( $ ){
   		},200);
 
   	}, false);
-  	
-  	window.addEventListener( "touchend", handleScrollTouc, false);
-  	window.addEventListener( "touchcancel", handleScrollTouc, false);
 
-  	if( !detectmob() && window.innerWidth > 1023 )
-		window.addEventListener( "scroll", handleScroll, false);
+  	window.addEventListener( "touchcancel", function(){
+
+  		setTimeout(function(){
+
+  			handleScrollTouc();
+
+  		},200);
+
+  	}, false);
+
+  // 	if( !detectmob() && window.innerWidth > 1023 )
+		// window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -144,18 +140,6 @@ jQuery(function( $ ){
         }
     }
 
-    function showSlideshowHeader(){
-        if(!headerElem.hasClass('slideshow-header')){
-            headerElem.addClass('slideshow-header');
-        }
-    }
-
-    function hideSlideshowHeader(){
-        if(headerElem.hasClass('slideshow-header')){
-            headerElem.removeClass('slideshow-header');
-        }
-    }
-
     function handleScrollTouc(){
 
 		if($('header.entry-header').length > 0){
@@ -170,5 +154,17 @@ jQuery(function( $ ){
             }
         }
   	}
+
+    function showSlideshowHeader(){
+        if(!headerElem.hasClass('slideshow-header')){
+            headerElem.addClass('slideshow-header');
+        }
+    }
+
+    function hideSlideshowHeader(){
+        if(headerElem.hasClass('slideshow-header')){
+            headerElem.removeClass('slideshow-header');
+        }
+    }
 
 });
