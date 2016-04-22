@@ -348,14 +348,11 @@ add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100
 
 //add revcontent exit pop (desktop only)
 function revcontent_exit_pop() {
-	$script = '<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=29260&p=21367&k=f70853a271747e8e1f3ffef5a48ea50a20beed84&d=itsthevibe.com&t=false&i=none&x=true&z=10"></script>';
-	if(class_exists('MobileSmartShortcodes')){
-		echo do_shortcode('[is_desktop]'.$script.'[/is_desktop]');
-	} else {
-		echo $script;
+	if(!is_home()){
+		echo '<div id="rcjsload_sp4f5cm"></div><script src="http://publishers.revcontent.com/itsthevibe_revexit_desktop.js"></script>';
 	}
 }
-add_action( 'wp_footer', 'revcontent_exit_pop', 100 );
+add_action( 'wp_footer', 'revcontent_exit_pop', 1000 );
 
 //facebook init
 function itv_facebook_init(){

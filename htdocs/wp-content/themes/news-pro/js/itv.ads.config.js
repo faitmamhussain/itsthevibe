@@ -85,9 +85,6 @@ function TaboolaAds() {
     };
 }
 
-
-var cccc = 0;
-
 function RevcontentAds() {
 
     //Below
@@ -234,15 +231,15 @@ function BelowSlideshow() {
         Revcontent.BelowSlideshow();
     }
     else {
-        if (
-            utm_source_value.toUpperCase() == 'TABOOLA'
-        ) {
+        if (utm_source_value.toUpperCase() == 'TABOOLA') {
             Taboola.BelowSlideshow();
         }
         else if (
             utm_source_value.toUpperCase() == 'EDGE' ||
             utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'UNDEFINED'
+            utm_source_value.toUpperCase() == 'UNDEFINED' ||
+            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
+            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE'
         ) {
             Taboola.BelowSlideshow(false, true); //forceSafe = false, forceNS = true
         }
