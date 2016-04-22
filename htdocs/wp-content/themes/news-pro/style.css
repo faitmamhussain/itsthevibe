@@ -2481,7 +2481,7 @@ Media Queries
 	.site-title,
 	.title-area,
 	.wrap {
-		width: 100%;
+		width: 100% !important;
 	}
 
 	.site-container.has-left-sidebar .sidebar-secondary {
