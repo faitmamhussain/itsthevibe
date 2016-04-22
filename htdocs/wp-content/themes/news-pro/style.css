@@ -2643,6 +2643,11 @@ Media Queries
 		padding: 0 10px;
 	}
 	.site-inner,
+	.site-footer{
+		width: 100%;
+		max-width: none;
+	}
+	.site-inner,
 	.site-header + section {
 		margin-top: 61px;
 	}
