@@ -7,6 +7,7 @@
         setupPostHref();
         handleScroll();
         $(window).scroll(handleScroll);
+        document.addEventListener("touchmove", handleScroll, false);
 
         function setupPostHref(){
             var href = $('.slideshow-navigation a').last().attr('href');
