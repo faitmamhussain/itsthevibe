@@ -42,37 +42,16 @@ jQuery( document ).ready(function( $ ) {
         });
     }
 
-    $(window).on('scroll', function(){
-        if(!$('.sidebar-secondary').length){
-            var sidebarElem = $('.sidebar-primary');
-            var mainContent = $('main.content');
-            if((document.body.clientHeight+$(window).scrollTop()-110) > sidebarElem.height()){
-                if(sidebarElem.css('position') !== 'fixed'){
-                    sidebarElem.css({
-                        'left': mainContent.offset().left+mainContent.width()+3+'px',
-                        'position' : 'fixed',
-                        'bottom': 0
-                    });
-                }
-            }
-            else{
-                sidebarElem.css({
-                    'position' : 'static'
-                });
-            }
+    //stick second sidebar section (wait while first ad loads)
+    setTimeout(function() {
+        var elem = $('.sidebar-primary section:nth-child(2)');
+        if(elem.length){
+            var elemOffset = elem.position().top;
+            var controller = new ScrollMagic.Controller();
+            var scene = new ScrollMagic.Scene({offset: elemOffset})
+                .setPin(".sidebar-primary section:nth-child(2)")
+                .addTo(controller);
         }
-    });
-
-    $(window).on('resize', function(){
-        if(!$('.sidebar-secondary').length) {
-            var sidebarElem = $('.sidebar-primary');
-            var mainContent = $('main.content');
-            if (sidebarElem.css('position') == 'fixed') {
-                sidebarElem.css({
-                    'left': mainContent.offset().left + mainContent.width() + 3 + 'px'
-                });
-            }
-        }
-    });
+    }, 2000);
 
 });
