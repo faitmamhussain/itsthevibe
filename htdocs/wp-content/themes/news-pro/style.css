@@ -2610,14 +2610,15 @@ Media Queries
 	.content .entry-content .itv_ad_widget{
 		float: none !important;
 	}
-	.entry-content,
+	.content-sidebar-wrap,
 	.itv_ad_widget{
 		text-align: center;
 	}
 	.itv_ad_widget p, .itv_ad_widget div{
 		width: 100%;
 	}
-	.entry-content p{
+	.entry-content p,
+	.post-share-buttons{
 		text-align: left;
 	}
 	.fb-like-and-share{

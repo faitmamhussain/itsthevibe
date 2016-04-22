@@ -24,7 +24,7 @@ jQuery(function( $ ){
 	/* Scroling menu */
 	var lastScrollTop = 0;
 
-	if( !detectmob() ){
+	if( !detectmob() && window.innerWidth > 1023 ){
 
 		$(window).scroll(function(event){
 
