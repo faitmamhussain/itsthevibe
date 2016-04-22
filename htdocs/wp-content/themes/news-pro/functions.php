@@ -506,76 +506,6 @@ add_shortcode('slideshow-share', function($atts, $content){
 	return $html;
 });
 
-add_shortcode('mobile-posts', function($atts, $content){
-	
-	// The Query
-	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-	$the_query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 9 ) );
-
-	// The Loop
-	if ( $the_query->have_posts() ) {
-
-		while ( $the_query->have_posts() ) {
-			$the_query->the_post();
-
-				$post = get_post();
-
-				$thumbnail = get_the_post_thumbnail($post->ID, 'medium');
-
-				if( !$thumbnail )
-					continue;
-
-				if( empty($GLOBALS['home_page_posts_counter']) ){
-					$GLOBALS['home_page_posts_counter'] = 1;
-				} else {
-					$GLOBALS['home_page_posts_counter']++;
-				}
-
-				$counter = $GLOBALS['home_page_posts_counter'];
-
-				$cat = itv_get_primary_category($post);
-
-				echo '<div class="home-page-post one-third'.(($counter % 3 == 1) ? ' first' : '').'">';
-			?>
-				<a
-					href="<?php echo get_permalink(); ?>"
-				   	class="post-image post-link-catchable"
-					data-url="<?php echo get_permalink(); ?>"
-					data-image="<?php echo wp_get_attachment_thumb_url(get_post_thumbnail_id($post->ID)); ?>"
-					data-term="slot-<?php echo $counter; ?>"
-				>
-					<?php echo get_the_post_thumbnail($post->ID, 'medium');?>
-				</a>
-				<div class="post-description">
-					<a
-						href="<?php echo get_category_link($cat->cat_ID);?>"
-						class="category post-link-catchable"
-						data-url="<?php echo get_category_link($cat->cat_ID);?>"
-						data-image=""
-						data-term="slot-<?php echo $counter; ?>"
-					><?php echo $cat->name;?></a>
-					<span class="posted-on"><?php echo human_time_diff(get_the_time('U'), current_time('timestamp')); ?> ago</span>
-					<h3 class="entry-title">
-						<a
-							href="<?php echo get_permalink(); ?>"
-							class="post-link-catchable"
-							data-url="<?php echo get_permalink(); ?>"
-							data-image="<?php echo wp_get_attachment_thumb_url(get_post_thumbnail_id($post->ID)); ?>"
-							data-term="slot-<?php echo $counter; ?>"
-						>
-							<?php echo the_title();?>
-						</a>
-					</h3>
-				</div>
-			</div>
-
-			<?php
-		}
-	}
-	wp_reset_query();
-
-});
-
 if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 
 	remove_shortcode( 'ajax_load_more' );
@@ -586,33 +516,32 @@ if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 	add_action('genesis_entry_footer', 'mobile_nav', 99999);
 
 	function mobile_nav(){
-		?>
-		<div class="mobile-nav" >
 
-			<?php if( get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
-			<p class="prev-post" >
-				<span class="fa fa-2x fa-chevron-left" ></span>
-				<?php echo get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
-			</p>
-			<?php } ?>
+		// For single post
+		if( is_single() && !in_category('slideshows') ){
 
-			<?php if( get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
-			<p class="next-post" >
-				<?php echo get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
-				<span class="fa fa-2x fa-chevron-right" ></span>
-			</p>
-			<?php } ?>
+			?>
+			<div class="mobile-nav" >
 
-		</div>
-		<?php
+				<?php if( get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
+				<p class="prev-post" >
+					<span class="fa fa-2x fa-chevron-left" ></span>
+					<?php echo get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
+				</p>
+				<?php } ?>
+
+				<?php if( get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
+				<p class="next-post" >
+					<?php echo get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
+					<span class="fa fa-2x fa-chevron-right" ></span>
+				</p>
+				<?php } ?>
+
+			</div>
+			<?php
+		}
+
 	}
-
-}else{
-
-	remove_shortcode( 'mobile-posts' );
-	add_shortcode('mobile-posts', function(){
-	   return '';
-	});
 
 }
 

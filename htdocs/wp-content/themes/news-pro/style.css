@@ -2606,6 +2606,20 @@ Media Queries
 	.slideshow-header .slideshow-menu-right{
 		width: 100%;
 	}
+	.content .entry-content img,
+	.content .entry-content .itv_ad_widget{
+		float: none !important;
+	}
+	.entry-content,
+	.itv_ad_widget{
+		text-align: center;
+	}
+	.itv_ad_widget p, .itv_ad_widget div{
+		width: 100%;
+	}
+	.entry-content p{
+		text-align: left;
+	}
 }
 
 @media only screen and (max-width: 760px) {
