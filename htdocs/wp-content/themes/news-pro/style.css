@@ -2394,7 +2394,7 @@ Media Queries
 
 	.site-inner,
 	.site-footer {
-		max-width:  780px;
+		/*max-width:  780px;*/
 		position: relative;
 		left: 0;
 		top: 0;
@@ -2481,7 +2481,7 @@ Media Queries
 	.site-title,
 	.title-area,
 	.wrap {
-		width: 100%;
+		width: 100% !important;
 	}
 
 	.site-container.has-left-sidebar .sidebar-secondary {
@@ -2606,6 +2606,27 @@ Media Queries
 	.slideshow-header .slideshow-menu-right{
 		width: 100%;
 	}
+	.content .entry-content img,
+	.content .entry-content .itv_ad_widget{
+		float: none !important;
+	}
+	.content-sidebar-wrap,
+	.itv_ad_widget{
+		text-align: center;
+	}
+	.itv_ad_widget p, .itv_ad_widget div{
+		width: 100%;
+	}
+	.entry-content p,
+	.post-share-buttons{
+		text-align: left;
+	}
+	.fb-like-and-share{
+		margin: 10px 20px;
+	}
+	.slideshow-share .fb-like-and-share{
+		margin: 0 0 20px 0;
+	}
 }
 
 @media only screen and (max-width: 760px) {
@@ -2641,6 +2662,11 @@ Media Queries
 	}
 	.site-header{
 		padding: 0 10px;
+	}
+	.site-inner,
+	.site-footer{
+		width: 100%;
+		max-width: none;
 	}
 	.site-inner,
 	.site-header + section {
