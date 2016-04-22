@@ -94,8 +94,11 @@ jQuery(function( $ ){
     handleScroll();
     //$(window).scroll(handleScroll);
 
-    window.addEventListener( "scroll", handleScroll);
-	document.addEventListener("touchmove", handleScroll);
+    window.addEventListener( "scroll", handleScroll, false);
+	window.addEventListener("touchstart", handleScroll, false);
+  	window.addEventListener("touchend", handleScroll, false);
+  	window.addEventListener("touchcancel", handleScroll, false);
+  	window.addEventListener("touchmove", handleScroll, false);
 
 
     function setupPostHref(){
