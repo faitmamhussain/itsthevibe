@@ -94,12 +94,34 @@ jQuery(function( $ ){
     handleScroll();
     //$(window).scroll(handleScroll);
 
-  	// window.addEventListener("touchstart", handleScrollTouc, false);
-  	// window.addEventListener( "touchmove", handleScrollTouc, false);
-  	// window.addEventListener( "touchend", handleScrollTouc, false);
-  	// window.addEventListener( "touchcancel", handleScrollTouc, false);
+  	window.addEventListener("touchstart", function(){
 
-  	window.onscroll = handleScrollTouc;
+  		handleScrollTouc();
+
+  		setTimeout(function(){
+
+  			handleScrollTouc();
+
+  		},200);
+
+
+  	}, false);
+  	
+  	window.addEventListener( "touchmove", function(){
+
+  		handleScrollTouc();
+
+  		setTimeout(function(){
+
+  			handleScrollTouc();
+
+  		},200);
+
+  	}, false);
+
+  	window.addEventListener( "touchend", handleScrollTouc, false);
+  	window.addEventListener( "touchcancel", handleScrollTouc, false);
+
 	window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
@@ -135,6 +157,8 @@ jQuery(function( $ ){
     }
 
     function handleScrollTouc(){
+
+    	console.log( window.pageYOffset );
 
 		if($('header.entry-header').length > 0){
 
