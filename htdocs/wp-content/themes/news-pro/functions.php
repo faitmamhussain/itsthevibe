@@ -8,6 +8,10 @@ include_once( get_stylesheet_directory() . '/lib/theme-defaults.php' );
 //* Set Localization (do not remove)
 load_child_theme_textdomain( 'news', apply_filters( 'child_theme_textdomain', get_stylesheet_directory() . '/languages', 'news' ) );
 
+// Remove this script on frontend
+if( !is_admin() )
+	wp_deregister_style('dashicons');
+
 //* Child theme (do not remove)
 define( 'CHILD_THEME_NAME', __( 'News Pro Theme', 'news' ) );
 define( 'CHILD_THEME_URL', 'http://my.studiopress.com/themes/news/' );
