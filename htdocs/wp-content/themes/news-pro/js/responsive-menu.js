@@ -106,7 +106,6 @@ jQuery(function( $ ){
 
 
   	}, false);
-  	
   	window.addEventListener( "touchmove", function(){
 
   		handleScrollTouc();
@@ -118,11 +117,12 @@ jQuery(function( $ ){
   		},200);
 
   	}, false);
-
+  	
   	window.addEventListener( "touchend", handleScrollTouc, false);
   	window.addEventListener( "touchcancel", handleScrollTouc, false);
 
-	window.addEventListener( "scroll", handleScroll, false);
+  	if( !detectmob() && window.innerWidth > 1023 )
+		window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -157,8 +157,6 @@ jQuery(function( $ ){
     }
 
     function handleScrollTouc(){
-
-    	console.log( window.pageYOffset );
 
 		if($('header.entry-header').length > 0){
 
