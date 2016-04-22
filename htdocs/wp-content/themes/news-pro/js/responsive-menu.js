@@ -22,7 +22,7 @@ jQuery(function( $ ){
 	});
 
 	/* Scroling menu */
-	var lastScrollTop = 0;
+	//var lastScrollTop = 0;
 
 	// if( !detectmob() && window.innerWidth > 1023 ){
 
