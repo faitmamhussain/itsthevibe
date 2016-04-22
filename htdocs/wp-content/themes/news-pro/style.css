@@ -2096,7 +2096,7 @@ Site Footer
 .site-footer .wrap {
     background-color: #000;
     border-top: 1px solid #333;
-    width: 780px;
+    /*width: 780px;*/
 }
 .full-width-content .site-footer .wrap{
     width: 100%;
