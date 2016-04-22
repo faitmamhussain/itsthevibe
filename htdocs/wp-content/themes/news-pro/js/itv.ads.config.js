@@ -30,160 +30,150 @@ function isMobile() {
 }
 
 function getRundomId() {
-    return Math.random(10000, 99999);
+    return Math.floor(Math.random() * (99999 - 10000)) + 10000;
 }
 
 function TaboolaAds() {
-    this.BelowPost = function () {
-        if (!isMobile) {
+    this.BelowPost = function (forceSafe, forceNC) {
+        var term = this_utm_term;
+        if (forceSafe) {
+            term = 'Safe';
+        }
+        if (forceNC) {
+            term = 'NC';
+        }
+
+        if (!isMobile()) {
             document.write('<div id="taboola-below-article-thumbnails"></div>' +
             '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola-below-article-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + this_utm_term + '",target_type:"mix"});' +
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-a",container:"taboola-below-article-thumbnails",placement:"ITV - '
+            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + '",target_type:"mix"});' +
             '</script>');
         }
         else {
             document.write('<div id="mobile-taboola-below-article-thumbnails"></div>' +
             '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"mobile-thumbnails-a",container:"mobile-taboola-below-article-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + this_utm_term + ' - Mobile,target_type:"mix"});' +
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"mobile-taboola-below-article-thumbnails",placement:"ITV - '
+            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + ' - Mobile",target_type:"mix"});' +
             '</script>');
         }
     };
 
-    this.RightRailPost = function () {
-        document.write('<div id="taboola-right-rail-thumbnails"></div>' +
+    this.BelowSlideshow = function (forceSafe, forceNC) {
+        var term = this_utm_term;
+        if (forceSafe) {
+            term = 'Safe';
+        }
+        if (forceNC) {
+            term = 'NC';
+        }
+        if (!isMobile()) {
+            document.write('<div id="taboola-below-gallery-thumbnails"></div>' +
+            '<script type="text/javascript">' +
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-b",container:"taboola-below-gallery-thumbnails",placement:"ITV - ' +
+            this_utm_source_value + ' - Below Slideshow - Sponsored - ' + term + '",target_type:"mix"});' +
+            '</script>');
+        }
+    };
+
+    this.BelowEndSlideshow = function () {
+        document.write('<div id="taboola­native­end­of­gallery­thumbnails"></div>' +
         '<script type="text/javascript">' +
-        'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-d",container:"taboola-right-rail-thumbnails",placement:"ITV - '
-        + this_utm_source_value + ' - Right Rail - Sponsored - ' + this_utm_term + '",target_type:"mix"});' +
-        '</script>');
-    };
-
-    this.BelowPostSafe = function () {
-        if (!isMobile) {
-            document.write('<div id="taboola-below-article-thumbnails"></div>' +
-            '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola-below-article-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + this_utm_term + '",target_type:"mix"});' +
-            '</script>');
-        }
-        else {
-            document.write('<div id="mobile-taboola-below-article-thumbnails"></div>' +
-            '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"mobile-thumbnails-a",container:"mobile-taboola-below-article-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + this_utm_term + ' - Mobile",target_type:"mix"});' +
-            '</script>');
-        }
-    };
-
-    this.EndSlateSafe = function () {
-        if (!isMobile) {
-            document.write('<div id="taboola-end-of-gallery-thumbnails"></div>' +
-            '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"taboola-end-of-gallery-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - End Gallery - Sponsored - ' + this_utm_term + '",target_type:"mix"});</script>');
-        }
-        else {
-            document.write('<div id="taboola-end-of-gallery-thumbnails"></div>' +
-            '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"taboola-end-of-gallery-thumbnails",placement:"ITV - '
-            + this_utm_source_value + ' - End Gallery - Sponsored - ' + this_utm_term + ' - Mobile",target_type:"mix"});' +
-            '</script>');
-        }
-    };
-
-    this.EndGalleryNative = function () {
-        document.write('<div id="taboola-below-gallery-thumbnails"></div>' +
-        '<script type="text/javascript">' +
-        'window._taboola=window._taboola||[],_taboola.push({mode:"organic-thumbnails-d",container:"taboola-below-gallery-thumbnails",placement:"ITV - '
-        + this_utm_source_value + ' - End Gallery - Native",target_type:"mix"});' +
+        'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola­native­end­of­gallery­thumbnails",placement:"ITV - '
+        + this_utm_source_value + ' - ' + this_page_type + ' - Organic - ' + this_utm_term + '",target_type:"mix"});' +
         '</script>');
     };
 }
 
-function RevcontentAds(){
-    this.BelowPost = function(){
-        document.write('<div id="rcjsload_90a25c"></div><script type="text/javascript">!function(){var t=document.createElement("script");t.id="rc_"+Math.floor(1e3*Math.random()),t.type="text/javascript",t.src="//trends.revcontent.com/serve.js.php?w=1200&t="+t.id+"&c="+(new Date).getTime()+"&width="+(window.outerWidth||document.documentElement.clientWidth),t.async=!0;var e=document.getElementById("rcjsload_90a25c");e.appendChild(t)}();</script>');
-    };
 
-    this.RightRailPost = function(){
-        document.write('<div id="rcjsload_ad93e4"></div>' +
+var cccc = 0;
+
+function RevcontentAds() {
+
+    //Below
+    this.BelowPost = function (containerId) {
+        if(!jQuery('#'+containerId).length){
+            return;
+        }
+        var rand = getRundomId();
+        var rcDefaultWidgetID = 29016;
+        var rcCatMap = '{outbrain:30567,taboola:30568,revcontent:30569,gemini:30570,adblade:30571,fb:30572,"3lift":30573,g4:30574,houseads:30575,ha:30575,taboola_organic:30576,pinterest:30577,instagram:30578,cad:30579,twitter:30580}';
+        if (isMobile()) {
+            rcDefaultWidgetID = 30346;
+            rcCatMap = '{outbrain:30581,taboola:30585,revcontent:30586,gemini:30587,adblade:30588,fb:30589,"3lift":30590,g4:30591,houseads:30592,ha:30592,taboola_organic:30593,pinterest:30594,instagram:30595,cad:30596,twitter:30597}';
+        }
+        jQuery('#'+containerId).append('<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
         '<script type="text/javascript">' +
-        '!function(){var t=document.createElement("script");' +
-        't.id="rc_"+Math.floor(Math.random()),t.type="text/javascript",t.src="//trends.revcontent.com/serve.js.php?w=30301&t="+t.id+"&c="+(new Date).getTime()+"&width="+(window.outerWidth||document.documentElement.clientWidth),t.async=!0;' +
-        'var e=document.getElementById("rcjsload_ad93e4");e.appendChild(t)}();' +
+        '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
+        'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
+        'if(pair[0] == "utm_source"){publisherCategory = pair[1];}}' +
+        'if (typeof utm_source_value !== "undefined" ) {publisherCategory = utm_source_value;}' +
+        'var rcCatMap = ' + rcCatMap + ';var rcContextualCatID = rcCatMap[publisherCategory.toLowerCase()];if (typeof(rcContextualCatID) !== "undefined") { rcDefaultWidgetID = rcContextualCatID; }' +
+        'var rcel = document.createElement("script");rcel.id = "rc_" + Math.floor(Math.random() * 1000);' +
+        'rcel.type = "text/javascript";' +
+        'rcel.src = "http://trends.revcontent.com/serve.js.php?w="+rcDefaultWidgetID+"&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);' +
+        'rcel.async = true;var rcds = document.getElementById("rcjsload_4ht9wt3_' + rand + '"); rcds.appendChild(rcel);})();' +
         '</script>');
     };
 
-    // new tags
-    this.BelowPostNew = function(){
-        if(!isMobile){
-            document.write('<div id="rcjsload_a4gu7k"></div><script src="http://publishers.revcontent.com/yourdailydish_belowarticle_desktop.js"></script>');
+    this.BelowSlideshow = function () {
+        var rand = getRundomId();
+        var rcDefaultWidgetID = 29335;
+        var rcCatMap = '{outbrain:30600,taboola:30601,revcontent:30602,gemini:30603,adblade:30604,fb:30605,"3lift":30606,g4:30607,houseads:30608,ha:30608,taboola_organic:30609,pinterest:30610,instagram:30611,cad:30612,twitter:30613}';
+        if (isMobile()) {
+            rcDefaultWidgetID = 29406;
+            rcCatMap = '{outbrain:30620,taboola:30621,revcontent:30622,gemini:30623,adblade:30624,fb:30625,"3lift":30626,g4:30627,houseads:30628,ha:30628,taboola_organic:30629,pinterest:30630,instagram:30631,cad:30632,twitter:30633}';
         }
-        else{
-            document.write('<div id="rcjsload_a5gu7k"></div><script src="http://publishers.revcontent.com/yourdailydish_belowarticle_mobile.js"></script>');
-        }
+        document.write('<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
+        '<script type="text/javascript">' +
+        '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
+        'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
+        'if(pair[0] == "utm_source"){publisherCategory = pair[1];}}' +
+        'if (typeof utm_source_value !== "undefined" ) {publisherCategory = utm_source_value;}' +
+        'var rcCatMap = ' + rcCatMap + ';var rcContextualCatID = rcCatMap[publisherCategory.toLowerCase()];if (typeof(rcContextualCatID) !== "undefined") { rcDefaultWidgetID = rcContextualCatID; }' +
+        'var rcel = document.createElement("script");rcel.id = "rc_" + Math.floor(Math.random() * 1000);' +
+        'rcel.type = "text/javascript";' +
+        'rcel.src = "http://trends.revcontent.com/serve.js.php?w="+rcDefaultWidgetID+"&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);' +
+        'rcel.async = true;var rcds = document.getElementById("rcjsload_4ht9wt3_' + rand + '"); rcds.appendChild(rcel);})();' +
+        '</script>');
     };
 
-    this.EndSlateNew = function(){
-        if(!isMobile){
-            document.write('<div id="rcjsload_a6gu7k"></div><script src="http://publishers.revcontent.com/yourdailydish_endofgallery_desktop.js"></script>');
+    this.BelowEndSlideshow = function () {
+        var rand = getRundomId();
+        var rcDefaultWidgetID = 29333;
+        var rcCatMap = '{}';
+        if (isMobile()) {
+            rcDefaultWidgetID = 30345;
         }
-        else{
-            document.write('<div id="rcjsload_a7gu7k"></div><script src="http://publishers.revcontent.com/yourdailydish_endofgallery_mobile.js"></script>');
-        }
-    }
-
-    this.ExitPopNew = function(){
-        document.write('<div id="rcjsload_a9gu7k"></div><script src="http://publishers.revcontent.com/yourdailydish_revexit_desktop.js"></script>');
-    }
-
-    this.SidebarInternalGallery = function(){
-        document.write('<div id="rcjsload_sdf5hdh"></div><script src="http://publishers.revcontent.com/yourdailydish_internal_rr1.js"></script>');
-    }
-
-    this.SidebarInternalGallery2 = function(){
-        document.write('<div id="rcjsload_sdfg4hs"></div><script src="http://publishers.revcontent.com/yourdailydish_internal_rr2.js"></script>');
-    }
-
-    this.SidebarInternalEndGallery = function(){
-        document.write('<div id="rcjsload_ac3d49"></div><script type="text/javascript">(function(){var rcel=document.createElement("script");rcel.id="rc_" + Math.floor(Math.random() * 1000);rcel.type="text/javascript";rcel.src="http://trends.revcontent.com/serve.js.php?w=17325&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);rcel.async=true;var rcds=document.getElementById("rcjsload_ac3d49"); rcds.appendChild(rcel);})();</script>');
-    }
-
-    this.SidebarInternalEndGallery2 = function(){
-        document.write('<div id="rcjsload_2812bf"></div><script type="text/javascript">(function(){var rcel=document.createElement("script");rcel.id="rc_" + Math.floor(Math.random() * 1000);rcel.type="text/javascript";rcel.src="http://trends.revcontent.com/serve.js.php?w=17304&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);rcel.async=true;var rcds=document.getElementById("rcjsload_2812bf"); rcds.appendChild(rcel);})();</script>');
-    }
-
-    this.SidebarInternalArticle = function(){
-        document.write('<div id="rcjsload_f68903"></div>' +
+        document.write('<div id="rcjsload_pu06hus_' + rand + '"></div>' +
         '<script type="text/javascript">' +
-        '(function(){var rcel=document.createElement("script");' +
-        'rcel.id="rc_" + Math.floor(Math.random() * 1000);' +
-        'rcel.type="text/javascript";' +
-        'rcel.src="http://trends.revcontent.com/serve.js.php?w=17335&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);' +
-        'rcel.async=true;var rcds=document.getElementById("rcjsload_f68903");' +
-        'rcds.appendChild(rcel);})();' +
+        '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
+        'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
+        'if(pair[0] == "utm_source"){publisherCategory = pair[1];}}' +
+        'if (typeof utm_source_value !== "undefined" ) {publisherCategory = utm_source_value;}' +
+        'var rcCatMap = ' + rcCatMap + ';var rcContextualCatID = rcCatMap[publisherCategory.toLowerCase()];if (typeof(rcContextualCatID) !== "undefined") { rcDefaultWidgetID = rcContextualCatID; }' +
+        'var rcel = document.createElement("script");rcel.id = "rc_" + Math.floor(Math.random() * 1000);' +
+        'rcel.type = "text/javascript";' +
+        'rcel.src = "http://trends.revcontent.com/serve.js.php?w="+rcDefaultWidgetID+"&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);' +
+        'rcel.async = true;var rcds = document.getElementById("rcjsload_pu06hus_' + rand + '"); rcds.appendChild(rcel);})();' +
         '</script>');
-    }
+    };
 
-    this.SidebarInternalArticle2 = function(){
-        document.write('<div id="rcjsload_ff3c8b"></div>' +
-        '<script type="text/javascript">(function(){var rcel=document.createElement("script");' +
-        'rcel.id="rc_" + Math.floor(Math.random() * 1000);rcel.type="text/javascript";' +
-        'rcel.src="http://trends.revcontent.com/serve.js.php?w=17341&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);rcel.async=true;var rcds=document.getElementById("rcjsload_ff3c8b"); rcds.appendChild(rcel);})();</script>');
-    }
+    //RR
+    this.RightRailPost = function () {
+        document.write('<div id="rcjsload_ubd3tix"></div>' +
+        '<script src="http://publishers.revcontent.com/itsthevibe_internalitvpostrr1.js"></script>');
+    };
 
-    this.ExitPopInternal = function(){
-        document.write('<script type="text/javascript" id="rev2exit" src="http://labs-cdn.revcontent.com/build/revexit.min.js?w=17297&p=1059&k=f035fc90f62128fa6c44debbd72082538985aff5&d=yourdailydish.com&t=false&i=all&x=false&z=10"></script>');
-    }
+    this.RightRailSlideshow = function () {
+        document.write('<div id="rcjsload_scalnbg"></div>' +
+        '<script src="http://publishers.revcontent.com/itsthevibe_internalitvslideshowrr1.js"></script>');
+    };
 
-    this.BelowPostInternal = function(){
-        document.write('<div id="rcjsload_96f300"></div><script type="text/javascript">(function(){var rcel=document.createElement("script");rcel.id="rc_" + Math.floor(Math.random() * 1000);rcel.type="text/javascript";rcel.src="http://trends.revcontent.com/serve.js.php?w=17473&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);rcel.async=true;var rcds=document.getElementById("rcjsload_96f300"); rcds.appendChild(rcel);})();</script>');
-    }
-
-    this.BelowPostInternalMobile = function(){
-        document.write('<div id="rcjsload_f6ad21"></div><script type="text/javascript">(function(){var rcel=document.createElement("script");rcel.id="rc_" + Math.floor(Math.random() * 1000);rcel.type="text/javascript";rcel.src="http://trends.revcontent.com/serve.js.php?w=17494&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);rcel.async=true;var rcds=document.getElementById("rcjsload_f6ad21"); rcds.appendChild(rcel);})();</script>');
-    }
+    this.RightRailEndSlideshow = function () {
+        document.write('<div id="rcjsload_zn3arqb"></div>' +
+        '<script src="http://publishers.revcontent.com/itsthevibe_internalitvendslideshowrr.js"></script>');
+    };
 }
 
 
@@ -193,250 +183,102 @@ function DeclareITV() {
 }
 
 /******************************
-Article RR
+ Article RR
  ******************************/
 function RightRailPost() {
-    if(this_utm_source_value.toUpperCase() == 'TABOOLA'){
-        Taboola.RightRailPost();
-    }
-    else{
-        Revcontent.RightRailPost();
-    }
+    Revcontent.RightRailPost();
 }
 
 /******************************
- below article
+ Gallery RR
  ******************************/
-function BelowPost() {
-    if (!isMobile) {
-        if (utm_source_value.toUpperCase() == 'TABOOLA') {
-            if (utm_term_value == 'safe') {
-                Taboola.BelowPostSafe();
-            }
-            else {
-                Taboola.BelowPost();
-            }
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'GEMINI' ||
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC'
-        ) {
-            Revcontent.BelowPostNew();
-        }
-        else if (utm_source_value.toUpperCase() == 'TABOOLA') {
-            if (utm_term_value == 'safe') {
-                Taboola.BelowPostSafe();
-            }
-            else {
-                //Revcontent.BelowPostNew();
-            }
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'GEMINI' ||
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC'
-        ) {
-            //Revcontent.BelowPostNew();
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'EDGE'
-        ) {
-            Taboola.BelowPost();
-        }
-        else if (utm_source_value.toUpperCase() == 'GOOGLE') {
-            //Revcontent.BelowPostInternalMobile();
-        }
-        else {
-            //Revcontent.BelowPostInternalMobile();
-        }
-    }
+function RightRailSlideshow() {
+    Revcontent.RightRailSlideshow();
 }
 
+/******************************
+ End Slideshow RR
+ ******************************/
+function RightRailEndSlideshow() {
+    Revcontent.RightRailEndSlideshow();
+}
 
 /******************************
- below gallery
+ Below Post
  ******************************/
-function BelowGalleryNative() {
-    if (!isMobile) {
-        if (utm_source_value.toUpperCase() == 'TABOOLA') {
-            if (utm_term_value == 'safe') {
-                Taboola.BelowPostSafe();
-            }
-            else {
-                Taboola.BelowPost();
-            }
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC'
-        ) {
-            Revcontent.BelowPostNew();
-        }
-        else {
-            Revcontent.BelowPostInternal();
-        }
-    }
-    else if (utm_source_value.toUpperCase() == 'TABOOLA') {
-        if (utm_term_value == 'safe') {
-            Taboola.BelowPostSafe();
-        }
-        else {
-            Revcontent.BelowPostNew();
-        }
-    }
-    else if (
-        utm_source_value.toUpperCase() == 'GEMINI' ||
-        utm_source_value.toUpperCase() == 'YAHOO' ||
-        utm_source_value.toUpperCase() == 'REVCONTENT' ||
-        utm_source_value.toUpperCase() == 'PINTEREST' ||
-        utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-        utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-        utm_source_value.toUpperCase() == 'ADBLADE' ||
-        utm_source_value.toUpperCase() == 'HOUSEADS' ||
-        utm_source_value.toUpperCase() == 'TWITTER' ||
-        utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC'
-    ) {
-        Revcontent.BelowPostNew();
-    }
-    else if (
-        utm_source_value.toUpperCase() == 'FB' ||
-        utm_source_value.toUpperCase() == 'EDGE'
-    ) {
-        Taboola.BelowPost();
-    }
-    else if (utm_source_value.toUpperCase() == 'GOOGLE') {
-        Revcontent.BelowPostInternalMobile();
+function BelowPost(containerId) {
+    /*if (
+     utm_source_value.toUpperCase() == 'TABOOLA'
+     ) {
+     Taboola.BelowPost();
+     }
+     else if(
+     utm_source_value.toUpperCase() == 'EDGE' ||
+     utm_source_value.toUpperCase() == 'FB' ||
+     utm_source_value.toUpperCase() == 'UNDEFINED'
+     ){
+     Taboola.BelowPost(false, true); //forceSafe = false, forceNS = true
+     }
+     else{
+     Revcontent.BelowPost();
+     }*/
+
+    Revcontent.BelowPost(containerId);
+}
+
+/******************************
+ Below Slideshow
+ ******************************/
+function BelowSlideshow() {
+    if (isMobile()) {
+        Revcontent.BelowSlideshow();
     }
     else {
-        Revcontent.BelowPostInternalMobile();
-    }
-}
-
-
-/******************************
- gallery RR 1
- ******************************/
-function RightRailGalleryNative1() {
-    Revcontent.SidebarInternalGallery();
-}
-
-
-/******************************
- gallery RR 1
- ******************************/
-function RightRailGalleryNative2() {
-    Revcontent.SidebarInternalGallery2();
-}
-
-
-/******************************
- end gallery
- ******************************/
-function EndGalleryNative() {
-    if (!isMobile) {
         if (
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'GEMINI' ||
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'ADBLADE' ||
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
             utm_source_value.toUpperCase() == 'TABOOLA'
         ) {
-            Taboola.EndGalleryNative();
+            Taboola.BelowSlideshow();
         }
         else if (
-            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE'
+            utm_source_value.toUpperCase() == 'EDGE' ||
+            utm_source_value.toUpperCase() == 'FB' ||
+            utm_source_value.toUpperCase() == 'UNDEFINED'
         ) {
-            //Revcontent.EndSlateNew();
+            Taboola.BelowSlideshow(false, true); //forceSafe = false, forceNS = true
         }
         else {
-            Taboola.EndGalleryNative();
+            Revcontent.BelowSlideshow();
         }
+    }
+}
+
+/******************************
+ Below End Slideshow
+ ******************************/
+function BelowEndSlideshow() {
+    if (isMobile()) {
+        Revcontent.BelowEndSlideshow()
     }
     else {
-        if (utm_source_value.toUpperCase() == 'TABOOLA') {
-            if (utm_term_value == 'safe') {
-                Taboola.EndSlateSafe();
-            }
-            else {
-                //Revcontent.EndSlateNew();
-            }
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'GEMINI' ||
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
+        if (
+            utm_source_value.toUpperCase() == 'TABOOLA' ||
+            utm_source_value.toUpperCase() == 'EDGE' ||
             utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'G4' ||
-            utm_source_value.toUpperCase() == 'ADBLADE' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC'
+            utm_source_value.toUpperCase() == 'UNDEFINED'
         ) {
-            //Revcontent.EndSlateNew();
+            Taboola.BelowEndSlideshow();
         }
         else {
-            Taboola.EndSlateSafe();
+            Revcontent.BelowEndSlideshow();
         }
     }
 }
-
-/******************************
- end gallery RR 1
- ******************************/
-function RightRailEndGalleryNative1() {
-    //Revcontent.SidebarInternalEndGallery();
-}
-
-
-/******************************
- end gallery RR 2
- ******************************/
-function RightRailEndGalleryNative2() {
-    //Revcontent.SidebarInternalEndGallery2();
-}
-
 
 /******************************
  exit pop
  ******************************/
 function ExitPop() {
-    if (!isMobile) {
+    if (!isMobile()) {
         if (
             utm_source_value.toUpperCase() == 'REVCONTENT' ||
             utm_source_value.toUpperCase() == 'OUTBRAIN' ||
@@ -468,5 +310,3 @@ function ExitPop() {
         }
     }
 }
-
-//DeclareITV();
