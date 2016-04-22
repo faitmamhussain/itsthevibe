@@ -252,6 +252,10 @@ function BelowSlideshow() {
     }
 }
 
+function BelowCategorySlideshow() {
+    Revcontent.BelowSlideshow();
+}
+
 /******************************
  Below End Slideshow
  ******************************/
