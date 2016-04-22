@@ -576,7 +576,7 @@ add_shortcode('mobile-posts', function($atts, $content){
 
 });
 
-if( isMobile() ){
+if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 
 	remove_shortcode( 'ajax_load_more' );
 	add_shortcode('ajax_load_more', function(){
