@@ -2394,7 +2394,7 @@ Media Queries
 
 	.site-inner,
 	.site-footer {
-		max-width:  780px;
+		/*max-width:  780px;*/
 		position: relative;
 		left: 0;
 		top: 0;
