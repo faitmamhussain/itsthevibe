@@ -37,9 +37,6 @@ jQuery( document ).ready(function( $ ) {
 
     if(!isMobile() && typeof(refreshSidebarMidAd) == "function"){
         setInterval(function(){
-            if (window.console) {
-                console.log('refresh');
-            }
             refreshSidebarMidAd();
         }, 10000);
     }
