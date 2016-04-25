@@ -2322,7 +2322,9 @@ Theme Colors
 .news-pro-orange .home-top .ui-tabs ul.ui-tabs-nav li.ui-tabs-active a:hover {
 	background-color: #fff;
 }
-
+#revexitadpanel{
+    height: initial !important;
+}
 
 /*
 Media Queries
