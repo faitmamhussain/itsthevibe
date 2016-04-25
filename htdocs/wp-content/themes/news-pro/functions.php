@@ -416,23 +416,20 @@ add_action('genesis_doctype', function(){
 add_action('wp_head', function(){
 	global $thisPageType;
 
+	include_once(get_stylesheet_directory() . '/lib/header.php');
+
 	if($thisPageType == 'ITV_Article'){
 		//Included only on article pages. JS code to fire virtual pageviews.
 		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
 	}
-
-	// if( !isMobile() || ( in_category('slideshows') && is_single() ) ){
-	// 	include_once(get_stylesheet_directory() . '/lib/slideshow-custom-menu.php');
-	// }
-
 }, 10);
 
-function kill_slideshows_redirect() {
+function itv_kill_slideshows_redirect() {
 	if (in_category('slideshows')) {
 		add_action('redirect_canonical','__return_false');
 	}
 }
-add_action('template_redirect','kill_slideshows_redirect',1);
+add_action('template_redirect','itv_kill_slideshows_redirect',1);
 
 function get_permalink_with_utm(){
 	$url = get_permalink();
@@ -546,8 +543,14 @@ include_once( get_stylesheet_directory() . '/lib/custom-slideshow.php' );
 //* Featured Posts
 include_once( get_stylesheet_directory() . '/lib/featured-posts.php' );
 
-//TODO need to replace this hotfix
+//Declare ads configuration
 function itv_insert_after_body(){
 	echo '<script type="text/javascript" async>DeclareITV();</script>';
 }
-add_action( 'genesis_after_header', 'itv_insert_after_body', 10 );
+add_action( 'genesis_before', 'itv_insert_after_body', 10 );
+
+//Include footer
+function itv_footer(){
+	include_once( get_stylesheet_directory() . '/lib/footer.php' );
+}
+add_action( 'genesis_after', 'itv_footer');
