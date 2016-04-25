@@ -5,11 +5,8 @@ jQuery( document ).ready(function( $ ) {
     var alm = $('#ajax-load-more');
 
     if(alm.length){
-
         var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName('body')[0];
-
         $(document).scroll(function () {
-
             var offset = window.pageYOffset;
             offset += w.innerHeight|| e.clientHeight|| g.clientHeight;
 
@@ -27,10 +24,6 @@ jQuery( document ).ready(function( $ ) {
                         window.history.pushState('','', hash);
                     }
                     currentHash = hash;
-                    
-                    if(typeof(refreshSidebarMidAd) == "function"){
-                        refreshSidebarMidAd();
-                    }
                 }
             });
 
@@ -40,6 +33,15 @@ jQuery( document ).ready(function( $ ) {
                 currentHash = initialUrl;
             }
         });
+    }
+
+    if(!isMobile() && typeof(refreshSidebarMidAd) == "function"){
+        setInterval(function(){
+            if (window.console) {
+                console.log('refresh');
+            }
+            refreshSidebarMidAd();
+        }, 10000);
     }
 
     //stick second sidebar section (wait while first ad loads)
