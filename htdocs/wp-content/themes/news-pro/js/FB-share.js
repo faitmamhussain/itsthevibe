@@ -4,7 +4,7 @@ var wdevice = (jQuery(window).width() <= 1188) ? ((jQuery(window).width() < 763)
 jQuery(document).on('click', '.button-facebook', function(event) {
     event.preventDefault;
     var jQuerythis = jQuery(this);
-    var popwidth = 626;
+    var popwidth = 560;
     var popheight = 256;
     var url = '';
 
