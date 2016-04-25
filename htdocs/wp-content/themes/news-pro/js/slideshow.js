@@ -2,7 +2,7 @@
     $(function () {
         $(window).on('scroll', function () {
 
-            if (!$('.sidebar-secondary').length && isDesktop()) {
+            if (!$('.sidebar-secondary').length && isDesktop() && $('.sidebar-primary').is(':visible')) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
                 if ((document.body.clientHeight + $(window).scrollTop() - 110) > sidebarElem.height()) {
