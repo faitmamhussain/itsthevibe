@@ -66,7 +66,7 @@ add_image_size( 'home-middle', 348, 180, TRUE );
 add_image_size( 'home-top', 740, 400, TRUE );
 
 //image for facebook preview
-add_image_size( 'fb-share', 600, 315, array( 'center', 'top' ) );
+add_image_size( 'fb-share', 650, 340, array( 'center', 'top' ) );
 
 //* Add support for custom background
 add_theme_support( 'custom-background' );
