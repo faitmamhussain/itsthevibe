@@ -184,18 +184,6 @@ add_filter( 'genesis_attr_site-header', function($atts){
 	return $atts;
 }, 100 );
 
-//add fixes for floating left sidebar
-add_filter("genesis_attr_site-container", function($attributes){
-
-	$site_layout = genesis_site_layout();
-
-	if ( $site_layout == 'sidebar-content-sidebar' && strpos($attributes['class'], 'site-container') !== false ){
-		$attributes['class'] .= ' has-left-sidebar';
-	}
-
-	return $attributes;
-});
-
 /** Force sidebar-content-sidebar layout */
 add_filter( 'genesis_pre_get_option_site_layout', 'itv_slideshow_layout' );
 function itv_slideshow_layout( $opt ) {
