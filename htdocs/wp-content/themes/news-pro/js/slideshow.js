@@ -1,28 +1,29 @@
 (function ($) {
-    $(function() {
-        $(window).on('scroll', function(){
-            if(!$('.sidebar-secondary').length){
+    $(function () {
+        $(window).on('scroll', function () {
+
+            if (!$('.sidebar-secondary').length && isDesktop()) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
-                if((document.body.clientHeight+$(window).scrollTop()-110) > sidebarElem.height()){
-                    if(sidebarElem.css('position') !== 'fixed'){
+                if ((document.body.clientHeight + $(window).scrollTop() - 110) > sidebarElem.height()) {
+                    if (sidebarElem.css('position') !== 'fixed') {
                         sidebarElem.css({
-                            'left': mainContent.offset().left+mainContent.width()+3+'px',
-                            'position' : 'fixed',
+                            'left': mainContent.offset().left + mainContent.width() + 3 + 'px',
+                            'position': 'fixed',
                             'bottom': 0
                         });
                     }
                 }
-                else{
+                else {
                     sidebarElem.css({
-                        'position' : 'static'
+                        'position': 'static'
                     });
                 }
             }
         });
 
-        $(window).on('resize', function(){
-            if(!$('.sidebar-secondary').length) {
+        $(window).on('resize', function () {
+            if (!$('.sidebar-secondary').length) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
                 if (sidebarElem.css('position') == 'fixed') {

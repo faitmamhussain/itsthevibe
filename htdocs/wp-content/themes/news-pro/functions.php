@@ -355,7 +355,7 @@ add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100
 //add revcontent exit pop (desktop only)
 function revcontent_exit_pop() {
 	if(!is_home()){
-		echo '<div id="rcjsload_sp4f5cm"></div><script src="http://publishers.revcontent.com/itsthevibe_revexit_desktop.js"></script>';
+		echo '<script>if(typeof(ExitPop) == "function"){ExitPop();}</script>';
 	}
 }
 add_action( 'wp_footer', 'revcontent_exit_pop', 1000 );

@@ -29,6 +29,16 @@ function isMobile() {
     return ((document.documentElement.clientWidth || document.body.clientWidth) < 668);
 }
 
+function isSmartPhone() {
+    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 320px) and (max-device-width : 480px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
+}
+function isTablet() {
+    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 768px) and (max-device-width : 1024px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
+}
+function isDesktop() {
+    return !(isSmartPhone() || isTablet())
+}
+
 function getRundomId() {
     return Math.floor(Math.random() * (99999 - 10000)) + 10000;
 }
@@ -89,7 +99,7 @@ function RevcontentAds() {
 
     //Below
     this.BelowPost = function (containerId) {
-        if(!jQuery('#'+containerId).length){
+        if (!jQuery('#' + containerId).length) {
             return;
         }
         var rand = getRundomId();
@@ -99,7 +109,7 @@ function RevcontentAds() {
             rcDefaultWidgetID = 30346;
             rcCatMap = '{outbrain:30581,taboola:30585,revcontent:30586,gemini:30587,adblade:30588,fb:30589,"3lift":30590,g4:30591,houseads:30592,ha:30592,taboola_organic:30593,pinterest:30594,instagram:30595,cad:30596,twitter:30597}';
         }
-        jQuery('#'+containerId).append('<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
+        jQuery('#' + containerId).append('<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
         '<script type="text/javascript">' +
         '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
         'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
@@ -170,6 +180,22 @@ function RevcontentAds() {
     this.RightRailEndSlideshow = function () {
         document.write('<div id="rcjsload_zn3arqb"></div>' +
         '<script src="http://publishers.revcontent.com/itsthevibe_internalitvendslideshowrr.js"></script>');
+    };
+
+    //Popup
+    this.ExitPop = function () {
+        if (isSmartPhone()) {
+            document.write('<div id="rcjsload_m32zbkr"></div>' +
+            '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_mobile.js"></script>');
+        }
+        else if (isTablet()) {
+            document.write('<div id="rcjsload_jl33waf"></div>' +
+            '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_tablet.js"></script>');
+        }
+        else {
+            document.write('<div id="rcjsload_lcuvtcb"></div>' +
+            '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_desktop.js"></script>');
+        }
     };
 }
 
@@ -279,35 +305,14 @@ function BelowEndSlideshow() {
  exit pop
  ******************************/
 function ExitPop() {
-    if (!isMobile()) {
-        if (
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'HOUSEADS' ||
-            utm_source_value.toUpperCase() == 'INSTAGRAM' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            (utm_source_value.toUpperCase() == 'TABOOLA' && utm_term_value != 'safe') ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE'
-        ) {
-            //Revcontent.ExitPopNew();
-        }
-        else if (
-            utm_source_value.toUpperCase() == undefined ||
-            utm_source_value.toUpperCase() == ''
-        ) {
-            //Revcontent.ExitPopInternal();
-        }
-        else if (
-            utm_source_value.toUpperCase() == 'YAHOO' ||
-            utm_source_value.toUpperCase() == 'GEMINI'
-        ) {
-            if (page_num >= 1) {
-                //Revcontent.ExitPopInternal();
-            }
-        }
+    if (
+        utm_source_value.toUpperCase() == 'TABOOLA' ||
+        utm_source_value.toUpperCase() == 'GEMINI' ||
+        utm_source_value.toUpperCase() == 'FB' ||
+        utm_source_value.toUpperCase() == 'GOOGLE' ||
+        utm_source_value.toUpperCase() == 'UNDEFINED' ||
+        utm_source_value.toUpperCase() == ''
+    ) {
+        Revcontent.ExitPop();
     }
 }
