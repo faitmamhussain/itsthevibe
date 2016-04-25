@@ -1494,12 +1494,12 @@ Site Header
 }
 .slideshow-header .slideshow-menu-left{
 	display: inline-block;
-	width: 65%;
+	width: 60%;
 	vertical-align: middle;
 }
 .slideshow-header .slideshow-menu-right{
 	display: inline-block;
-	width: 35%;
+	width: 40%;
 	vertical-align: middle;
 }
 

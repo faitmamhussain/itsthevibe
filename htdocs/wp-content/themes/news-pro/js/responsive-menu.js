@@ -89,6 +89,7 @@ jQuery(function( $ ){
 
 	var headerElem = $('header.site-header');
     var nextButton = $('.slideshow-menu-right a.slideshow-button');
+	var alm = $('#ajax-load-more');
 
     setupPostHref();
     handleScroll();
@@ -122,7 +123,9 @@ jQuery(function( $ ){
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
-        nextButton.attr('href', href);
+		if(typeof href != 'undefined' && href && href != "#"){
+			nextButton.attr('href', href);
+		}
     }
 
     function handleScroll(){

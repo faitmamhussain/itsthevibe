@@ -75,6 +75,8 @@ function itv_add_slideshow_paged(){
 
 	if( is_single() && is_numeric($last_url_segment) && $last_url_segment <= $custom_slide ) {
 
+		remove_action('genesis_entry_footer', 'mobile_nav', 99999);
+
 		$i = $last_url_segment - 1;
 
 		$back = ($i-1) > 0 ? $i : '';

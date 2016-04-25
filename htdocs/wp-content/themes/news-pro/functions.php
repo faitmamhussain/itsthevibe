@@ -465,7 +465,12 @@ function get_permalink_with_utm(){
 
 add_shortcode('slideshow-share', function($atts, $content){
 	$shareURL = get_site_url() . strtok($_SERVER["REQUEST_URI"],'?');
-	$post_title_full = get_the_title();
+	if(is_category()){
+		$post_title_full = single_cat_title('', false);
+	} else {
+		$post_title_full = get_the_title();
+	}
+
 	$post_title = substr($post_title_full, 0, (40 - 3));
 	$post_title = preg_replace('/ [^ ]*$/', ' ...', $post_title);
 
@@ -493,8 +498,12 @@ add_shortcode('slideshow-share', function($atts, $content){
 				<i class="fa fa-fw fa-whatsapp"></i>
 			</a>
 		</div>
-		<?php if(in_category('slideshows') && is_single()){ ?>
-		<a class="slideshow-button" href="#">
+		<?php
+		$next_post = get_next_post(true);
+		$next_link = in_category('slideshows') ? '#' : (! empty($next_post)) ? get_permalink($next_post->ID) : '';;
+		if(is_single() && ! empty($next_link)){
+		?>
+		<a class="slideshow-button" href="<?php echo $next_link;?>">
 			<span>Next</span>
 			<i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i>
 		</a>
@@ -517,23 +526,23 @@ if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 	function mobile_nav(){
 
 		// For single post
-		if( is_single() && !in_category('slideshows') ){
+		if( is_single() ){
 
 			?>
 			<div class="mobile-nav" >
 
-				<?php if( get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
-				<p class="prev-post" >
-					<span class="fa fa-2x fa-chevron-left" ></span>
-					<?php echo get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
-				</p>
+				<?php if( $prev_link = get_previous_post_link( $format = '%link', $link = 'Prev post', $in_same_term = true, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
+					<p class="prev-post" >
+						<span class="fa fa-2x fa-chevron-left" ></span>
+						<?php echo $prev_link; ?>
+					</p>
 				<?php } ?>
 
-				<?php if( get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
-				<p class="next-post" >
-					<?php echo get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); ?>
-					<span class="fa fa-2x fa-chevron-right" ></span>
-				</p>
+				<?php if( $next_link = get_next_post_link( $format = '%link', $link = 'Next post', $in_same_term = true, $excluded_terms = '', $taxonomy = 'category' ) ){ ?>
+					<p class="next-post" >
+						<?php echo $next_link; ?>
+						<span class="fa fa-2x fa-chevron-right" ></span>
+					</p>
 				<?php } ?>
 
 			</div>

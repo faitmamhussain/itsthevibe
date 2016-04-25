@@ -20,6 +20,13 @@ jQuery( document ).ready(function( $ ) {
                     if(title){
                         window.history.pushState({"pageTitle":title},'', hash);
                         document.title = title;
+
+                        if($('.slideshow-post-title').length){
+                            var shortTitle = title.substr(0, (40 - 3));
+                            shortTitle = shortTitle.replace(/ [^ ]*$/, ' ...');
+                            $('.slideshow-post-title').html(shortTitle);
+                        }
+
                     } else {
                         window.history.pushState('','', hash);
                     }
