@@ -25,18 +25,23 @@ function news_load_scripts() {
 
 	global $thisPageType, $post;
 
-	wp_enqueue_script( 'news-responsive-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/responsive-menu.js', array( 'jquery' ), '1.0.0' );
-	wp_enqueue_script( 'ScrollMagic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js' );
+	wp_enqueue_script( 'news-responsive-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/responsive-menu.js', array( 'jquery' ));
 	wp_enqueue_script( 'Swiper', '//cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js' );
-	wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ), '1.0.0' );
-	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'FB-share', get_bloginfo( 'stylesheet_directory' ) . '/js/FB-share.js', array( 'jquery' ));
 
 	if( !isMobile() || ( in_category('slideshows') && is_single() ) )
-		wp_enqueue_script( 'slideshow-custom-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow-custom-menu.js', array( 'jquery' ), '1.0.0' );
+		wp_enqueue_script( 'slideshow-custom-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow-custom-menu.js', array( 'jquery' ));
 
+	if(in_category('slideshows') && is_single()){
+		wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow.js', array( 'jquery' ));
+	}
+	else{
+		wp_enqueue_script( 'ScrollMagic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js' );
+		wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ));
+	}
 
 	//JS code for setting utm-params, mobile detection and helpers.
-	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'jquery' ), '1.0.0' );
+	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'jquery' ));
 	$translation_array = [
 		'id' => $post->ID,
 		'slug' => substr($post->post_name, 0, 40),
