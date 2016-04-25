@@ -65,6 +65,9 @@ add_image_size( 'home-bottom', 150, 150, TRUE );
 add_image_size( 'home-middle', 348, 180, TRUE );
 add_image_size( 'home-top', 740, 400, TRUE );
 
+//image for facebook preview
+add_image_size( 'fb-share', 600, 315, array( 'center', 'top' ) );
+
 //* Add support for custom background
 add_theme_support( 'custom-background' );
 
@@ -183,6 +186,14 @@ add_filter( 'genesis_attr_site-header', function($atts){
 //	}
 	return $atts;
 }, 100 );
+
+//wp seo open graph image size override for facebook
+add_filter('wpseo_opengraph_image_size', function($size){
+	if(has_image_size('fb-share')){
+		$size = 'fb-share';
+	}
+	return $size;
+});
 
 /** Force sidebar-content-sidebar layout */
 add_filter( 'genesis_pre_get_option_site_layout', 'itv_slideshow_layout' );
