@@ -95,11 +95,30 @@ jQuery(function( $ ){
     //$(window).scroll(handleScroll);
 
   	window.addEventListener("touchstart", handleScrollTouc, false);
-  	window.addEventListener( "touchmove", handleScrollTouc, false);
-  	window.addEventListener( "touchend", handleScrollTouc, false);
-  	window.addEventListener( "touchcancel", handleScrollTouc, false);
+  	window.addEventListener("touchmove", handleScrollTouc, false);
 
-  	window.addEventListener( "scroll", handleScroll, false);
+  	window.addEventListener( "touchend", function(){
+
+  		setTimeout(function(){
+
+  			handleScrollTouc();
+
+  		},200);
+
+  	}, false);
+
+  	window.addEventListener( "touchcancel", function(){
+
+  		setTimeout(function(){
+
+  			handleScrollTouc();
+
+  		},200);
+
+  	}, false);
+
+  	if( !detectmob() && window.innerWidth > 1023 )
+		window.addEventListener( "scroll", handleScroll, false);
 
     function setupPostHref(){
         var href = $('.slideshow-navigation a').last().attr('href');
@@ -121,6 +140,21 @@ jQuery(function( $ ){
         }
     }
 
+    function handleScrollTouc(){
+
+		if($('header.entry-header').length > 0){
+
+            var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
+            var content = $('header.entry-header').offset().top;
+
+            if( window.pageYOffset > 0 ){
+	            showSlideshowHeader();
+            }else{
+	            hideSlideshowHeader();
+            }
+        }
+  	}
+
     function showSlideshowHeader(){
         if(!headerElem.hasClass('slideshow-header')){
             headerElem.addClass('slideshow-header');
@@ -132,20 +166,5 @@ jQuery(function( $ ){
             headerElem.removeClass('slideshow-header');
         }
     }
-
-    function handleScrollTouc(){
-
-		if($('header.entry-header').length > 0){
-
-            var headerBottom = $('header.site-header').offset().top + $('header.site-header').height();
-            var content = $('header.entry-header').offset().top;
-
-            if( $(window).scrollTop() > 0 ){
-	            showSlideshowHeader();
-            }else{
-	            hideSlideshowHeader();
-            }
-        }
-  	}
 
 });
