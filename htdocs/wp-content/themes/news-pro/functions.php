@@ -240,6 +240,11 @@ function itv_remove_page_title(){
 	remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
 }
 
+//remove "Advertisement" from post excerpt (for twitter and facebook share)
+add_filter('get_the_excerpt', function($excerpt){
+	return trim(str_replace('Advertisement', '', $excerpt));
+}, 99999);
+
 //Remove post tags from all posts
 add_filter('genesis_post_meta', function($post_meta){
 	return str_replace('[post_tags]', '', $post_meta);
