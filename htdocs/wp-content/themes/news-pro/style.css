@@ -1510,7 +1510,7 @@ Site Header
 
 .slideshow-header a.slideshow-button{
 	display: inline-block;
-	padding: 5px 5px;
+	padding: 3px 5px 0px;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -2559,7 +2559,7 @@ Media Queries
 
 	.site-inner,
 	.site-header + section {
-		margin-top: 77px;
+		margin-top: 60px;
 	}
 
 	/*.featured-posts-widget > .featured-post:last-of-type {*/
@@ -2658,12 +2658,9 @@ Media Queries
 
 	.site-header .title-area{
 		float: left;
-		width: 115px;
-		padding: 6px 0 0 0;
 	}
 	.site-header .site-title a {
-		min-height: 50px;
-		background-size: contain !important;
+
 	}
 	.slideshow-header div.header-widget-area{
 		display: block !important;
@@ -2680,7 +2677,7 @@ Media Queries
 	}
 	.site-inner,
 	.site-header + section {
-		margin-top: 61px;
+		margin-top: 60px;
 	}
 }
 
@@ -2829,6 +2826,7 @@ Media Queries
 
 	a.post-image img{
 		width: 100%;
+		height: initial;
 	}
 
 	article a img.alignleft{
@@ -2888,8 +2886,8 @@ Media Queries
 		font-size: 18px;
 	}
 	.site-header .header-social-icons{
-		font-size: 28px;
-		padding-top: 6px;
+		font-size: 32px;
+		padding: 3px 0;
 	}
 	.facebook-icon{
 		margin: 6px 10px !important;
@@ -2897,9 +2895,26 @@ Media Queries
 	.post-share-buttons a{
 		padding-right: 10px !important;
 	}
+	.site-header .responsive-menu-icon {
+		padding: 9px 5px;
+		width: 50px;
+	}
 }
 @media only screen and (max-width: 360px){
 	.post-share-buttons .fb-share-button .hide-1,.post-share-buttons .fb-share-button .hide-2{
 		display: none;
+	}
+	.site-header {
+		padding: 0;
+	}
+	.site-header .header-social-icons{
+		font-size: 28px;
+		padding: 3px 0;
+	}
+}
+@media only screen and (max-width: 335px){
+	.content .entry-content .itv_ad_widget {
+		position: relative;
+		left: -15px;
 	}
 }
