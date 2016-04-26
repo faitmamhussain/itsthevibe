@@ -2,7 +2,7 @@
     $(function () {
         $(window).on('scroll', function () {
 
-            if (!$('.sidebar-secondary').length && isDesktop() && $('.sidebar-primary').is(':visible')) {
+            if (isDesktop() && $('.sidebar-primary').is(':visible')) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
                 if ((document.body.clientHeight + $(window).scrollTop() - 110) > sidebarElem.height()) {
@@ -23,14 +23,12 @@
         });
 
         $(window).on('resize', function () {
-            if (!$('.sidebar-secondary').length) {
-                var sidebarElem = $('.sidebar-primary');
-                var mainContent = $('main.content');
-                if (sidebarElem.css('position') == 'fixed') {
-                    sidebarElem.css({
-                        'left': mainContent.offset().left + mainContent.width() + 3 + 'px'
-                    });
-                }
+            var sidebarElem = $('.sidebar-primary');
+            var mainContent = $('main.content');
+            if (sidebarElem.css('position') == 'fixed') {
+                sidebarElem.css({
+                    'left': mainContent.offset().left + mainContent.width() + 3 + 'px'
+                });
             }
         });
     });
