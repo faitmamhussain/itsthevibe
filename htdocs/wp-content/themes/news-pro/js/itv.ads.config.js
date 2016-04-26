@@ -39,7 +39,7 @@ function isDesktop() {
     return !(isSmartPhone() || isTablet())
 }
 
-function getRundomId() {
+function getRandomId() {
     return Math.floor(Math.random() * (99999 - 10000)) + 10000;
 }
 
@@ -102,7 +102,7 @@ function RevcontentAds() {
         if (!jQuery('#' + containerId).length) {
             return;
         }
-        var rand = getRundomId();
+        var rand = getRandomId();
         var rcDefaultWidgetID = 29016;
         var rcCatMap = '{outbrain:30567,taboola:30568,revcontent:30569,gemini:30570,adblade:30571,fb:30572,"3lift":30573,g4:30574,houseads:30575,ha:30575,taboola_organic:30576,pinterest:30577,instagram:30578,cad:30579,twitter:30580}';
         if (isMobile()) {
@@ -124,7 +124,7 @@ function RevcontentAds() {
     };
 
     this.BelowSlideshow = function () {
-        var rand = getRundomId();
+        var rand = getRandomId();
         var rcDefaultWidgetID = 29335;
         var rcCatMap = '{outbrain:30600,taboola:30601,revcontent:30602,gemini:30603,adblade:30604,fb:30605,"3lift":30606,g4:30607,houseads:30608,ha:30608,taboola_organic:30609,pinterest:30610,instagram:30611,cad:30612,twitter:30613}';
         if (isMobile()) {
@@ -146,7 +146,7 @@ function RevcontentAds() {
     };
 
     this.BelowEndSlideshow = function () {
-        var rand = getRundomId();
+        var rand = getRandomId();
         var rcDefaultWidgetID = 29333;
         var rcCatMap = '{}';
         if (isMobile()) {
