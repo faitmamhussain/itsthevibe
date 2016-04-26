@@ -58,6 +58,9 @@
 		slots['sidebarMidAd'] = googletag.defineSlot('/76778142/Itsthevibe_Sidebar_Ad_Mid', [[300, 600], [160, 600], [300, 250]], 'div-gpt-ad-1461545772821-1').addService(googletag.pubads());
 		slots['sidebarTopAd'] = googletag.defineSlot('/76778142/Itsthevibe_Sidebar_Ad_Top', [300, 250], 'div-gpt-ad-1461545772821-2').addService(googletag.pubads());
 
+		slots['sidebarPostTopAd'] = googletag.defineSlot('/76778142/Itsthevibe_PostPage_Ad_Top', [300, 250], 'div-gpt-ad-1461545772821-22').addService(googletag.pubads());
+		slots['sidebarPostMidAd'] = googletag.defineSlot('/76778142/Itsthevibe_PostPage_Ad_Mid', [[300, 600], [160, 600], [300, 250]], 'div-gpt-ad-1461545772821-23').addService(googletag.pubads());
+
 		googletag.pubads().setTargeting('utm_source', utm_source_value);
 		googletag.pubads().setTargeting('utm_camp', utm_campaign_value);
 		googletag.pubads().setTargeting('utm_medium', utm_medium_value);
