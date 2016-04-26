@@ -214,6 +214,17 @@ function itv_slideshow_layout( $opt ) {
 	return $opt;
 }
 
+//hide the main menu on first page load
+add_filter('wp_nav_menu', function($nav_menu, $args){
+	if( ! empty($args->menu)
+	    && is_object($args->menu)
+	    && ! empty($args->menu->slug)
+	    && $args->menu->slug == 'main-navigation'){
+		$nav_menu = '<style type="text/css">@media only screen and (max-width: 1023px){#menu-main-navigation{display: none;}}</style>'.$nav_menu;
+	}
+	return $nav_menu;
+}, 15, 2);
+
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
 	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
