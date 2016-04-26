@@ -320,7 +320,7 @@ function add_featured_image_to_post($content) {
 
 		//check if there is no img tag or shortcode in beginning
 		if(empty($img_pos) || $img_pos > 100) {
-			$content = get_the_post_thumbnail( null, 'post-image' ).$content;
+			$content = '<p>'.get_the_post_thumbnail( null, 'post-image' ).'</p>'.$content;
 		}
 	}
 	return $content;
