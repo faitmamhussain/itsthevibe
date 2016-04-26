@@ -122,6 +122,7 @@ function itv_add_slideshow_paged(){
 			<?php if( ! empty($image_information_footer) ):?>
 				<p class="slideshow-info-footer"><?php echo $image_information_footer; ?></p>
 			<?php endif;?>
+			<?php if(function_exists ('adinserter')) echo adinserter(12); ?>
 			<div class="slideshow-share">
 				<?php if(is_single())include_once('fb/FB-share-like.php');?>
 			</div>
