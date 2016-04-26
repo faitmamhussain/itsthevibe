@@ -88,8 +88,9 @@ function itv_add_slideshow_paged(){
 		$image_information_footer = empty($post_meta['custom_slide_'.$i.'_image_information_footer'][0]) ? '' : $post_meta['custom_slide_'.$i.'_image_information_footer'][0];
 		$final_page = empty($post_meta['final_page'][0]) ? get_site_url().'/end-slideshow' : $post_meta['final_page'][0];
 		$shareURL = $post_link.$i;
+		$next = (($i+1) >= $custom_slide) ? $final_page : $post_link.($i+2);
 
-		$slide_image = '<a href="'.$post_link.($i+2).'">'.wp_get_attachment_image((int)$image, 'full').'</a>';
+		$slide_image = '<a href="'.$next.'">'.wp_get_attachment_image((int)$image, 'full').'</a>';
 
 		?>
 		<div class="slideshow-wrap">
@@ -100,11 +101,7 @@ function itv_add_slideshow_paged(){
 				<a class="slideshow-button one-sixth first back desktop-only" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<h2 class="four-sixths"><?php echo $image_title;?></h2>
 				<a class="slideshow-button one-sixth first back mobile-only" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
-				<?php if( ($i+1) == $custom_slide ):?>
-					<a class="slideshow-button one-sixth next" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
-				<?php else:?>
-					<a class="slideshow-button one-sixth next" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
-				<?php endif; ?>
+				<a class="slideshow-button one-sixth next" href="<?php echo $next;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 			</div>
 			<div class="slideshow-image">
 				<?php echo $slide_image; ?>
@@ -129,11 +126,7 @@ function itv_add_slideshow_paged(){
 			<div class="slideshow-navigation">
 				<a class="slideshow-button one-sixth first back" href="<?php echo $post_link.$back;?>"><i class="fa fa-2x fa-chevron-left" aria-hidden="true"></i> <span>Back</span></a>
 				<div class="slideshow-counter four-sixths"><?php echo ($i+1).' of '.$custom_slide; ?></div>
-				<?php if( ($i+1) == $custom_slide ):?>
-					<a class="slideshow-button one-sixth next" href="<?php echo $final_page;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
-				<?php else:?>
-					<a class="slideshow-button one-sixth next" href="<?php echo $post_link.($i+2);?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
-				<?php endif; ?>
+				<a class="slideshow-button one-sixth next" href="<?php echo $next;?>"><span>Next</span> <i class="fa fa-2x fa-chevron-right" aria-hidden="true"></i></a>
 			</div>
 		</div>
 		<?php
