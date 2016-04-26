@@ -44,7 +44,7 @@ jQuery( document ).ready(function( $ ) {
 
     if(!isMobile() && typeof(refreshSidebarMidAd) == "function"){
         setInterval(function(){
-            refreshSidebarMidAd();
+            //refreshSidebarMidAd(); - uncomment when ads are ready
         }, 10000);
     }
 
@@ -56,10 +56,7 @@ jQuery( document ).ready(function( $ ) {
             if($('.site-header').length){
                 addHeight += $('.site-header').height();
             }
-            if($('#wpadminbar').length){
-                addHeight += $('#wpadminbar').height()
-            }
-            var elemOffset = elem.position().top - addHeight;
+            var elemOffset = $(".sidebar-primary section:nth-child(1)").height() + addHeight - 20;
             var controller = new ScrollMagic.Controller();
             var scene = new ScrollMagic.Scene({offset: elemOffset})
                 .setPin(".sidebar-primary section:nth-child(2)")
