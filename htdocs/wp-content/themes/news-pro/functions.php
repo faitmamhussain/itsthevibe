@@ -203,12 +203,12 @@ function itv_slideshow_layout( $opt ) {
 
 		$url = $_SERVER['REQUEST_URI'];
 		$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
-		$first_page_allowed_source = ['taboola', 'outbrain', 'adblade', 'revcontent'];
-		$second_page_allowed_source = ['pinterest', 'fb', 'gemini', 'google', 'yahoo'];
+		$first_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade'];
+		$second_page_allowed_source = ['fb', 'google', 'edge', 'pinterest', 'gemini', 'yahoo', 'g4', 'shrd', 'bgard'];
 
 		//page 1
 		if(is_page('end-slideshow') || (!is_numeric($last_url_segment) && in_array($utm_source, $first_page_allowed_source)) || (is_numeric($last_url_segment) && in_array($utm_source, $second_page_allowed_source))){
-			$opt = 'sidebar-content-sidebar'; // You can change this to any Genesis
+			$opt = 'sidebar-content-sidebar'; //set layout with left sidebar
 		}
 	}
 	return $opt;
