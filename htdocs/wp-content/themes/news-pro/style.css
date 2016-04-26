@@ -248,8 +248,7 @@ cite {
 }
 
 .home .itv_ad_widget:first-child{
-    margin-top: 70px;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 h4.ad-header {
@@ -2627,9 +2626,6 @@ Media Queries
 	.itv_ad_widget p, .itv_ad_widget div{
 		width: 99%;
 	}
-    .home .itv_ad_widget:first-child{
-        margin-top: 80px;
-    }
 
 	.entry-content p,
 	.post-share-buttons{
@@ -2686,10 +2682,6 @@ Media Queries
 	.site-header + section {
 		margin-top: 61px;
 	}
-
-    .home .itv_ad_widget:first-child{
-        margin-top: 70px;
-    }
 }
 
 @media only screen and (max-width: 600px) {
