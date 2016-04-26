@@ -808,9 +808,8 @@ Widgets
 .featured-content p {
 	margin-bottom: 20px;
 }
-.one-third a img{
-	width: 255px;
-	height: 255px;
+.home-page-post{
+	text-align: center;
 }
 .one-third, .rc-branding-label{
 	padding: 10px 0;
@@ -834,7 +833,7 @@ Plugins
 /* AJAX Load More */
 
 .home-page-post .post-image {
-	display: block;
+	display: inline-block;
 }
 
 .home-page-post .posted-on {
@@ -849,6 +848,9 @@ Plugins
 
 .home-page-post .post-description {
 	margin-top: 8px;
+	max-width: 300px;
+	display: inline-block;
+	text-align: justify;
 }
 
 .alm-btn-wrap {
@@ -2824,9 +2826,17 @@ Media Queries
 		padding: 15px;
 	}
 
-	a.post-image img{
+	.home-page-post a.post-image {
+		display: block;
+	}
+
+	.home-page-post a.post-image img{
 		width: 100%;
-		height: initial;
+	}
+
+	.home-page-post .post-description {
+		margin-top: 8px;
+		max-width: inherit;
 	}
 
 	article a img.alignleft{
