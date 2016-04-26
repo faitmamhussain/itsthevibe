@@ -55,8 +55,8 @@
 		slots['footerAd'] = googletag.defineSlot('/76778142/Itsthevibe_Footer_Ad', [[320, 100], [320, 50], [728, 90], [300, 250]], 'div-gpt-ad-1460507361888-2').addService(googletag.pubads());
 		slots['leftSidebarAd'] = googletag.defineSlot('/76778142/Itsthevibe_Left_Sidebar_Ad_2', [160, 600], 'div-gpt-ad-1460507361888-9').defineSizeMapping(mapping5).addService(googletag.pubads());
 		slots['sidebarBottomAd'] = googletag.defineSlot('/76778142/Itsthevibe_Sidebar_Ad_Bottom', [300, 250], 'div-gpt-ad-1460507361888-10').addService(googletag.pubads());
-		slots['sidebarMidAd'] = googletag.defineSlot('/76778142/Itsthevibe_PostPage_Ad_Mid', [[300, 600], [160, 600], [300, 250]], 'div-gpt-ad-1461545772821-1').addService(googletag.pubads());
-		slots['sidebarTopAd'] = googletag.defineSlot('/76778142/Itsthevibe_PostPage_Ad_Top', [300, 250], 'div-gpt-ad-1461545772821-2').addService(googletag.pubads());
+		slots['sidebarMidAd'] = googletag.defineSlot('/76778142/Itsthevibe_Sidebar_Ad_Mid', [[300, 600], [160, 600], [300, 250]], 'div-gpt-ad-1461545772821-1').addService(googletag.pubads());
+		slots['sidebarTopAd'] = googletag.defineSlot('/76778142/Itsthevibe_Sidebar_Ad_Top', [300, 250], 'div-gpt-ad-1461545772821-2').addService(googletag.pubads());
 
 		googletag.pubads().setTargeting('utm_source', utm_source_value);
 		googletag.pubads().setTargeting('utm_camp', utm_campaign_value);
