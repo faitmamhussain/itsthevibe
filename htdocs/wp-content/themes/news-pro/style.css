@@ -2870,7 +2870,7 @@ Media Queries
         width: 55%;
     }
     .post-share-buttons{
-    	margin: 10px 0 20px 0 !important;
+    	margin: 10px 0 10px 0 !important;
     }
 }
 
@@ -2890,9 +2890,6 @@ Media Queries
 	.site-header .header-social-icons{
 		font-size: 28px;
 		padding-top: 6px;
-	}
-	.post-share-buttons .twitter-share-button, .post-share-buttons .pinterest-share-button, .post-share-buttons .whatsapp-share-button{
-		margin-top: 10px;
 	}
 	.facebook-icon{
 		margin: 6px 10px !important;

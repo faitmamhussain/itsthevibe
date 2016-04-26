@@ -1,6 +1,6 @@
 <style type="text/css">
 	.post-share-buttons{
-		margin: 20px 20px 5px 20px;
+		margin: 20px 20px 0 20px;
 	}
 	.post-share-buttons a{
 		display: inline-block;
@@ -12,6 +12,7 @@
 	    border-radius: 6px;
 	    font-weight: 900;
 	    color: #ffffff;
+		margin-bottom: 10px;
 	}
 	.post-share-buttons .fb-share-button{
 		background-color: #3c56a2;

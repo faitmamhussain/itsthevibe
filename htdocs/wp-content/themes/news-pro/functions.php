@@ -326,6 +326,28 @@ function add_featured_image_to_post($content) {
 	return $content;
 }
 
+// Make all images the link to next post on mobile pages
+if(isMobile()){
+	add_filter( 'the_content', function($content) {
+		if ( is_singular() && ! is_page() ){
+			$splits = preg_split('/(<img[^>]+\>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			if(count($splits) >= 3){
+				$next_post = get_next_post(true);
+				$next_link = get_permalink($next_post->ID);
+				if(! empty($next_post)){
+					foreach($splits as &$split){
+						if(strpos($split,'<img') === 0){
+							$split = '<a href="'.$next_link.'">'.$split.'</a>';
+						}
+					}
+					$content = implode('',$splits);
+				}
+			}
+		}
+		return $content;
+	}, 20);
+}
+
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
 function add_ad_block_after_post(){
@@ -516,7 +538,7 @@ add_shortcode('slideshow-share', function($atts, $content){
 		</div>
 		<?php
 		$next_post = get_next_post(true);
-		$next_link = in_category('slideshows') ? '#' : (! empty($next_post)) ? get_permalink($next_post->ID) : '';;
+		$next_link = in_category('slideshows') ? '#' : (! empty($next_post)) ? get_permalink($next_post->ID) : '';
 		if(is_single() && ! empty($next_link)){
 		?>
 		<a class="slideshow-button" href="<?php echo $next_link;?>">
