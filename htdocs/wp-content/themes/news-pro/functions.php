@@ -32,7 +32,7 @@ function news_load_scripts() {
 	if( !isMobile() || ( in_category('slideshows') && is_single() ) )
 		wp_enqueue_script( 'slideshow-custom-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow-custom-menu.js', array( 'jquery' ));
 
-	if(in_category('slideshows') && is_single()){
+	if(in_category('slideshows') && is_single() || is_page('end-slideshow')){
 		wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow.js', array( 'jquery' ));
 	}
 	else{
