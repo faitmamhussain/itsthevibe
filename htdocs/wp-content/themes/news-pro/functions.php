@@ -260,8 +260,11 @@ function add_infinite_scroll(){
 		$cat = itv_get_primary_category($post);
 
 		if( class_exists('AjaxLoadMore') )
-			echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" container_type="div"]');
-	
+			if(isMobile()){
+				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="6" max_pages="1" repeater="repeater"]');
+			} else {
+				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" container_type="div"]');
+			}
 	}
 }
 
@@ -554,10 +557,21 @@ add_shortcode('slideshow-share', function($atts, $content){
 
 if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 
-	remove_shortcode( 'ajax_load_more' );
-	add_shortcode('ajax_load_more', function(){
-	   return '';
-	});
+	if(is_page()){
+		add_filter( "alm_modify_query_args", function($args, $slug){
+
+			if(isset($args['posts_per_page'])){
+				$args['posts_per_page'] = 6;
+			}
+
+			//allow only one page
+			if( ! empty($args['offset'])){
+				return array();
+			}
+
+			return $args;
+		}, 10, 2 );
+	}
 
 	add_action('genesis_entry_footer', 'mobile_nav', 99999);
 
