@@ -323,33 +323,35 @@ function add_featured_image_to_post($content) {
 
 		//check if there is no img tag or shortcode in beginning
 		if(empty($img_pos) || $img_pos > 100) {
-			$content = '<p>'.get_the_post_thumbnail( null, 'post-image' ).'</p>'.$content;
+			$content = get_the_post_thumbnail( null, 'post-image' ).$content;
 		}
 	}
 	return $content;
 }
 
-// Make all images the link to next post on mobile pages
-if(isMobile()){
-	add_filter( 'the_content', function($content) {
-		if ( is_singular() && ! is_page() ){
-			$splits = preg_split('/(<img[^>]+\>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-			if(count($splits) >= 3){
-				$next_post = get_next_post(true);
-				$next_link = get_permalink($next_post->ID);
-				if(! empty($next_post)){
-					foreach($splits as &$split){
-						if(strpos($split,'<img') === 0){
-							$split = '<a href="'.$next_link.'">'.$split.'</a>';
+// Make all images the link to next post on mobile pages, wrap images in <p> tag for ad inserter
+add_filter( 'the_content', function($content) {
+	if ( is_singular() && ! is_page() ){
+		$splits = preg_split('/(<img[^>]+\>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
+		if(count($splits) >= 3){
+			$next_post = get_next_post(true);
+			$next_link = get_permalink($next_post->ID);
+			if(! empty($next_post)){
+				foreach($splits as &$split){
+					if(strpos($split,'<img') === 0){
+						if(isMobile()){
+							$split = '<p><a href="'.$next_link.'">'.$split.'</a></p>';
+						} else {
+							$split = '<p>'.$split.'</p>';
 						}
 					}
-					$content = implode('',$splits);
 				}
+				$content = implode('',$splits);
 			}
 		}
-		return $content;
-	}, 20);
-}
+	}
+	return $content;
+}, 20);
 
 add_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
 
