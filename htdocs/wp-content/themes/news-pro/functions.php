@@ -379,7 +379,7 @@ function add_google_analytics(){
 		ga('create', 'UA-75246817-1', 'auto');
 	<?php
 	global $itv_has_slideshows_cat;
-	if($itv_has_slideshows_cat): ?>
+	if($itv_has_slideshows_cat || is_page('End Slideshow')): ?>
 		ga('slideshowTracker.send', 'pageview');
 	<?php else: ?>
 		ga('send', 'pageview');
