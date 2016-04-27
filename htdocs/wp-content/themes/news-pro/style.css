@@ -2330,6 +2330,14 @@ Theme Colors
     display: none;
 }
 
+.wp-video-shortcode {
+    max-width: 100%;
+}
+
+.wp-audio-shortcode {
+    max-width: 100%;
+}
+
 /*
 Media Queries
 ---------------------------------------------------------------------------------------------------- */

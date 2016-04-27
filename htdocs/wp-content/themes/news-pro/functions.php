@@ -206,7 +206,7 @@ function itv_slideshow_layout( $opt ) {
 		$first_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade', 'twitter'];
 		$second_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade', 'twitter', 'fb', 'gemini', 'google', 'edge', 'pinterest', 'yahoo', 'g4', 'shrd', 'bgard'];
 
-		//page 1
+		//page 1 & page 2
 		if(is_page('end-slideshow') || (!is_numeric($last_url_segment) && in_array($utm_source, $first_page_allowed_source)) || (is_numeric($last_url_segment) && in_array($utm_source, $second_page_allowed_source))){
 			$opt = 'sidebar-content-sidebar'; //set layout with left sidebar
 		}
@@ -414,7 +414,12 @@ add_filter( 'genesis_attr_entry-meta-after-content', function(){return '';}, 100
 
 //add revcontent exit pop (desktop only)
 function revcontent_exit_pop() {
-	if(!is_home()){
+	$utm_source = (isset($_GET['utm_source']) ? strtolower($_GET['utm_source']) : strtolower($_COOKIE['itv_utm_source']));
+	$exclude_utm_source = ['gemini', 'yahoo'];
+	$url = $_SERVER['REQUEST_URI'];
+	$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
+
+	if(!is_home() && !(in_category('slideshows') && !is_numeric($last_url_segment) && in_array($utm_source, $exclude_utm_source))){
 		echo '<script>if(typeof(ExitPop) == "function"){ExitPop();}</script>';
 	}
 }
