@@ -415,12 +415,12 @@ function add_google_analytics(){
 		);
 	?>
 		ga('<?php echo $tracker; ?>set', {
-			page: '<?php echo $slug; ?>',
-			title: '<?php echo $title; ?>',
+			page: <?php echo json_encode($slug); ?>,
+			title: <?php echo json_encode($title); ?>,
 			<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
 				foreach($ga_utm as $utm => $ga){
 					if(isset($custom_utm_params[$utm])){
-						echo "$ga : '$custom_utm_params[$utm]',";
+						echo "$ga : ".json_encode($custom_utm_params[$utm]).",";
 					} else {
 						echo "$ga : '',";
 					}
