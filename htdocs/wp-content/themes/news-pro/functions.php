@@ -204,7 +204,7 @@ function itv_slideshow_layout( $opt ) {
 		$url = $_SERVER['REQUEST_URI'];
 		$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
 		$first_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade', 'twitter'];
-		$second_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade', 'twitter'];
+		$second_page_allowed_source = ['outbrain', 'taboola', 'taboola_native', 'taboola_organic', 'revcontent', '3lift', 'brt', 'instagram', 'cad', 'adblade', 'twitter', 'fb', 'gemini', 'google', 'edge', 'pinterest', 'yahoo', 'g4', 'shrd', 'bgard'];
 
 		//page 1
 		if(is_page('end-slideshow') || (!is_numeric($last_url_segment) && in_array($utm_source, $first_page_allowed_source)) || (is_numeric($last_url_segment) && in_array($utm_source, $second_page_allowed_source))){
@@ -323,7 +323,7 @@ function add_featured_image_to_post($content) {
 
 		//check if there is no img tag or shortcode in beginning
 		if(empty($img_pos) || $img_pos > 100) {
-			$content = get_the_post_thumbnail( null, 'post-image' ).$content;
+			$content = '<p>'.get_the_post_thumbnail( null, 'post-image' ).'</p>'.$content;
 		}
 	}
 	return $content;
