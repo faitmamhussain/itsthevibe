@@ -14,7 +14,8 @@
                         });
                     }
                 }
-                else {
+
+                if(document.body.clientHeight + $(window).scrollTop() + 100 < sidebarElem.height()){
                     sidebarElem.css({
                         'position': 'static'
                     });
