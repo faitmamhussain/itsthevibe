@@ -175,6 +175,30 @@ add_action( 'genesis_doctype', function(){
 	<?php
 }, 5 );
 
+//get utm params from cookies
+add_action('genesis_doctype', 'get_utm_params');
+function get_utm_params(){
+	global $custom_utm_params;
+
+	$custom_utm_params = array();
+
+	$targeting = array(
+		'utm_source',
+		'utm_campaign',
+		'utm_medium',
+		'utm_content',
+		'utm_term',
+		'test'
+	);
+
+	foreach($targeting as $target){
+		$param = isset($_COOKIE['itv_'.$target]) ? $_COOKIE['itv_'.$target] : false;
+		if(!empty($param)){
+			$custom_utm_params[$target] = $param;
+		}
+	}
+}
+
 //make header full width on all pages
 add_filter( 'genesis_attr_site-header', function($atts){
 //	if(is_front_page()){
@@ -378,12 +402,33 @@ function add_google_analytics(){
 		ga('create', 'UA-76802967-1', 'auto', 'slideshowTracker');
 		ga('create', 'UA-75246817-1', 'auto');
 	<?php
-	global $itv_has_slideshows_cat;
-	if($itv_has_slideshows_cat || is_page('End Slideshow')): ?>
-		ga('slideshowTracker.send', 'pageview');
-	<?php else: ?>
-		ga('send', 'pageview');
-	<?php endif; ?></script>
+		global $post, $itv_has_slideshows_cat, $custom_utm_params;
+		$title = $post->post_title;
+		$slug = $post->post_name;
+		$tracker = ($itv_has_slideshows_cat || is_page('End Slideshow')) ? 'slideshowTracker.' : '';
+		$ga_utm = array(
+			'utm_source' => 'campaignSource',
+			'utm_campaign' => 'campaignName',
+			'utm_medium' => 'campaignMedium',
+			'utm_content' => 'campaignContent',
+			'utm_term' => 'campaignKeyword',
+		);
+	?>
+		ga('<?php echo $tracker; ?>set', {
+			page: '<?php echo $slug; ?>',
+			title: '<?php echo $title; ?>',
+			<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
+				foreach($ga_utm as $utm => $ga){
+					if(isset($custom_utm_params[$utm])){
+						echo "$ga : '$custom_utm_params[$utm]',";
+					} else {
+						echo "$ga : '',";
+					}
+				}
+			} ?>
+		});
+		ga('<?php echo $tracker; ?>send', 'pageview');
+	</script>
 	<script async src='https://www.google-analytics.com/analytics.js'></script>
 	<?php
 }
