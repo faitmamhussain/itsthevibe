@@ -3,7 +3,6 @@
 add_action('genesis_before_entry', function(){
 	global $itv_has_slideshows_cat;
 	$post = get_post();
-	$itv_has_slideshows_cat = in_category('slideshows', $post);
 
 	if($itv_has_slideshows_cat){
 

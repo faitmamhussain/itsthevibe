@@ -368,6 +368,25 @@ j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
 })(window,document,\'script\',\'dataLayer\',\'GTM-P8TJTK\');</script>';
 }
 
+add_action('genesis_before', 'add_google_analytics', 6);
+
+function add_google_analytics(){
+	?><script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-76802967-1', 'auto', 'slideshowTracker');
+		ga('create', 'UA-75246817-1', 'auto');
+	<?php
+	global $itv_has_slideshows_cat;
+	if($itv_has_slideshows_cat): ?>
+		ga('slideshowTracker.send', 'pageview');
+	<?php else: ?>
+		ga('send', 'pageview');
+	<?php endif; ?></script><?php
+}
+
 function itv_get_primary_category($post = null){
 
 	$post = get_post($post);
@@ -453,7 +472,10 @@ add_filter('alm_modify_query_args', function($args, $slug){
 remove_filter('post_limits', 'mpo_change_limit' );
 
 add_action('genesis_doctype', function(){
-	global $thisPageType;
+	global $thisPageType, $itv_has_slideshows_cat;
+
+	$itv_has_slideshows_cat = in_category('slideshows');
+
 	$pageChecks = array(
 		'ITV_Home' 			=> is_front_page(),
 		'ITV_404' 			=> (is_page('404page') || is_404()),
