@@ -654,3 +654,10 @@ function itv_footer(){
 	include_once( get_stylesheet_directory() . '/lib/footer.php' );
 }
 add_action( 'genesis_after', 'itv_footer');
+
+//cover for embed
+add_filter( 'embed_oembed_html', 'itv_custom_oembed_filter', 10, 4 ) ;
+function itv_custom_oembed_filter($html, $url, $attr, $post_ID) {
+	$return = '<div class="video-container">'.$html.'</div>';
+	return $return;
+}
