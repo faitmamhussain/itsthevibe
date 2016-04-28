@@ -15,6 +15,9 @@ jQuery( document ).ready(function( $ ) {
                 var distanceBottom = distanceTop + $(this).height();
                 var hash = $(this).data('anchor-url');
                 var title = $(this).data('anchor-title');
+                var tracker = $(this).data('anchor-tracker');
+                var post_title = $(this).data('anchor-post-title');
+                var slug = $(this).data('anchor-slug');
 
                 if (distanceTop < offset && distanceBottom > offset && currentHash != hash) {
                     if(title){
@@ -26,6 +29,8 @@ jQuery( document ).ready(function( $ ) {
                             shortTitle = shortTitle.replace(/ [^ ]*$/, ' ...');
                             $('.slideshow-post-title').html(shortTitle);
                         }
+
+                        send_ga_event(tracker, post_title, slug);
 
                     } else {
                         window.history.pushState('','', hash);
@@ -64,4 +69,19 @@ jQuery( document ).ready(function( $ ) {
         }
     }, 2000);
 
+    function send_ga_event(tracker, title, slug){
+        if(typeof tracker == 'undefined'){
+            tracker = '';
+        }
+        ga(tracker+'set', {
+            page: slug,
+            title: title,
+            campaignSource: utm_source_value,
+            campaignName: utm_campaign_value,
+            campaignMedium: utm_medium_value,
+            campaignContent: utm_content_value,
+            campaignKeyword: utm_term_value,
+        });
+        ga(tracker+'send', 'pageview');
+    }
 });
