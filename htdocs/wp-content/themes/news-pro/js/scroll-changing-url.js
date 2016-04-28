@@ -42,7 +42,7 @@ jQuery( document ).ready(function( $ ) {
         });
     }
 
-    if(!isMobile() && typeof(refreshSidebarMidAd) == "function"){
+    if(!ITV_OBJ.isMobile && typeof(refreshSidebarMidAd) == "function"){
         setInterval(function(){
             //refreshSidebarMidAd(); - uncomment when ads are ready
         }, 10000);

@@ -1,4 +1,7 @@
 //querystring params
+
+var ITV_OBJ = ITV_OBJ || {};
+
 if( typeof String.prototype.getParamValue === "undefined" ){
     String.prototype.hashCode = function(){
         var hash = 0, i, char;
@@ -101,7 +104,10 @@ for(var x = 0; x < itvtargeting.length; x++){
 var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 var minDesktopWidth = 1003;
-var isMobile = (Math.max(viewportWidth, viewportHeight) < minDesktopWidth);
+ITV_OBJ.isMobile = isMobile();
+ITV_OBJ.isSmartPhone = isSmartPhone();
+ITV_OBJ.isTablet = isTablet();
+ITV_OBJ.isDesktop = isDesktop();
 
 var currentPageUrl = window.location.href.split('?')[0];
 
@@ -135,6 +141,20 @@ function getAndUpdateUserId(){
     }
     document.cookie = "itv_user_id="+usr_id+"; path=/; expires=" + expiration_date.toGMTString();
     return usr_id;
+}
+
+function isMobile() {
+    return ((document.documentElement.clientWidth || document.body.clientWidth) < 668);
+}
+
+function isSmartPhone() {
+    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 320px) and (max-device-width : 480px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
+}
+function isTablet() {
+    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 768px) and (max-device-width : 1024px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
+}
+function isDesktop() {
+    return !(isSmartPhone() || isTablet())
 }
 
 (function ($) {

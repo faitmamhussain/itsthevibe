@@ -24,27 +24,17 @@ else {
         this_utm_term = 'NS';
     }
 }
-
-function isMobile() {
-    return ((document.documentElement.clientWidth || document.body.clientWidth) < 668);
-}
-
-function isSmartPhone() {
-    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 320px) and (max-device-width : 480px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
-}
-function isTablet() {
-    return (window.matchMedia && window.matchMedia(" only screen and (min-device-width : 768px) and (max-device-width : 1024px)").matches || /(iPhone|iPod)/g.test(navigator.userAgent));
-}
-function isDesktop() {
-    return !(isSmartPhone() || isTablet())
-}
+var utm_source = this_utm_source_value;
 
 function getRandomId() {
     return Math.floor(Math.random() * (99999 - 10000)) + 10000;
 }
 
 function TaboolaAds() {
-    this.BelowPost = function (forceSafe, forceNS) {
+    this.BelowPost = function (containerId, forceSafe, forceNS) {
+        if (!jQuery('#' + containerId).length) {
+            return;
+        }
         var rand = getRandomId();
         var term = this_utm_term;
         if (forceSafe) {
@@ -54,17 +44,17 @@ function TaboolaAds() {
             term = 'NS';
         }
 
-        if (!isMobile()) {
-            document.write('<div id="taboola-below-article-thumbnails-'+rand+'"></div>' +
+        if (!ITV_OBJ.isMobile) {
+            jQuery('#' + containerId).append('<div id="taboola-below-article-thumbnails-' + rand + '"></div>' +
             '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-a",container:"taboola-below-article-thumbnails",placement:"ITV - '
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-a",container:"taboola-below-article-thumbnails-' + rand + '",placement:"ITV - '
             + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + '",target_type:"mix"});' +
             '</script>');
         }
         else {
-            document.write('<div id="mobile-taboola-below-article-thumbnails"></div>' +
+            jQuery('#' + containerId).append('<div id="mobile-taboola-below-article-thumbnails-' + rand + '"></div>' +
             '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"mobile-taboola-below-article-thumbnails-'+rand+'",placement:"ITV - '
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"mobile-taboola-below-article-thumbnails-' + rand + '",placement:"ITV - '
             + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + ' - Mobile",target_type:"mix"});' +
             '</script>');
         }
@@ -79,10 +69,10 @@ function TaboolaAds() {
         if (forceNS) {
             term = 'NS';
         }
-        if (!isMobile()) {
-            document.write('<div id="taboola-below-gallery-thumbnails-'+rand+'"></div>' +
+        if (!ITV_OBJ.isMobile) {
+            document.write('<div id="taboola-below-gallery-thumbnails-' + rand + '"></div>' +
             '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-b",container:"taboola-below-gallery-thumbnails-'+rand+'",placement:"ITV - ' +
+            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-b",container:"taboola-below-gallery-thumbnails-' + rand + '",placement:"ITV - ' +
             this_utm_source_value + ' - Below Slideshow - Sponsored - ' + term + '",target_type:"mix"});' +
             '</script>');
         }
@@ -90,9 +80,9 @@ function TaboolaAds() {
 
     this.BelowEndSlideshow = function () {
         var rand = getRandomId();
-        document.write('<div id="taboola­native­end­of­gallery­thumbnails-'+rand+'"></div>' +
+        document.write('<div id="taboola­native­end­of­gallery­thumbnails-' + rand + '"></div>' +
         '<script type="text/javascript">' +
-        'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola­native­end­of­gallery­thumbnails-'+rand+'",placement:"ITV - '
+        'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola­native­end­of­gallery­thumbnails-' + rand + '",placement:"ITV - '
         + this_utm_source_value + ' - ' + this_page_type + ' - Organic - ' + this_utm_term + '",target_type:"mix"});' +
         '</script>');
     };
@@ -108,7 +98,7 @@ function RevcontentAds() {
         var rand = getRandomId();
         var rcDefaultWidgetID = 29016;
         var rcCatMap = '{outbrain:30567,taboola:30568,revcontent:30569,gemini:30570,adblade:30571,fb:30572,"3lift":30573,g4:30574,houseads:30575,ha:30575,taboola_organic:30576,pinterest:30577,instagram:30578,cad:30579,twitter:30580}';
-        if (isMobile()) {
+        if (ITV_OBJ.isMobile) {
             rcDefaultWidgetID = 30346;
             rcCatMap = '{outbrain:30581,taboola:30585,revcontent:30586,gemini:30587,adblade:30588,fb:30589,"3lift":30590,g4:30591,houseads:30592,ha:30592,taboola_organic:30593,pinterest:30594,instagram:30595,cad:30596,twitter:30597}';
         }
@@ -130,7 +120,7 @@ function RevcontentAds() {
         var rand = getRandomId();
         var rcDefaultWidgetID = 29335;
         var rcCatMap = '{outbrain:30600,taboola:30601,revcontent:30602,gemini:30603,adblade:30604,fb:30605,"3lift":30606,g4:30607,houseads:30608,ha:30608,taboola_organic:30609,pinterest:30610,instagram:30611,cad:30612,twitter:30613}';
-        if (isMobile()) {
+        if (ITV_OBJ.isMobile) {
             rcDefaultWidgetID = 29406;
             rcCatMap = '{outbrain:30620,taboola:30621,revcontent:30622,gemini:30623,adblade:30624,fb:30625,"3lift":30626,g4:30627,houseads:30628,ha:30628,taboola_organic:30629,pinterest:30630,instagram:30631,cad:30632,twitter:30633}';
         }
@@ -152,7 +142,7 @@ function RevcontentAds() {
         var rand = getRandomId();
         var rcDefaultWidgetID = 29333;
         var rcCatMap = '{}';
-        if (isMobile()) {
+        if (ITV_OBJ.isMobile) {
             rcDefaultWidgetID = 30345;
         }
         document.write('<div id="rcjsload_pu06hus_' + rand + '"></div>' +
@@ -187,11 +177,11 @@ function RevcontentAds() {
 
     //Popup
     this.ExitPop = function () {
-        if (isSmartPhone()) {
+        if (ITV_OBJ.isSmartPhone) {
             document.write('<div id="rcjsload_m32zbkr"></div>' +
             '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_mobile.js"></script>');
         }
-        else if (isTablet()) {
+        else if (ITV_OBJ.isTablet) {
             document.write('<div id="rcjsload_jl33waf"></div>' +
             '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_tablet.js"></script>');
         }
@@ -233,30 +223,28 @@ function RightRailEndSlideshow() {
  Below Post
  ******************************/
 function BelowPost(containerId) {
-    /*if (
-     utm_source_value.toUpperCase() == 'TABOOLA'
-     ) {
-     Taboola.BelowPost();
-     }
-     else if(
-     utm_source_value.toUpperCase() == 'EDGE' ||
-     utm_source_value.toUpperCase() == 'FB' ||
-     utm_source_value.toUpperCase() == 'UNDEFINED'
-     ){
-     Taboola.BelowPost(false, true); //forceSafe = false, forceNS = true
-     }
-     else{
-     Revcontent.BelowPost();
-     }*/
-
-    Revcontent.BelowPost(containerId);
+    if (
+        utm_source_value.toUpperCase() == 'TABOOLA'
+    ) {
+        Taboola.BelowPost(containerId);
+    }
+    else if (
+        utm_source_value.toUpperCase() == 'EDGE' ||
+        utm_source_value.toUpperCase() == 'FB' ||
+        utm_source_value.toUpperCase() == 'UNDEFINED'
+    ) {
+        Taboola.BelowPost(containerId, false, true); //forceSafe = false, forceNS = true
+    }
+    else {
+        Revcontent.BelowPost(containerId);
+    }
 }
 
 /******************************
  Below Slideshow
  ******************************/
 function BelowSlideshow() {
-    if (isMobile()) {
+    if (ITV_OBJ.isMobile) {
         Revcontent.BelowSlideshow();
     }
     else {
@@ -286,7 +274,7 @@ function BelowCategorySlideshow() {
  Below End Slideshow
  ******************************/
 function BelowEndSlideshow() {
-    if (isMobile()) {
+    if (ITV_OBJ.isMobile) {
         Revcontent.BelowEndSlideshow()
     }
     else {
