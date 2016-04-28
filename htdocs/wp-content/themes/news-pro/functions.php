@@ -60,13 +60,8 @@ function news_load_scripts() {
 	
 }
 
-//* Add new image sizes
-add_image_size( 'home-bottom', 150, 150, TRUE );
-add_image_size( 'home-middle', 348, 180, TRUE );
-add_image_size( 'home-top', 740, 400, TRUE );
-
 //image for facebook preview
-add_image_size( 'fb-share', 650, 340, array( 'center', 'top' ) );
+add_image_size( 'fb-share', 600, 314, array( 'center', 'top' ) );
 
 //* Add support for custom background
 add_theme_support( 'custom-background' );
@@ -88,24 +83,9 @@ add_theme_support( 'genesis-style-selector', array(
 	'news-pro-orange' => __( 'News Pro Orange', 'news' ),
 ) );
 
-//* Add support for 6-column footer widgets
-add_theme_support( 'genesis-footer-widgets', 6 );
-
 //* Reposition the secondary navigation
 remove_action( 'genesis_after_header', 'genesis_do_subnav' );
 add_action( 'genesis_before_header', 'genesis_do_subnav' );
-
-//* Hook after entry widget after the entry content
-add_action( 'genesis_after_entry', 'news_after_entry', 5 );
-function news_after_entry() {
-
-	if ( is_singular( 'post' ) )
-		genesis_widget_area( 'after-entry', array(
-			'before' => '<div class="after-entry" class="widget-area">',
-			'after'  => '</div>',
-		) );
-
-}
 
 //* Remove comment form allowed tags
 add_filter( 'comment_form_defaults', 'news_remove_comment_form_allowed_tags' );
@@ -116,34 +96,7 @@ function news_remove_comment_form_allowed_tags( $defaults ) {
 
 }
 
-//* Register widget areas
-genesis_register_sidebar( array(
-	'id'          => 'home-top',
-	'name'        => __( 'Home - Top', 'news' ),
-	'description' => __( 'This is the top section of the homepage.', 'news' ),
-) );
-genesis_register_sidebar( array(
-	'id'          => 'home-middle-left',
-	'name'        => __( 'Home - Middle Left', 'news' ),
-	'description' => __( 'This is the middle left section of the homepage.', 'news' ),
-) );
-genesis_register_sidebar( array(
-	'id'          => 'home-middle-right',
-	'name'        => __( 'Home - Middle Right', 'news' ),
-	'description' => __( 'This is the middle right section of the homepage.', 'news' ),
-) );
-genesis_register_sidebar( array(
-	'id'          => 'home-bottom',
-	'name'        => __( 'Home - Bottom', 'news' ),
-	'description' => __( 'This is the bottom section of the homepage.', 'news' ),
-) );
-genesis_register_sidebar( array(
-	'id'          => 'after-entry',
-	'name'        => __( 'After Entry', 'news' ),
-	'description' => __( 'This is the after entry section.', 'news' ),
-) );
-
-//add foter navigation menu
+//add footer navigation menu
 add_theme_support ( 'genesis-menus' , array (
 	'primary'   => __( 'Primary Navigation Menu', 'genesis' ),
 	'secondary' => __( 'Secondary Navigation Menu', 'genesis' ),
