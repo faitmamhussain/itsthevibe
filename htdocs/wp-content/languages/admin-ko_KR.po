@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.1.0-alpha\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Administration\n"
 
 #. translators: default start of the week. 0 = Sunday, 1 = Monday
@@ -26,7 +26,7 @@ msgid "0"
 msgstr "Asia/Seoul"
 
 #. translators: %s: wp_add_inline_script()
-#: wp-admin/about.php:155
+#: wp-admin/about.php:163
 msgid "Better support has been added for script header/footer dependencies. New %s enables adding extra code to registered scripts."
 msgstr "자바스크립트를 헤더/푸터에 추가할 때 더 나은 지원이 포함됩니다. 새로운 %s는 등록된 스크립트에 추가적인 코드를 포함할 수 있도록 합니다."
 
@@ -39,98 +39,98 @@ msgid "Release Deputy"
 msgstr "릴리즈 부대표"
 
 #. translators: %s: URL to customizer
-#: wp-admin/about.php:75
+#: wp-admin/about.php:83
 msgid "Preview mobile, tablet, and desktop views directly in the <a href=\"%s\" class=\"load-customize\">customizer</a>."
 msgstr "<a href=\"%s\" class=\"load-customize\">사용자 정의하기</a>에서 모바일, 태블릿, 데스크탑 미리보기."
 
-#: wp-admin/about.php:79
+#: wp-admin/about.php:87
 msgid "Preview mobile, tablet, and desktop views directly in the customizer."
 msgstr "사용자 정의하기에서 모바일, 태블릿, 데스크탑 미리보기."
 
-#: wp-admin/about.php:69
+#: wp-admin/about.php:77
 msgid "Make sure your site looks great on all screens!"
 msgstr "모든 화면에서 자신의 사이트가 어떻게 보이는지 확인하세요!"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:165
+#: wp-admin/about.php:173
 msgid "Embed templates have been split into parts and can be <a href=\"%s\">directly overridden by themes</a> via the template hierarchy."
 msgstr "임베드 템플릿은 몇 개로 나누어졌으며 템플릿 계층구조를 통해 <a href=\"%s\">테마로 직접 덮어쓰기 할 수 있습니다</a>."
 
-#: wp-admin/about.php:161
+#: wp-admin/about.php:169
 msgid "Better Embed Templates"
 msgstr "더 나은 임베드 템플릿"
 
 #. translators: 1: URL to Menus section of the customizer, 2: URL to Widgets
 #. section of the customizer
-#: wp-admin/about.php:125
+#: wp-admin/about.php:133
 msgid "See it in action with <a href=\"%1$s\" class=\"load-customize\">Menus</a> or <a href=\"%2$s\" class=\"load-customize\">Widgets</a>."
 msgstr "<a href=\"%1$s\" class=\"load-customize\">메뉴</a> 또는 <a href=\"%2$s\" class=\"load-customize\">위젯</a>에서 작동되는 것을 확인하세요."
 
-#: wp-admin/about.php:144
+#: wp-admin/about.php:152
 msgid "JavaScript Library Updates"
 msgstr "자바스크립트 라이브러리 업데이트"
 
-#: wp-admin/about.php:145
+#: wp-admin/about.php:153
 msgid "jQuery 1.12.3, jQuery Migrate 1.4.0, Backbone 1.2.3, and Underscore 1.8.3 are bundled."
 msgstr "jQuery 1.12.3, jQuery Migrate 1.4.0, Backbone 1.2.3 과 Underscore 1.8.3이 포함되었습니다."
 
-#: wp-admin/about.php:151
+#: wp-admin/about.php:159
 msgid "Script Loader Improvements"
 msgstr "스크립트 로더 성능향상"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:112
+#: wp-admin/about.php:120
 msgid "The customizer now supports a <a href=\"%s\">comprehensive framework</a> for rendering parts of the preview without rewriting your PHP code in JavaScript."
 msgstr "사용자 정의하기는 자바스크립트에 PHP를 다시 쓰지 않고도 미리보기의 실행 부분에 대해 <a href=\"%s\">포괄적인 프레임워크</a>를 지원합니다."
 
 #. translators: %s: URL to Menus section of the customizer
-#: wp-admin/about.php:119
+#: wp-admin/about.php:127
 msgid "See it in action with <a href=\"%s\" class=\"load-customize\">Menus</a>."
 msgstr "<a href=\"%s\" class=\"load-customize\">메뉴</a>에서 작동되는 것을 확인하세요."
 
-#: wp-admin/about.php:95
+#: wp-admin/about.php:103
 msgid "The Twenty Fifteen and Twenty Sixteen themes have been updated to support custom logos, which can be found in the Site Identity section of the customizer."
 msgstr "Twenty Fifteen과 Twenty Sixteen 테마는 커스텀 로고를 지원하기 위해 업데이트 됐으며 사용자 정의하기의 사이트 아이덴티티 영역에서 볼 수 있습니다."
 
-#: wp-admin/about.php:134
+#: wp-admin/about.php:142
 msgid "Smart Image Resizing"
 msgstr "스마트 이미지 크기조절"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:138
+#: wp-admin/about.php:146
 msgid "Generated images now load up to 50&#37; faster with no noticeable quality loss. <a href=\"%s\">It&#8217;s really cool</a>."
 msgstr "생성된 이미지는 이제 현저한 화질 손실 없이 50퍼센트 빠르게 로드 됩니다. <a href=\"%s\">아주 쿨합니다</a>."
 
-#: wp-admin/about.php:108
+#: wp-admin/about.php:116
 msgid "Selective Refresh"
 msgstr "선택적 새로고침"
 
 #. translators: %s: URL to Site Identity section of the customizer
-#: wp-admin/about.php:91
+#: wp-admin/about.php:99
 msgid "Your theme supports custom logos! Try it out right now in the <a href=\"%s\" class=\"load-customize\">Site Identity</a> section of the customizer."
 msgstr "테마가 커스텀 로고를 지원합니다! 사용자 정의하기의 <a href=\"%s\" class=\"load-customize\">사이트 아이덴티티</a> 영역에서 지금 만들어보세요."
 
-#: wp-admin/about.php:85
+#: wp-admin/about.php:93
 msgid "Custom Logos"
 msgstr "커스텀 로고"
 
-#: wp-admin/about.php:86
+#: wp-admin/about.php:94
 msgid "Themes can now support logos for your business or brand."
 msgstr "테마에서 브랜드 로고 이미지를 지원합니다."
 
-#: wp-admin/about.php:58
+#: wp-admin/about.php:66
 msgid "Do you enjoy using formatting shortcuts for lists and headings? Now they&#8217;re even more useful, with horizontal lines and <code>&lt;code&gt;</code>."
 msgstr "목록과 헤딩 글자의 포맷 단축키를 즐겨 사용하시나요? 이제 이들은 수평선과 <code>&lt;code&gt;</code>로 한층 더 유용해졌습니다."
 
-#: wp-admin/about.php:65
+#: wp-admin/about.php:73
 msgid "Customization Improvements"
 msgstr "개인화 기능 성능향상"
 
-#: wp-admin/about.php:68
+#: wp-admin/about.php:76
 msgid "Live Responsive Previews"
 msgstr "실시간 반응형 미리보기"
 
-#: wp-admin/about.php:53
+#: wp-admin/about.php:61
 msgid "Stay focused on your writing with a less distracting interface that keeps you in place and allows you to easily link to your content."
 msgstr "한곳에서 쉽게 콘텐츠에  링크할 수 있고 글쓰기에 집중할 수 있습니다."
 
@@ -138,11 +138,11 @@ msgstr "한곳에서 쉽게 콘텐츠에  링크할 수 있고 글쓰기에 집�
 msgid "Thank you for updating! WordPress %s streamlines your workflow, whether you&#8217;re writing or building your site."
 msgstr "업데이트 해주셔서 감사합니다!. WordPress %s는 글을 쓰고 있거나 사이트를 만드는 중에도 끊기지 않고 사용할 수 있습니다."
 
-#: wp-admin/about.php:49
+#: wp-admin/about.php:57
 msgid "Editing Improvements"
 msgstr "편집기 향상"
 
-#: wp-admin/about.php:52
+#: wp-admin/about.php:60
 msgid "Inline Linking"
 msgstr "인라인 링크"
 
@@ -629,7 +629,7 @@ msgid "(Currently set to: %s)"
 msgstr "(현재 설정: %s)"
 
 #. translators: %s: WordPress version number
-#: wp-admin/about.php:200
+#: wp-admin/about.php:208
 msgid "<strong>Version %s</strong> addressed one security issue."
 msgstr "<strong>버전 %s</strong> 하나의 보안 문제 처리함."
 
@@ -651,15 +651,15 @@ msgstr "https://en.gravatar.com/"
 msgid "Profile Picture"
 msgstr "프로필 사진"
 
-#: wp-admin/about.php:191
+#: wp-admin/about.php:199
 msgid "Maintenance Releases"
 msgstr "유지 관리 릴리즈"
 
-#: wp-admin/about.php:194
+#: wp-admin/about.php:202
 msgid "Security Releases"
 msgstr "보안 릴리즈"
 
-#: wp-admin/about.php:197
+#: wp-admin/about.php:205
 msgid "Maintenance and Security Releases"
 msgstr "유지보수 및 보안 릴리즈"
 
@@ -1241,7 +1241,7 @@ msgstr "%s 응답"
 msgid "The current theme does not support uploading a custom header image."
 msgstr "현재 테마는 사용자 정의 헤더 이미지 업로드를 지원하지 않습니다."
 
-#: wp-admin/about.php:57
+#: wp-admin/about.php:65
 msgid "Formatting Shortcuts"
 msgstr "포맷 단축키"
 
@@ -4985,25 +4985,25 @@ msgstr "사이트를 볼 때 툴바 보이기"
 
 #. translators: 1: WordPress version number, 2: plural number of bugs. Singular
 #. security issue.
-#: wp-admin/about.php:209
+#: wp-admin/about.php:217
 msgid "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs."
 msgstr[0] "<strong>버전 %1$s</strong> 보안 문제와 %2$s 버그를 처리했습니다."
 
 #. translators: %s: Codex URL
-#: wp-admin/about.php:217
+#: wp-admin/about.php:45 wp-admin/about.php:225
 msgid "For more information, see <a href=\"%s\">the release notes</a>."
 msgstr "더 많은 정보는, <a href=\"%s\">릴리즈 노트</a>를 참조하세요."
 
 #. translators: 1: WordPress version number, 2: plural number of bugs. More
 #. than one security issue.
-#: wp-admin/about.php:213
+#: wp-admin/about.php:221
 msgid "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs."
 msgstr[0] "<strong>버전 %1$s</strong> 몇가지 보안 문제를 처리했고 %2$s 버그를 수리했습니다."
 
 #. translators: 1: WordPress version number, 2: plural number of bugs.
-#: wp-admin/about.php:205
+#: wp-admin/about.php:43 wp-admin/about.php:213
 msgid "<strong>Version %1$s</strong> addressed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed %2$s bugs."
 msgstr[0] "<strong>버전 %1$s</strong>이(가) %2$s 버그를 해결함."
@@ -5012,7 +5012,7 @@ msgstr[0] "<strong>버전 %1$s</strong>이(가) %2$s 버그를 해결함."
 msgid "Welcome to your WordPress Dashboard! This is the screen you will see when you log in to your site, and gives you access to all the site management features of WordPress. You can get help for any screen by clicking the Help tab in the upper corner."
 msgstr "워드프레스 알림판에 오신 것을 환영합니다! 이 화면은 사이트에 로그인 했을 때 보여지며 워드프레스의 모든 사이트 관리 기능에 접근하게 해줍니다. 어떤 화면이라도 상단 구석의 도움말 탭을 클릭해서 도움을 얻을 수 있습니다"
 
-#: wp-admin/about.php:196
+#: wp-admin/about.php:204
 msgid "Maintenance and Security Release"
 msgstr "관리 보안 릴리즈"
 
@@ -5020,16 +5020,16 @@ msgstr "관리 보안 릴리즈"
 msgid "What&#8217;s New"
 msgstr "새로운 것"
 
-#: wp-admin/about.php:193
+#: wp-admin/about.php:201
 msgid "Security Release"
 msgstr "보안 릴리즈"
 
-#: wp-admin/about.php:190
+#: wp-admin/about.php:42 wp-admin/about.php:198
 msgid "Maintenance Release"
 msgstr "관리 릴리즈"
 
 #. translators: %s: WordPress version number
-#: wp-admin/about.php:202
+#: wp-admin/about.php:210
 msgid "<strong>Version %s</strong> addressed some security issues."
 msgstr "<strong>버전 %s</strong> 보안 문제를 처리했습니다."
 
@@ -5037,7 +5037,7 @@ msgstr "<strong>버전 %s</strong> 보안 문제를 처리했습니다."
 msgid "This screen allows you to choose your permalink structure. You can choose from common settings or create custom URL structures."
 msgstr "이 화면은 기본 고유주소 구조를 선택할 수 있게 해줍니다. 일반 설정에서 선택하거나 사용자 정의 URL 구조를 만들 수 있습니다."
 
-#: wp-admin/about.php:175
+#: wp-admin/about.php:183
 msgid "Return to Updates"
 msgstr "업데이트로 돌아가기"
 
@@ -5329,11 +5329,11 @@ msgstr "add_meta_box()를 사용하기 위해서 wp-admin/includes/template.php�
 msgid "Welcome to WordPress %s"
 msgstr "WordPress %s 사용을 환영합니다"
 
-#: wp-admin/about.php:178
+#: wp-admin/about.php:186
 msgid "Go to Dashboard &rarr; Home"
 msgstr "대시보드 &rarr; 홈으로 가기"
 
-#: wp-admin/about.php:175
+#: wp-admin/about.php:183
 msgid "Return to Dashboard &rarr; Updates"
 msgstr "대시보드 &rarr; 업데이트로 돌아가기"
 
@@ -5341,7 +5341,7 @@ msgstr "대시보드 &rarr; 업데이트로 돌아가기"
 msgid "WordPress is created by a worldwide team of passionate individuals."
 msgstr "워드프레스는 열정적인 개인들로 구성된 전세계 팀에 의해 만들어졌습니다."
 
-#: wp-admin/about.php:104
+#: wp-admin/about.php:112
 msgid "Under the Hood"
 msgstr "개발 부분"
 
@@ -7344,7 +7344,7 @@ msgid "Must-Use <span class=\"count\">(%s)</span>"
 msgid_plural "Must-Use <span class=\"count\">(%s)</span>"
 msgstr[0] "Must-Use <span class=\"count\">(%s)</span>"
 
-#: wp-admin/about.php:178
+#: wp-admin/about.php:186
 msgid "Go to Dashboard"
 msgstr "대시보드로 가기 l&rsquo;홈"
 
