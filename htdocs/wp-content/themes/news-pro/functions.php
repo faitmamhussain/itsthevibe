@@ -387,10 +387,9 @@ add_action('genesis_before', 'add_google_tag_manager', 5);
 
 function add_google_tag_manager(){
 	echo '<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P8TJTK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
-new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
-\'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':new Date().getTime(),event:\'gtm.js\'});
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';
+j.async=true;j.src=\'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,\'script\',\'dataLayer\',\'GTM-P8TJTK\');</script>';
 }
 
@@ -401,7 +400,13 @@ function add_google_analytics(){
 		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 		ga('create', 'UA-76802967-1', 'auto', 'slideshowTracker');
 		ga('create', 'UA-75246817-1', 'auto');
+		<?php send_google_analytics();?>
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
 	<?php
+}
+
+function send_google_analytics(){
 		global $post, $itv_has_slideshows_cat, $custom_utm_params;
 		$title = $post->post_title;
 		$slug = $post->post_name;
@@ -414,22 +419,22 @@ function add_google_analytics(){
 			'utm_term' => 'campaignKeyword',
 		);
 	?>
-		ga('<?php echo $tracker; ?>set', {
-			page: <?php echo json_encode($slug); ?>,
-			title: <?php echo json_encode($title); ?>,
-			<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
-				foreach($ga_utm as $utm => $ga){
-					if(isset($custom_utm_params[$utm])){
-						echo "$ga : ".json_encode($custom_utm_params[$utm]).",";
-					} else {
-						echo "$ga : '',";
-					}
-				}
-			} ?>
-		});
-		ga('<?php echo $tracker; ?>send', 'pageview');
-	</script>
-	<script async src='https://www.google-analytics.com/analytics.js'></script>
+	ga('<?php echo $tracker; ?>set', {
+	<?php if(empty($tracker)): ?>
+		page: <?php echo json_encode($slug); ?>,
+		title: <?php echo json_encode($title); ?>,
+	<?php endif; ?>
+	<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
+		foreach($ga_utm as $utm => $ga){
+			if(isset($custom_utm_params[$utm])){
+				echo "$ga : ".json_encode($custom_utm_params[$utm]).",";
+			} else {
+				echo "$ga : '',";
+			}
+		}
+	} ?>
+	});
+	ga('<?php echo $tracker; ?>send', 'pageview');
 	<?php
 }
 
@@ -557,18 +562,11 @@ function itv_kill_slideshows_redirect() {
 add_action('template_redirect','itv_kill_slideshows_redirect',1);
 
 function get_permalink_with_utm(){
-	$url = get_permalink();
-	$itv_targeting = array(
-		'utm_source',
-		'utm_campaign',
-		'utm_medium',
-		'utm_content',
-		'utm_term',
-		'test'
-	);
+	global $custom_utm_params;
 
-	foreach($itv_targeting as $target){
-		$param = isset($_COOKIE['itv_'.$target]) ? $_COOKIE['itv_'.$target] : false;
+	$url = get_permalink();
+
+	foreach($custom_utm_params as $target => $param){
 		if(!empty($param)){
 			$url = add_query_arg($target, $param, $url);
 		}
