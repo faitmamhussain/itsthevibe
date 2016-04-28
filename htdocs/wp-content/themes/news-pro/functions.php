@@ -420,8 +420,10 @@ function send_google_analytics(){
 		);
 	?>
 	ga('<?php echo $tracker; ?>set', {
-	page: <?php echo json_encode($slug); ?>,
-	title: <?php echo json_encode($title); ?>,
+	<?php if(empty($tracker)): ?>
+		page: <?php echo json_encode($slug); ?>,
+		title: <?php echo json_encode($title); ?>,
+	<?php endif; ?>
 	<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
 		foreach($ga_utm as $utm => $ga){
 			if(isset($custom_utm_params[$utm])){

@@ -13,13 +13,15 @@ jQuery( document ).ready(function( $ ) {
             $('.alm-reveal > .entry').each(function () {
                 var distanceTop = $(this).offset().top;
                 var distanceBottom = distanceTop + $(this).height();
-                var hash = $(this).data('anchor-url');
-                var title = $(this).data('anchor-title');
-                var tracker = $(this).data('anchor-tracker');
-                var post_title = $(this).data('anchor-post-title');
-                var slug = $(this).data('anchor-slug');
 
                 if (distanceTop < offset && distanceBottom > offset && currentHash != hash) {
+
+                    var hash = $(this).data('anchor-url');
+                    var title = $(this).data('anchor-title');
+                    var tracker = $(this).data('anchor-tracker');
+                    var post_title = $(this).data('anchor-post-title');
+                    var slug = $(this).data('anchor-slug');
+
                     if(title){
                         window.history.pushState({"pageTitle":title},'', hash);
                         document.title = title;
@@ -73,15 +75,26 @@ jQuery( document ).ready(function( $ ) {
         if(typeof tracker == 'undefined'){
             tracker = '';
         }
-        ga(tracker+'set', {
-            page: slug,
-            title: title,
-            campaignSource: utm_source_value,
-            campaignName: utm_campaign_value,
-            campaignMedium: utm_medium_value,
-            campaignContent: utm_content_value,
-            campaignKeyword: utm_term_value,
-        });
+        if(tracker == ''){
+            ga(tracker+'set', {
+                page: slug,
+                title: title,
+                campaignSource: utm_source_value,
+                campaignName: utm_campaign_value,
+                campaignMedium: utm_medium_value,
+                campaignContent: utm_content_value,
+                campaignKeyword: utm_term_value,
+            });
+        } else {
+            ga(tracker+'set', {
+                campaignSource: utm_source_value,
+                campaignName: utm_campaign_value,
+                campaignMedium: utm_medium_value,
+                campaignContent: utm_content_value,
+                campaignKeyword: utm_term_value,
+            });
+        }
+
         ga(tracker+'send', 'pageview');
     }
 });
