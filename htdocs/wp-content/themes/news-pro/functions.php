@@ -508,7 +508,7 @@ add_action('genesis_footer', function(){
 });
 
 //connect AjaxLoadMore with MyPostsOrder
-add_filter('alm_modify_query_args', function($args, $slug){
+add_filter('alm_modify_query_args', function($args){
 	if( array_key_exists('section_name', $args) ) {
 		global $wp_query, $paged;
 		$wp_query->query_vars = $args;
