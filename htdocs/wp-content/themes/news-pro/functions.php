@@ -313,18 +313,16 @@ add_filter( 'the_content', function($content) {
 		if(count($splits) >= 3){
 			$next_post = get_next_post(true);
 			$next_link = get_permalink($next_post->ID);
-			if(! empty($next_post)){
-				foreach($splits as &$split){
-					if(strpos($split,'<img') === 0){
-						if(isMobile()){
-							$split = '<p><a href="'.$next_link.'">'.$split.'</a></p>';
-						} else {
-							$split = '<p>'.$split.'</p>';
-						}
+			foreach($splits as &$split){
+				if(strpos($split,'<img') === 0){
+					if(isMobile() && !empty($next_post)){
+						$split = '<p><a href="'.$next_link.'">'.$split.'</a></p>';
+					} else {
+						$split = '<p>'.$split.'</p>';
 					}
 				}
-				$content = implode('',$splits);
 			}
+			$content = implode('',$splits);
 		}
 	}
 	return $content;
