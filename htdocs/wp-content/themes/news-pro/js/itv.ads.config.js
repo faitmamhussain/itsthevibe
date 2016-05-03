@@ -298,6 +298,8 @@ function BelowEndSlideshow() {
 function ExitPop() {
     if (
         utm_source_value.toUpperCase() == 'TABOOLA' ||
+        utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
+        utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
         utm_source_value.toUpperCase() == 'GEMINI' ||
         utm_source_value.toUpperCase() == 'FB' ||
         utm_source_value.toUpperCase() == 'GOOGLE' ||
