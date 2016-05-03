@@ -251,6 +251,29 @@ if (!defined('ALM_REPEATER_PATH')){
 
 add_action('alm_repeater_installed', function(){});
 
+
+
+add_shortcode('alm_repeater_preload', function($atts, $content){
+
+	extract(shortcode_atts(array(
+		'post_type' => 'post',
+		'posts_per_page' => '9',
+		'section_name' => 'slideshow'
+	), $atts));
+
+	$args = array(
+		'post_type' => $post_type,
+		'posts_per_page' => $posts_per_page,
+		'section_name' => $section_name
+	);
+
+	$the_query = new WP_Query($args);
+
+	while ($the_query->have_posts()) : $the_query->the_post();
+		include(get_stylesheet_directory().'/repeaters/repeater.php');
+	endwhile;
+});
+
 remove_filter( 'post_class', 'genesis_entry_post_class' );
 add_filter( 'post_class', 'itv_entry_post_class' );
 

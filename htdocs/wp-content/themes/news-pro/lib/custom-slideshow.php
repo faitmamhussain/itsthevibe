@@ -53,11 +53,11 @@ add_action('genesis_after_entry', function(){
 		$itv_has_slideshows_cat = false;
 	}
 	if($itv_has_slideshows_cat && function_exists ('adinserter')) echo adinserter(7);
-	if($itv_has_slideshows_cat && class_exists('AjaxLoadMore') && is_singular()){
+	if($itv_has_slideshows_cat && is_singular()){
 		if(isMobile()){
-			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="6" repeater="repeater" max_pages="1" custom_args="section_name:slideshow"]');
+			echo do_shortcode('[alm_repeater_preload post_type="post" posts_per_page="6" section_name="slideshow"]');
 		} else {
-			echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="9" repeater="repeater" max_pages="0" custom_args="section_name:slideshow"]');
+			echo do_shortcode('[alm_repeater_preload post_type="post" posts_per_page="9" section_name="slideshow"]');
 		}
 	}
 	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
