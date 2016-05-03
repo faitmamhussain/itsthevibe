@@ -21,7 +21,7 @@
 		data-image="<?php echo wp_get_attachment_thumb_url(get_post_thumbnail_id($post->ID)); ?>"
 		data-term="slot-<?php echo $counter; ?>"
 	>
-		<?php echo get_the_post_thumbnail($post->ID, 'medium');?>
+		<?php echo get_the_post_thumbnail($post->ID, 'custom-post');?>
 	</a>
 	<div class="post-description">
 		<a

@@ -63,6 +63,9 @@ function news_load_scripts() {
 //image for facebook preview
 add_image_size( 'fb-share', 600, 314, array( 'center', 'top' ) );
 
+//image for post previews (custom posts)
+add_image_size( 'custom-post', 300, 300, true );
+
 //* Add support for custom background
 add_theme_support( 'custom-background' );
 
