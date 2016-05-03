@@ -422,7 +422,9 @@ function send_google_analytics(){
 	} ?>
 	});
 	ga('<?php echo $tracker; ?>send', 'pageview');
-	<?php
+	<?php if(is_404()): ?>
+		ga('<?php echo $tracker; ?>send', 'event', '404 Error', '404', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>', {nonInteraction: true});
+	<?php endif;
 }
 
 function itv_get_primary_category($post = null){
