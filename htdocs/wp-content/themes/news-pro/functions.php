@@ -254,27 +254,32 @@ add_action('alm_repeater_installed', function(){});
 add_shortcode('alm_repeater_preload', function($atts, $content){
 
 	extract(shortcode_atts(array(
-		'post_type' => 'post',
 		'posts_per_page' => '9',
 		'section_name' => 'slideshow'
 	), $atts));
 
-	ob_start();
-
 	$args = array(
-		'post_type' => $post_type,
 		'posts_per_page' => $posts_per_page,
 		'section_name' => $section_name
 	);
 
-	$the_query = new WP_Query($args);
+	ob_start();
 
-	while ($the_query->have_posts()) : $the_query->the_post();
-		include(get_stylesheet_directory().'/repeaters/repeater.php');
-	endwhile;
+	global $wp_query;
 
-	$output_string=ob_get_contents();;
+	$old_query = $wp_query;
+
+	query_posts($args);
+
+	while ( have_posts() ){
+		the_post();
+		include( get_stylesheet_directory() . '/repeaters/repeater.php' );
+	};
+
+	$output_string = ob_get_contents();;
 	ob_end_clean();
+
+	$wp_query = $old_query;
 
 	return $output_string;
 });
