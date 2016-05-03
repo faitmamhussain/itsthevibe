@@ -251,8 +251,6 @@ if (!defined('ALM_REPEATER_PATH')){
 
 add_action('alm_repeater_installed', function(){});
 
-
-
 add_shortcode('alm_repeater_preload', function($atts, $content){
 
 	extract(shortcode_atts(array(
@@ -260,6 +258,8 @@ add_shortcode('alm_repeater_preload', function($atts, $content){
 		'posts_per_page' => '9',
 		'section_name' => 'slideshow'
 	), $atts));
+
+	ob_start();
 
 	$args = array(
 		'post_type' => $post_type,
@@ -272,6 +272,11 @@ add_shortcode('alm_repeater_preload', function($atts, $content){
 	while ($the_query->have_posts()) : $the_query->the_post();
 		include(get_stylesheet_directory().'/repeaters/repeater.php');
 	endwhile;
+
+	$output_string=ob_get_contents();;
+	ob_end_clean();
+
+	return $output_string;
 });
 
 remove_filter( 'post_class', 'genesis_entry_post_class' );
