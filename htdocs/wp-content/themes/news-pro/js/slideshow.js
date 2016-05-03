@@ -15,7 +15,7 @@
                     }
                 }
 
-                if(document.body.clientHeight + $(window).scrollTop() + 100 < sidebarElem.height()){
+                if(document.body.clientHeight + $(window).scrollTop() + 400 < sidebarElem.height()){
                     sidebarElem.css({
                         'position': 'static'
                     });
