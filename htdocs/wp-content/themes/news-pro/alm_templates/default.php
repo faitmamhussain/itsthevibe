@@ -23,7 +23,7 @@ $sep = apply_filters( 'document_title_separator', '-' );
 $title = $title.' '.$sep.' '.get_bloginfo( 'name', 'display' );
 $post_title = $post->post_title;
 $slug = $post->post_name;
-$tracker = $itv_has_slideshows_cat ? 'slideshowTracker.' : '';
+$tracker = 'ajaxTracker.';
 
 $anchor_url = get_permalink_with_utm();
 $atts = array(
