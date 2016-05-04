@@ -176,7 +176,7 @@ function RevcontentAds() {
     };
 
     //Popup
-    this.ExitPop = function () {
+    this.ExitPopInternal = function () {
         if (ITV_OBJ.isSmartPhone) {
             document.write('<div id="rcjsload_m32zbkr"></div>' +
             '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_mobile.js"></script>');
@@ -190,6 +190,13 @@ function RevcontentAds() {
             '<script src="http://publishers.revcontent.com/itsthevibe_internalitvrevexit_desktop.js"></script>');
         }
     };
+
+    this.ExitPop = function () {
+        if (isDesktop()) {
+            document.write('<div id="rcjsload_sp4f5cm"></div>' +
+            '<script src="http://publishers.revcontent.com/itsthevibe_revexit_desktop.js"></script>');
+        }
+    }
 }
 
 
@@ -297,15 +304,31 @@ function BelowEndSlideshow() {
  ******************************/
 function ExitPop() {
     if (
-        utm_source_value.toUpperCase() == 'TABOOLA' ||
+        utm_source_value.toUpperCase() == 'OUTBRAIN' ||
         utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
         utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-        utm_source_value.toUpperCase() == 'GEMINI' ||
+        utm_source_value.toUpperCase() == 'REVCONTENT' ||
+        utm_source_value.toUpperCase() == 'EDGE' ||
+        utm_source_value.toUpperCase() == 'PINTEREST' ||
+        utm_source_value.toUpperCase() == 'HA' ||
+        utm_source_value.toUpperCase() == 'WF_RIGHTRAIL' ||
+        utm_source_value.toUpperCase() == 'TWITTER' ||
+        utm_source_value.toUpperCase() == 'BGARD' ||
+        utm_source_value.toUpperCase() == 'SHRD' ||
+        utm_source_value.toUpperCase() == 'G4' ||
+        utm_source_value.toUpperCase() == '3LIFT' ||
+        utm_source_value.toUpperCase() == 'APPLE'
+    ) {
+        Revcontent.ExitPop();
+    }
+    else if (
+        utm_source_value.toUpperCase() == 'TABOOLA' ||
         utm_source_value.toUpperCase() == 'FB' ||
         utm_source_value.toUpperCase() == 'GOOGLE' ||
         utm_source_value.toUpperCase() == 'UNDEFINED' ||
-        utm_source_value.toUpperCase() == ''
+        utm_source_value.toUpperCase() == '' ||
+        utm_source_value.toUpperCase() == 'GEMINI'
     ) {
-        Revcontent.ExitPop();
+        Revcontent.ExitPopInternal();
     }
 }
