@@ -17,8 +17,8 @@ if (this_utm_term == '') {
     this_utm_term = 'Undefined';
 }
 else {
-    if (this_utm_term == 'Safe') {
-        this_utm_term = 'Safe';
+    if (this_utm_term.toUpperCase() == 'SAFE') {
+        this_utm_term = 'SAFE';
     }
     else {
         this_utm_term = 'NS';
