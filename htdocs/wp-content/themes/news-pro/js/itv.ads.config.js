@@ -78,12 +78,19 @@ function TaboolaAds() {
         }
     };
 
-    this.BelowEndSlideshow = function () {
+    this.BelowEndSlideshow = function (forceSafe, forceNS) {
         var rand = getRandomId();
+        var term = this_utm_term;
+        if (forceSafe) {
+            term = 'Safe';
+        }
+        if (forceNS) {
+            term = 'NS';
+        }
         document.write('<div id="taboola­native­end­of­gallery­thumbnails-' + rand + '"></div>' +
         '<script type="text/javascript">' +
         'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola­native­end­of­gallery­thumbnails-' + rand + '",placement:"ITV - '
-        + this_utm_source_value + ' - ' + this_page_type + ' - Organic - ' + this_utm_term + '",target_type:"mix"});' +
+        + this_utm_source_value + ' - ' + this_page_type + ' - Organic - ' + term + '",target_type:"mix"});' +
         '</script>');
     };
 }
@@ -281,7 +288,43 @@ function BelowCategorySlideshow() {
  Below End Slideshow
  ******************************/
 function BelowEndSlideshow() {
-    if (
+    if (ITV_OBJ.isSmartPhone) {
+        if (
+            utm_source_value.toUpperCase() == 'TABOOLA'
+        ) {
+            Taboola.BelowEndSlideshow();
+        }
+        else if(
+            utm_source_value.toUpperCase() == 'FB' ||
+            utm_source_value.toUpperCase() == 'UNDEFINED' ||
+            utm_source_value.toUpperCase() == ''
+        ){
+            Taboola.BelowEndSlideshow(true, false);
+        }
+        else if (
+            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
+            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
+            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
+            utm_source_value.toUpperCase() == 'REVCONTENT' ||
+            utm_source_value.toUpperCase() == 'EDGE' ||
+            utm_source_value.toUpperCase() == 'PINTEREST' ||
+            utm_source_value.toUpperCase() == 'HA' ||
+            utm_source_value.toUpperCase() == 'WF_RIGHTRAIL' ||
+            utm_source_value.toUpperCase() == 'TWITTER' ||
+            utm_source_value.toUpperCase() == 'BGARD' ||
+            utm_source_value.toUpperCase() == 'SHRD' ||
+            utm_source_value.toUpperCase() == 'G4' ||
+            utm_source_value.toUpperCase() == '3LIFT' ||
+            utm_source_value.toUpperCase() == 'APPLE' ||
+            utm_source_value.toUpperCase() == 'TABOOLA' ||
+            utm_source_value.toUpperCase() == 'GOOGLE' ||
+            utm_source_value.toUpperCase() == 'GEMINI'
+        ) {
+            Revcontent.BelowEndSlideshow();
+        }
+
+    }
+    else if ((ITV_OBJ.isTablet || ITV_OBJ.isDesktop)&& (
         utm_source_value.toUpperCase() == 'OUTBRAIN' ||
         utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
         utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
@@ -302,7 +345,7 @@ function BelowEndSlideshow() {
         utm_source_value.toUpperCase() == 'UNDEFINED' ||
         utm_source_value.toUpperCase() == '' ||
         utm_source_value.toUpperCase() == 'GEMINI'
-    ) {
+        )) {
         Taboola.BelowEndSlideshow();
     }
 }
