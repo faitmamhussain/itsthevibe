@@ -268,9 +268,10 @@ add_shortcode('alm_repeater_preload', function($atts, $content){
 
 	ob_start();
 
-	global $wp_query;
+	global $wp_query, $post;
 
 	$old_query = $wp_query;
+	$old_post = $post;
 
 	query_posts($args);
 
@@ -283,6 +284,7 @@ add_shortcode('alm_repeater_preload', function($atts, $content){
 	ob_end_clean();
 
 	$wp_query = $old_query;
+	$post = $old_post;
 
 	return $output_string;
 });
