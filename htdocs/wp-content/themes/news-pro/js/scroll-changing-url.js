@@ -75,25 +75,15 @@ jQuery( document ).ready(function( $ ) {
         if(typeof tracker == 'undefined'){
             tracker = '';
         }
-        if(tracker == ''){
-            ga(tracker+'set', {
-                page: slug,
-                title: title,
-                campaignSource: utm_source_value,
-                campaignName: utm_campaign_value,
-                campaignMedium: utm_medium_value,
-                campaignContent: utm_content_value,
-                campaignKeyword: utm_term_value,
-            });
-        } else {
-            ga(tracker+'set', {
-                campaignSource: utm_source_value,
-                campaignName: utm_campaign_value,
-                campaignMedium: utm_medium_value,
-                campaignContent: utm_content_value,
-                campaignKeyword: utm_term_value,
-            });
-        }
+        ga(tracker+'set', {
+            page: slug,
+            title: title,
+            campaignSource: utm_source_value,
+            campaignName: utm_campaign_value,
+            campaignMedium: utm_medium_value,
+            campaignContent: utm_content_value,
+            campaignKeyword: utm_term_value,
+        });
 
         ga(tracker+'send', 'pageview');
     }
