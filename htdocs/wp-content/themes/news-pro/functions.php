@@ -385,7 +385,8 @@ add_action('genesis_before', 'add_google_analytics', 6);
 function add_google_analytics(){
 	?><script>
 		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-		ga('create', 'UA-76802967-1', 'auto', 'slideshowTracker');
+		ga('create', 'UA-76802967-1', 'auto', 'ajaxTracker');
+		ga('create', 'UA-77237275-1', 'auto', 'adblockTracker');
 		ga('create', 'UA-75246817-1', 'auto');
 		<?php send_google_analytics();?>
 	</script>
@@ -397,7 +398,7 @@ function send_google_analytics(){
 		global $post, $itv_has_slideshows_cat, $custom_utm_params;
 		$title = $post->post_title;
 		$slug = $post->post_name;
-		$tracker = ($itv_has_slideshows_cat || is_page('End Slideshow')) ? 'slideshowTracker.' : '';
+		$tracker = ( is_single() && ! $itv_has_slideshows_cat && ! is_page() ) ? 'ajaxTracker.' : '';
 		$ga_utm = array(
 			'utm_source' => 'campaignSource',
 			'utm_campaign' => 'campaignName',
@@ -407,10 +408,8 @@ function send_google_analytics(){
 		);
 	?>
 	ga('<?php echo $tracker; ?>set', {
-	<?php if(empty($tracker)): ?>
 		page: <?php echo json_encode($slug); ?>,
 		title: <?php echo json_encode($title); ?>,
-	<?php endif; ?>
 	<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
 		foreach($ga_utm as $utm => $ga){
 			if(isset($custom_utm_params[$utm])){
