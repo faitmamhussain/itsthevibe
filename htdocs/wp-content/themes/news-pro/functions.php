@@ -410,6 +410,8 @@ function send_google_analytics(){
 	ga('<?php echo $tracker; ?>set', {
 		page: <?php echo json_encode($slug); ?>,
 		title: <?php echo json_encode($title); ?>,
+		allowLinker: false,
+		anonymizeIp: false,
 	<?php if( ! empty($custom_utm_params) && is_array($custom_utm_params) ){
 		foreach($ga_utm as $utm => $ga){
 			if(isset($custom_utm_params[$utm])){
@@ -422,8 +424,24 @@ function send_google_analytics(){
 	});
 	ga('<?php echo $tracker; ?>send', 'pageview');
 	<?php if(is_404()): ?>
-		ga('<?php echo $tracker; ?>send', 'event', '404 Error', '404', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>', {nonInteraction: true});
-	<?php endif;
+		ga('<?php echo $tracker; ?>send', 'event', '404 Error', document.referrer, '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>', {nonInteraction: true, anonymizeIp: false});
+	<?php endif; ?>
+
+	//adblock check
+	var adblockTest = document.createElement('div');
+	adblockTest.innerHTML = '&nbsp;';
+	adblockTest.className = 'adsbox';
+	document.body.appendChild(adblockTest);
+	window.setTimeout(function() {
+		if (adblockTest.offsetHeight === 0) {
+			ga('adblockTracker.send', 'event', 'Ad Blocker check', 'Adblock', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
+			ga('adblockTracker.send', 'event', 'Ads Blocked', utm_source, '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
+		} else {
+			ga('adblockTracker.send', 'event', 'Ad Blocker check', 'no Adblock', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
+		}
+		adblockTest.remove();
+	}, 100);
+	<?php
 }
 
 function itv_get_primary_category($post = null){
