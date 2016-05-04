@@ -8,6 +8,10 @@ add_shortcode('ajax_load_more', function(){
 //hack for full post display
 global $wp_query, $post, $itv_has_slideshows_cat;
 
+if( ! isset($itv_has_slideshows_cat) ){
+   $itv_has_slideshows_cat = has_category('slideshows');
+}
+
 $wp_query->is_singular = true;
 $wp_query->is_single = true;
 

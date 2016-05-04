@@ -3,6 +3,7 @@
 add_action('genesis_before_entry', function(){
 	global $itv_has_slideshows_cat;
 	$post = get_post();
+	$itv_has_slideshows_cat = has_category('slideshows', $post);
 
 	if($itv_has_slideshows_cat){
 
@@ -24,17 +25,22 @@ add_action('genesis_before_entry', function(){
 				add_filter( 'the_content', 'add_start_slideshow_link', 20 );
 			}
 
-			remove_action( 'genesis_after_entry' , 'itv_facebook_share' );
+			if(is_singular()){
+				remove_action( 'genesis_after_entry' , 'itv_facebook_share' );
+				remove_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
+				remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
-			remove_action('genesis_after_entry', 'add_ad_block_after_post', 99998);
-			remove_action('genesis_after_entry', 'add_infinite_scroll', 99999);
-
-			if($slideshow_type == 'paged'){
-				add_action('genesis_entry_content', 'itv_add_slideshow_paged', 11);
-			} elseif($slideshow_type == 'single') {
-				add_action('genesis_entry_content', 'itv_add_slideshow_single', 11);
+				if($slideshow_type == 'paged'){
+					add_action('genesis_entry_content', 'itv_add_slideshow_paged', 11);
+				} elseif($slideshow_type == 'single') {
+					add_action('genesis_entry_content', 'itv_add_slideshow_single', 11);
+				}
 			}
 		}
+	} else {
+		remove_filter( 'the_content', 'add_start_slideshow_link', 20 );
+		remove_action('genesis_entry_content', 'itv_add_slideshow_paged', 11);
+		remove_action('genesis_entry_content', 'itv_add_slideshow_single', 11);
 	}
 });
 
@@ -49,18 +55,18 @@ function add_start_slideshow_link($content){
 
 add_action('genesis_after_entry', function(){
 	global $itv_has_slideshows_cat;
-	if(empty($itv_has_slideshows_cat)){
-		$itv_has_slideshows_cat = false;
+	if( ! isset($itv_has_slideshows_cat) ){
+		$itv_has_slideshows_cat = has_category('slideshows');
 	}
-	if($itv_has_slideshows_cat && function_exists ('adinserter')) echo adinserter(7);
 	if($itv_has_slideshows_cat && is_singular()){
+		if(function_exists ('adinserter')) echo adinserter(7);
 		if(isMobile()){
 			echo do_shortcode('[alm_repeater_preload post_type="post" posts_per_page="6" section_name="slideshow"]');
 		} else {
 			echo do_shortcode('[alm_repeater_preload post_type="post" posts_per_page="9" section_name="slideshow"]');
 		}
+		include('fb/FB-comments.php');
 	}
-	if($itv_has_slideshows_cat && is_singular()) include('fb/FB-comments.php');
 }, 99998);
 
 function itv_add_slideshow_paged(){

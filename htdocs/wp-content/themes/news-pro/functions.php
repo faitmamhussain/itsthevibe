@@ -394,17 +394,20 @@ function add_google_analytics(){
 }
 
 function send_google_analytics(){
-		global $post, $itv_has_slideshows_cat, $custom_utm_params;
-		$title = $post->post_title;
-		$slug = $post->post_name;
-		$tracker = ($itv_has_slideshows_cat || is_page('End Slideshow')) ? 'slideshowTracker.' : '';
-		$ga_utm = array(
-			'utm_source' => 'campaignSource',
-			'utm_campaign' => 'campaignName',
-			'utm_medium' => 'campaignMedium',
-			'utm_content' => 'campaignContent',
-			'utm_term' => 'campaignKeyword',
-		);
+	global $post, $itv_has_slideshows_cat, $custom_utm_params;
+	if( ! isset($itv_has_slideshows_cat) ){
+		$itv_has_slideshows_cat = has_category('slideshows');
+	}
+	$title = $post->post_title;
+	$slug = $post->post_name;
+	$tracker = ($itv_has_slideshows_cat || is_page('End Slideshow')) ? 'slideshowTracker.' : '';
+	$ga_utm = array(
+		'utm_source' => 'campaignSource',
+		'utm_campaign' => 'campaignName',
+		'utm_medium' => 'campaignMedium',
+		'utm_content' => 'campaignContent',
+		'utm_term' => 'campaignKeyword',
+	);
 	?>
 	ga('<?php echo $tracker; ?>set', {
 	<?php if(empty($tracker)): ?>
@@ -517,9 +520,7 @@ add_filter('alm_modify_query_args', function($args){
 remove_filter('post_limits', 'mpo_change_limit' );
 
 add_action('genesis_doctype', function(){
-	global $thisPageType, $itv_has_slideshows_cat;
-
-	$itv_has_slideshows_cat = in_category('slideshows');
+	global $thisPageType;
 
 	$pageChecks = array(
 		'ITV_Home' 			=> is_front_page(),
