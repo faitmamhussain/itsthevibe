@@ -13,16 +13,16 @@ jQuery( document ).ready(function( $ ) {
             $('.alm-reveal > .entry').each(function () {
                 var distanceTop = $(this).offset().top;
                 var distanceBottom = distanceTop + $(this).height();
+                var hash = $(this).data('anchor-url');
 
                 if (distanceTop < offset && distanceBottom > offset && currentHash != hash) {
 
-                    var hash = $(this).data('anchor-url');
                     var title = $(this).data('anchor-title');
                     var tracker = $(this).data('anchor-tracker');
                     var post_title = $(this).data('anchor-post-title');
                     var slug = $(this).data('anchor-slug');
 
-                    if(title){
+                    if(title && title != document.title){
                         window.history.pushState({"pageTitle":title},'', hash);
                         document.title = title;
 
