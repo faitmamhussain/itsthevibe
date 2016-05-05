@@ -234,7 +234,7 @@ add_action('genesis_after_entry', 'add_infinite_scroll', 99999);
 
 function add_infinite_scroll(){
 
-	if( is_singular('post') && ! is_home() && ! is_front_page() ){
+	if( is_singular('post') && ! is_home() && ! is_front_page() && ! has_category('slideshows') ){
 
 		$post = get_post();
 		$cat = itv_get_primary_category($post);
