@@ -395,7 +395,7 @@ function add_google_analytics(){
 		<?php send_google_analytics();?>
 
 		<?php if(is_404()): ?>
-			ga('send', 'event', '404 Error', document.referrer, '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>', {nonInteraction: true, anonymizeIp: false});
+			ga('send', 'event', '404 Error', document.referrer, '<?php echo $_SERVER["REQUEST_URI"]; ?>', {nonInteraction: true, anonymizeIp: false});
 		<?php endif; ?>
 
 		//adblock check
@@ -405,10 +405,10 @@ function add_google_analytics(){
 		document.body.appendChild(adblockTest);
 		window.setTimeout(function() {
 			if (adblockTest.offsetHeight === 0) {
-				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'Adblock', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
-				ga('adblockTracker.send', 'event', 'Ads Blocked', utm_source, '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
+				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+				ga('adblockTracker.send', 'event', 'Ads Blocked', utm_source, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			} else {
-				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'no Adblock', '<?php echo json_encode($_SERVER["REQUEST_URI"]); ?>');
+				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'no Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			}
 			adblockTest.remove();
 		}, 100);
