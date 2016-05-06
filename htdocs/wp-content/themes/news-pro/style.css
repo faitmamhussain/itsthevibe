@@ -245,6 +245,13 @@ cite {
 	text-align: center;
 }
 
+.content .itv_ad_widget {
+	border-top: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+	padding: 8px 0 8px;
+	margin: 8px 0;
+}
+
 .home .itv_ad_widget:first-child{
     margin: 10px 0;
 }
@@ -911,6 +918,8 @@ Plugins
 .slideshow-wrap .slideshow-button.slideshow-button-start {
 	background-color: #ea1947;
 	color: #fff;
+	padding: 4px 12px 3px;
+	font-size: 28px;
 }
 
 .slideshow-wrap .slideshow-button > span {
