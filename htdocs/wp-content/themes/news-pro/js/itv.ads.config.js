@@ -60,7 +60,7 @@ function TaboolaAds() {
         }
     };
 
-    this.BelowSlideshow = function (forceSafe, forceNS) {
+    this.BelowSlideshow = function (containerId, forceSafe, forceNS, additionalPlacement) {
         var rand = getRandomId();
         var term = this_utm_term;
         if (forceSafe) {
@@ -69,12 +69,20 @@ function TaboolaAds() {
         if (forceNS) {
             term = 'NS';
         }
+        if( ! additionalPlacement ){
+            additionalPlacement = '';
+        }
         if (!ITV_OBJ.isMobile) {
-            document.write('<div id="taboola-below-gallery-thumbnails-' + rand + '"></div>' +
-            '<script type="text/javascript">' +
-            'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-b",container:"taboola-below-gallery-thumbnails-' + rand + '",placement:"ITV - ' +
-            this_utm_source_value + ' - Below Slideshow - Sponsored - ' + term + '",target_type:"mix"});' +
-            '</script>');
+            var dataToAppend = '<div id="taboola-below-gallery-thumbnails-' + rand + '"></div>' +
+                '<script type="text/javascript">' +
+                'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-b",container:"taboola-below-gallery-thumbnails-' + rand + '",placement:"ITV - ' +
+                this_utm_source_value + ' - Below Slideshow - Sponsored - ' + term + additionalPlacement + '",target_type:"mix"});' +
+                '</script>';
+            if(containerId) {
+                jQuery('#' + containerId).append(dataToAppend);
+            } else {
+                document.write(dataToAppend);
+            }
         }
     };
 
@@ -123,7 +131,7 @@ function RevcontentAds() {
         '</script>');
     };
 
-    this.BelowSlideshow = function () {
+    this.BelowSlideshow = function (containerId) {
         var rand = getRandomId();
         var rcDefaultWidgetID = 29335;
         var rcCatMap = '{outbrain:30600,taboola:30601,revcontent:30602,gemini:30603,adblade:30604,fb:30605,"3lift":30606,g4:30607,houseads:30608,ha:30608,taboola_organic:30609,pinterest:30610,instagram:30611,cad:30612,twitter:30613}';
@@ -131,7 +139,7 @@ function RevcontentAds() {
             rcDefaultWidgetID = 29406;
             rcCatMap = '{outbrain:30620,taboola:30621,revcontent:30622,gemini:30623,adblade:30624,fb:30625,"3lift":30626,g4:30627,houseads:30628,ha:30628,taboola_organic:30629,pinterest:30630,instagram:30631,cad:30632,twitter:30633}';
         }
-        document.write('<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
+        var dataToAppend = '<div id="rcjsload_4ht9wt3_' + rand + '"></div>' +
         '<script type="text/javascript">' +
         '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
         'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
@@ -142,7 +150,12 @@ function RevcontentAds() {
         'rcel.type = "text/javascript";' +
         'rcel.src = "http://trends.revcontent.com/serve.js.php?w="+rcDefaultWidgetID+"&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth);' +
         'rcel.async = true;var rcds = document.getElementById("rcjsload_4ht9wt3_' + rand + '"); rcds.appendChild(rcel);})();' +
-        '</script>');
+        '</script>';
+        if(containerId) {
+            jQuery('#' + containerId).append(dataToAppend);
+        } else {
+            document.write(dataToAppend);
+        }
     };
 
     this.BelowEndSlideshow = function () {
@@ -257,13 +270,13 @@ function BelowPost(containerId) {
 /******************************
  Below Slideshow
  ******************************/
-function BelowSlideshow() {
+function BelowSlideshow(containerId) {
     if (ITV_OBJ.isMobile) {
-        Revcontent.BelowSlideshow();
+        Revcontent.BelowSlideshow(containerId);
     }
     else {
         if (utm_source_value.toUpperCase() == 'TABOOLA') {
-            Taboola.BelowSlideshow();
+            Taboola.BelowSlideshow(containerId);
         }
         else if (
             utm_source_value.toUpperCase() == 'EDGE' ||
@@ -272,16 +285,26 @@ function BelowSlideshow() {
             utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
             utm_source_value.toUpperCase() == 'TABOOLA_NATIVE'
         ) {
-            Taboola.BelowSlideshow(false, true); //forceSafe = false, forceNS = true
+            Taboola.BelowSlideshow(containerId, false, true); //forceSafe = false, forceNS = true
+        }
+        else if (utm_source_value.toUpperCase() == 'GEMINI') {
+            //wait for adblock check
+            window.setTimeout(function() {
+                if (ITV_OBJ.adsBlocked) {
+                    Taboola.BelowSlideshow(containerId, false, false, ' - Adblock');
+                } else {
+                    Revcontent.BelowSlideshow(containerId);
+                }
+            }, 100);
         }
         else {
-            Revcontent.BelowSlideshow();
+            Revcontent.BelowSlideshow(containerId);
         }
     }
 }
 
-function BelowCategorySlideshow() {
-    Revcontent.BelowSlideshow();
+function BelowCategorySlideshow(containerId) {
+    Revcontent.BelowSlideshow(containerId);
 }
 
 /******************************
@@ -320,7 +343,7 @@ function BelowEndSlideshow() {
             utm_source_value.toUpperCase() == 'GOOGLE' ||
             utm_source_value.toUpperCase() == 'GEMINI'
         ) {
-            Revcontent.BelowEndSlideshow();
+            Taboola.BelowEndSlideshow();
         }
 
     }
