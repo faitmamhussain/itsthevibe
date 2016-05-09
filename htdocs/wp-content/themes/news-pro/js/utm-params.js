@@ -80,7 +80,7 @@ var post_id = post.id;
 var post_slug = post.slug;
 
 if( ! utm_source_value ){
-    utm_source_value = 'undefined';
+    utm_source_value = 'Undefined';
 }
 
 var explicitCheck;
@@ -95,7 +95,7 @@ else{
 var itvtargeting = ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term', 'test'];
 for(var x = 0; x < itvtargeting.length; x++){
     var targetValue = itvtargeting[x].getParamValue();
-    if( targetValue != null && targetValue != 'undefined' && targetValue != '' ){
+    if( targetValue ){
         setCookie('itv_'+itvtargeting[x], targetValue);
     }
 }
@@ -166,7 +166,7 @@ function isDesktop() {
                 var _this = $(this);
                 var pageType = post.type;
                 if(_this.data('url')){
-                    if(utm_source_value == 'itv' && pageType == 'ITV_404'){
+                    if(utm_source_value == 'Undefined' && pageType == 'ITV_404'){
                         utm_source_value = pageType;
                     }
                     $(this).attr("href", _this.data('url')
