@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ajax Load More\n"
-"POT-Creation-Date: 2016-04-11 09:45-0500\n"
-"PO-Revision-Date: 2016-04-11 09:45-0500\n"
-"Last-Translator: Darren Cooney <dcooney@ecentricarts.com>\n"
+"POT-Creation-Date: 2016-05-08 22:06-0500\n"
+"PO-Revision-Date: 2016-05-08 22:06-0500\n"
+"Last-Translator: Darren Cooney <darren.cooney@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_CA\n"
 "MIME-Version: 1.0\n"
@@ -15,12 +15,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/admin.php:117 ../admin/admin.php:674 ../admin/admin.php:718
-#: ../admin/admin.php:768
+#: ../admin/admin.php:92 ../admin/admin.php:123 ../admin/admin.php:681
+#: ../admin/admin.php:725 ../admin/admin.php:775
 msgid "You don't belong here."
 msgstr ""
 
-#: ../admin/admin.php:147 ../admin/editor/editor-build.php:67
+#: ../admin/admin.php:153 ../admin/editor/editor-build.php:67
 #: ../admin/views/licenses.php:51 ../admin/views/licenses.php:106
 #: ../admin/views/licenses.php:160 ../admin/views/licenses.php:215
 #: ../admin/views/licenses.php:271 ../admin/views/licenses.php:327
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: ../admin/admin.php:148 ../admin/editor/editor-build.php:68
+#: ../admin/admin.php:154 ../admin/editor/editor-build.php:68
 #: ../admin/views/licenses.php:55 ../admin/views/licenses.php:110
 #: ../admin/views/licenses.php:164 ../admin/views/licenses.php:219
 #: ../admin/views/licenses.php:275 ../admin/views/licenses.php:331
@@ -38,159 +38,159 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
-#: ../admin/admin.php:149
+#: ../admin/admin.php:155
 msgid "Applying layout"
 msgstr ""
 
-#: ../admin/admin.php:150 ../admin/views/repeater-templates.php:220
+#: ../admin/admin.php:156 ../admin/views/repeater-templates.php:220
 msgid "Template Updated"
 msgstr ""
 
-#: ../admin/admin.php:259
+#: ../admin/admin.php:266
 msgid ""
 "[Ajax Load More] Error opening default repeater template - Please check your "
 "file path and ensure your server is configured to allow Ajax Load More to "
 "read and write files within the /ajax-load-more/core/repeater directory"
 msgstr ""
 
-#: ../admin/admin.php:263
+#: ../admin/admin.php:270
 msgid ""
 "[Ajax Load More] Error updating default repeater template - Please check "
 "your file path and ensure your server is configured to allow Ajax Load More "
 "to read and write files within the /ajax-load-more/core/repeater directory."
 msgstr ""
 
-#: ../admin/admin.php:632
+#: ../admin/admin.php:639
 msgid "[Ajax Load More] Unable to open repeater template - "
 msgstr ""
 
-#: ../admin/admin.php:636
+#: ../admin/admin.php:643
 msgid "[Ajax Load More] Error saving repeater template - "
 msgstr ""
 
-#: ../admin/admin.php:669
+#: ../admin/admin.php:676
 msgid "Error Writing File"
 msgstr ""
 
-#: ../admin/admin.php:854
+#: ../admin/admin.php:861
 #: ../admin/shortcode-builder/shortcode-builder.php:1244
 msgid "Container Type"
 msgstr ""
 
-#: ../admin/admin.php:862
+#: ../admin/admin.php:869
 #: ../admin/shortcode-builder/shortcode-builder.php:1268
 msgid "Container Classes"
 msgstr ""
 
-#: ../admin/admin.php:870
+#: ../admin/admin.php:877
 msgid "Disable CSS"
 msgstr ""
 
-#: ../admin/admin.php:878
+#: ../admin/admin.php:885
 msgid "Button/Loading Style"
 msgstr ""
 
-#: ../admin/admin.php:886
+#: ../admin/admin.php:893
 msgid "Button Classes"
 msgstr ""
 
-#: ../admin/admin.php:894
+#: ../admin/admin.php:901
 msgid "Ajax Security"
 msgstr ""
 
-#: ../admin/admin.php:902
+#: ../admin/admin.php:909
 msgid "Top of Page"
 msgstr ""
 
-#: ../admin/admin.php:910
+#: ../admin/admin.php:917
 msgid "Dynamic Content"
 msgstr ""
 
-#: ../admin/admin.php:918
+#: ../admin/admin.php:925
 msgid "Editor Button"
 msgstr ""
 
-#: ../admin/admin.php:926
+#: ../admin/admin.php:933
 msgid "Error Notices"
 msgstr ""
 
-#: ../admin/admin.php:991
+#: ../admin/admin.php:998
 msgid ""
 "Customize the user experience of Ajax Load More by updating the fields below."
 msgstr ""
 
-#: ../admin/admin.php:1004
+#: ../admin/admin.php:1011
 msgid "The following settings affect the WordPress admin area only."
 msgstr ""
 
-#: ../admin/admin.php:1035
+#: ../admin/admin.php:1042
 msgid "I want to use my own CSS styles."
 msgstr ""
 
-#: ../admin/admin.php:1035
+#: ../admin/admin.php:1042
 msgid "View Ajax Load More CSS"
 msgstr ""
 
-#: ../admin/admin.php:1055
+#: ../admin/admin.php:1062
 msgid "Hide shortcode button in WYSIWYG editor."
 msgstr ""
 
-#: ../admin/admin.php:1076
+#: ../admin/admin.php:1083
 msgid ""
 "Display error messaging regarding repeater template updates in the browser "
 "console."
 msgstr ""
 
-#: ../admin/admin.php:1097
+#: ../admin/admin.php:1104
 msgid ""
 "Disable dynamic population of categories, tags and authors in the Shortcode "
 "Builder.<span style=\"display:block\">Recommended if you have an "
 "extraordinary number of categories, tags and/or authors."
 msgstr ""
 
-#: ../admin/admin.php:1118 ../admin/admin.php:1121
+#: ../admin/admin.php:1125 ../admin/admin.php:1128
 msgid "Ajax Posts Here"
 msgstr ""
 
-#: ../admin/admin.php:1123
+#: ../admin/admin.php:1130
 msgid "You can modify the container type when building a shortcode."
 msgstr ""
 
-#: ../admin/admin.php:1140
+#: ../admin/admin.php:1147
 msgid ""
 "Add classes to Ajax Load More container - classes are applied globally and "
 "will appear with every instance of Ajax Load More. <span style=\"display:"
 "block\">You can also add classes when building a shortcode.</span>"
 msgstr ""
 
-#: ../admin/admin.php:1202
+#: ../admin/admin.php:1209
 msgid ""
 "Select an Ajax loading style - you can choose between a <strong>button</"
 "strong> or <strong>infinite scroll</strong>"
 msgstr ""
 
-#: ../admin/admin.php:1225
+#: ../admin/admin.php:1232
 msgid "Preview"
 msgstr ""
 
-#: ../admin/admin.php:1225
+#: ../admin/admin.php:1232
 #: ../admin/shortcode-builder/shortcode-builder.php:1218
-#: ../ajax-load-more.php:369
+#: ../core/classes/class.alm-shortcode.php:122
 msgid "Older Posts"
 msgstr ""
 
-#: ../admin/admin.php:1244
+#: ../admin/admin.php:1251
 msgid "Add classes to your <strong>Load More</strong> button"
 msgstr ""
 
-#: ../admin/admin.php:1287
+#: ../admin/admin.php:1294
 msgid ""
 "On initial page load, move the user's browser window to the top of the "
 "screen.<span style=\"display:block\">This <u>may</u> help prevent the "
 "loading of unnecessary posts.</span>"
 msgstr ""
 
-#: ../admin/admin.php:1308
+#: ../admin/admin.php:1315
 msgid ""
 "Enable <a href=\"https://codex.wordpress.org/WordPress_Nonces\" target="
 "\"_blank\">WP nonce</a> verification to help protect URLs against certain "
@@ -1547,36 +1547,36 @@ msgstr ""
 msgid "Updating template..."
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:252
+#: ../admin/views/repeater-templates.php:251
 msgid "Templating Help"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:254
+#: ../admin/views/repeater-templates.php:253
 msgid "What is a repeater template?"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:255
+#: ../admin/views/repeater-templates.php:254
 msgid ""
 "A repeater template is a snippet of code that will execute over and over "
 "within a <a href=\"http://codex.wordpress.org/The_Loop\" target=\"_blank"
 "\">WordPress loop</a>.</p>"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:258
+#: ../admin/views/repeater-templates.php:257
 msgid "Can I include PHP in the repeater template?"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:259
+#: ../admin/views/repeater-templates.php:258
 msgid ""
 "Yes, PHP and core WordPress functions such as, <code>the_title()</code> and "
 "<code>the_permalink()</code> are required.</p>"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:262
+#: ../admin/views/repeater-templates.php:261
 msgid "Tips and Tricks"
 msgstr ""
 
-#: ../admin/views/repeater-templates.php:264
+#: ../admin/views/repeater-templates.php:263
 msgid ""
 "Always open and close your templates with an HTML element. In some rare "
 "cases data may not be displayed if not wrapped in HTML.<br/>e.g. <code>&lt;"
@@ -1652,11 +1652,11 @@ msgstr ""
 msgid "Clear all Shortcode Builder settings"
 msgstr ""
 
-#: ../ajax-load-more.php:192
+#: ../ajax-load-more.php:194
 msgid "Settings"
 msgstr ""
 
-#: ../core/functions.php:388
+#: ../core/functions.php:399
 msgid "Pages:"
 msgstr ""
 

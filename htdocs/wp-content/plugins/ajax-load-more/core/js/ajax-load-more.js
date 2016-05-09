@@ -82,8 +82,8 @@
       alm.comments_type = alm.content.attr('data-comments_type');    
       alm.comments_style = alm.content.attr('data-comments_style');    
       alm.comments_template = alm.content.attr('data-comments_template'); 
-      alm.comments_callback = alm.content.attr('data-comments_callback');     
-      
+      alm.comments_callback = alm.content.attr('data-comments_callback');   
+            
       alm.seo = alm.content.attr('data-seo'); // true | false   
       
       alm.preloaded = alm.content.attr('data-preloaded'); // true | false 
@@ -92,9 +92,8 @@
       alm.paging = alm.content.attr('data-paging'); // is paging enabled 
       alm.paging_controls = alm.content.attr('data-paging-controls');
       alm.paging_show_at_most = alm.content.attr('data-paging-show-at-most');
-      alm.paging_classes = alm.content.attr('data-paging-classes');
-
-      
+      alm.paging_classes = alm.content.attr('data-paging-classes');     
+       
 		/* Paging */
 		if(alm.paging === 'true'){
 			alm.paging = true;	
@@ -218,8 +217,7 @@
          alm.offset = 0;
       }else{
          alm.offset = alm.content.attr('data-offset');
-      }
-      
+      }      
       
       /* Check for pause on init
        * Pause could be used to hold the loading of posts for a button click.
@@ -349,7 +347,6 @@
        */
        
       alm.AjaxLoadMore.loadPosts = function () {      
-         
          if(!alm.disable_ajax){ // Check for ajax blocker
 	         if(!alm.paging){
             	alm.button.addClass('loading');
@@ -422,15 +419,16 @@
          
          // Set Alternate Query params         
          if(alm.alternate === 'true'){            
-            alm.alternate_array = {
+            alm.alternate_array = { 
                'alternate': 'true',
                'alternate_sequence': alm.alternate_sequence,
                'alternate_sequence_max': alm.alternate_sequence_max,
                'alternate_repeater': alm.alternate_repeater,
                'alternate_theme_repeater': alm.alternate_theme_repeater,
             };            
-         }          
-      
+         }      
+         
+         
          $.ajax({
             type: "GET",
             url: alm_localize.ajaxurl,
@@ -491,6 +489,7 @@
                }
             },
             success: function (data) {
+               //console.log(data);
 	            if(queryType === 'standard'){
                	alm.AjaxLoadMore.success(data, false);
                }
@@ -520,7 +519,7 @@
        *  @since 2.6.0
        */
        
-      alm.AjaxLoadMore.success = function (data, is_cache) {
+      alm.AjaxLoadMore.success = function (data, is_cache) {         
               
          if(alm.previous_post){ // Get previous page data	         
             alm.AjaxLoadMore.getPreviousPost();           
@@ -775,10 +774,10 @@
                   }
                }
                
-            } else { 
-	            	            
+            } else {          
                // Is Paging               
                if(!alm.init){
+                   
                   $('.alm-paging-content', alm.el).html('').append(alm.data).almWaitForImages().done(function(){  // Remove loading class and append data
                      $('.alm-paging-loading', alm.el).fadeOut(alm.speed); // Fade out loader
                      if ($.isFunction($.fn.almOnPagingComplete)){
@@ -1005,8 +1004,7 @@
 	                  alm.AjaxLoadMore.loadPosts();
 	                  
 	               }
-               }
-               
+               }               
             }
          });
       }
@@ -1051,10 +1049,12 @@
        *  @since 2.7.0
        */
        
-      $.fn.almUpdateCurrentPage = function(current, alm_paging_init){
-	      
+      $.fn.almUpdateCurrentPage = function(current, obj, alm){
          alm.page = current;
-         // If is paging and preloaded
+         
+         // We will eventually use this function to combine Paging + Preloaded add-ons
+         var alm_paging_init = false;
+         // If is paging init and preloaded, grab preloaded data, and append it .alm-reveal
 	      if(alm_paging_init && alm.preloaded === 'true'){
 		      
 		      var data = $('.alm-preloaded', alm.el).html(); // Content of preloaded page
