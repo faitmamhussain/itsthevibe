@@ -84,7 +84,10 @@ function TaboolaAds() {
         }
     };
 
-    this.BelowEndSlideshow = function (forceSafe, forceNS) {
+    this.BelowEndSlideshow = function (containerId, forceSafe, forceNS) {
+        if (!jQuery('#' + containerId).length) {
+            return;
+        }
         var rand = getRandomId();
         var term = this_utm_term;
         if (forceSafe) {
@@ -93,7 +96,7 @@ function TaboolaAds() {
         if (forceNS) {
             term = 'NS';
         }
-        document.write('<div id="taboola­native­end­of­gallery­thumbnails-' + rand + '"></div>' +
+        jQuery('#' + containerId).append('<div id="taboola­native­end­of­gallery­thumbnails-' + rand + '"></div>' +
         '<script type="text/javascript">' +
         'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-c",container:"taboola­native­end­of­gallery­thumbnails-' + rand + '",placement:"ITV - '
         + this_utm_source_value + ' - ' + this_page_type + ' - Organic - ' + term + '",target_type:"mix"});' +
@@ -154,14 +157,17 @@ function RevcontentAds() {
         '</script>');
     };
 
-    this.BelowEndSlideshow = function () {
+    this.BelowEndSlideshow = function (containerId) {
+        if (!jQuery('#' + containerId).length) {
+            return;
+        }
         var rand = getRandomId();
         var rcDefaultWidgetID = 29333;
         var rcCatMap = '{}';
         if (ITV_OBJ.isMobile) {
             rcDefaultWidgetID = 30345;
         }
-        document.write('<div id="rcjsload_pu06hus_' + rand + '"></div>' +
+        jQuery('#' + containerId).append('<div id="rcjsload_pu06hus_' + rand + '"></div>' +
         '<script type="text/javascript">' +
         '(function() {var publisherCategory = "";var rcDefaultWidgetID = ' + rcDefaultWidgetID + ';var query = window.location.search.substring(1);' +
         'var vars = query.split("&");for (var i=0;i<vars.length;i++) {var pair = vars[i].split("=");' +
@@ -246,15 +252,16 @@ function RightRailEndSlideshow() {
  Below Post
  ******************************/
 function BelowPost(containerId) {
+    var utm_source_uppercase = utm_source_value.toUpperCase();
     if (
-        utm_source_value.toUpperCase() == 'TABOOLA'
+        utm_source_uppercase == 'TABOOLA'
     ) {
         Taboola.BelowPost(containerId);
     }
     else if (
-        utm_source_value.toUpperCase() == 'EDGE' ||
-        utm_source_value.toUpperCase() == 'FB' ||
-        utm_source_value.toUpperCase() == 'UNDEFINED'
+        utm_source_uppercase == 'EDGE' ||
+        utm_source_uppercase == 'FB' ||
+        utm_source_uppercase == 'UNDEFINED'
     ) {
         Taboola.BelowPost(containerId, false, true); //forceSafe = false, forceNS = true
     }
@@ -267,23 +274,24 @@ function BelowPost(containerId) {
  Below Slideshow
  ******************************/
 function BelowSlideshow(containerId) {
+    var utm_source_uppercase = utm_source_value.toUpperCase();
     if (ITV_OBJ.isMobile) {
         Revcontent.BelowSlideshow(containerId);
     }
     else {
-        if (utm_source_value.toUpperCase() == 'TABOOLA') {
+        if (utm_source_uppercase == 'TABOOLA') {
             Taboola.BelowSlideshow(containerId);
         }
         else if (
-            utm_source_value.toUpperCase() == 'EDGE' ||
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'UNDEFINED' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE'
+            utm_source_uppercase == 'EDGE' ||
+            utm_source_uppercase == 'FB' ||
+            utm_source_uppercase == 'UNDEFINED' ||
+            utm_source_uppercase == 'TABOOLA_ORGANIC' ||
+            utm_source_uppercase == 'TABOOLA_NATIVE'
         ) {
             Taboola.BelowSlideshow(containerId, false, true); //forceSafe = false, forceNS = true
         }
-        else if (utm_source_value.toUpperCase() == 'GEMINI') {
+        else if (utm_source_uppercase == 'GEMINI') {
             //wait for adblock check
             window.setTimeout(function() {
                 if (ITV_OBJ.adsBlocked) {
@@ -306,66 +314,67 @@ function BelowCategorySlideshow(containerId) {
 /******************************
  Below End Slideshow
  ******************************/
-function BelowEndSlideshow() {
+function BelowEndSlideshow(containerId) {
+    var utm_source_uppercase = utm_source_value.toUpperCase();
     if (ITV_OBJ.isSmartPhone) {
         if (
-            utm_source_value.toUpperCase() == 'TABOOLA'
+            utm_source_uppercase == 'TABOOLA'
         ) {
-            Taboola.BelowEndSlideshow();
+            Taboola.BelowEndSlideshow(containerId);
         }
         else if(
-            utm_source_value.toUpperCase() == 'FB' ||
-            utm_source_value.toUpperCase() == 'UNDEFINED' ||
-            utm_source_value.toUpperCase() == ''
+            utm_source_uppercase == 'FB' ||
+            utm_source_uppercase == 'UNDEFINED' ||
+            utm_source_uppercase == ''
         ){
-            Taboola.BelowEndSlideshow(true, false);
+            Taboola.BelowEndSlideshow(containerId, true, false);
         }
         else if (
-            utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
-            utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-            utm_source_value.toUpperCase() == 'REVCONTENT' ||
-            utm_source_value.toUpperCase() == 'EDGE' ||
-            utm_source_value.toUpperCase() == 'PINTEREST' ||
-            utm_source_value.toUpperCase() == 'HA' ||
-            utm_source_value.toUpperCase() == 'WF_RIGHTRAIL' ||
-            utm_source_value.toUpperCase() == 'TWITTER' ||
-            utm_source_value.toUpperCase() == 'BGARD' ||
-            utm_source_value.toUpperCase() == 'SHRD' ||
-            utm_source_value.toUpperCase() == 'G4' ||
-            utm_source_value.toUpperCase() == '3LIFT' ||
-            utm_source_value.toUpperCase() == 'APPLE' ||
-            utm_source_value.toUpperCase() == 'TABOOLA' ||
-            utm_source_value.toUpperCase() == 'GOOGLE' ||
-            utm_source_value.toUpperCase() == 'GEMINI'
+            utm_source_uppercase == 'OUTBRAIN' ||
+            utm_source_uppercase == 'TABOOLA_NATIVE' ||
+            utm_source_uppercase == 'TABOOLA_ORGANIC' ||
+            utm_source_uppercase == 'REVCONTENT' ||
+            utm_source_uppercase == 'EDGE' ||
+            utm_source_uppercase == 'PINTEREST' ||
+            utm_source_uppercase == 'HA' ||
+            utm_source_uppercase == 'WF_RIGHTRAIL' ||
+            utm_source_uppercase == 'TWITTER' ||
+            utm_source_uppercase == 'BGARD' ||
+            utm_source_uppercase == 'SHRD' ||
+            utm_source_uppercase == 'G4' ||
+            utm_source_uppercase == '3LIFT' ||
+            utm_source_uppercase == 'APPLE' ||
+            utm_source_uppercase == 'TABOOLA' ||
+            utm_source_uppercase == 'GOOGLE' ||
+            utm_source_uppercase == 'GEMINI'
         ) {
-            Taboola.BelowEndSlideshow();
+            Taboola.BelowEndSlideshow(containerId);
         }
 
     }
     else if ((ITV_OBJ.isTablet || ITV_OBJ.isDesktop)&& (
-        utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-        utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
-        utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-        utm_source_value.toUpperCase() == 'REVCONTENT' ||
-        utm_source_value.toUpperCase() == 'EDGE' ||
-        utm_source_value.toUpperCase() == 'PINTEREST' ||
-        utm_source_value.toUpperCase() == 'HA' ||
-        utm_source_value.toUpperCase() == 'WF_RIGHTRAIL' ||
-        utm_source_value.toUpperCase() == 'TWITTER' ||
-        utm_source_value.toUpperCase() == 'BGARD' ||
-        utm_source_value.toUpperCase() == 'SHRD' ||
-        utm_source_value.toUpperCase() == 'G4' ||
-        utm_source_value.toUpperCase() == '3LIFT' ||
-        utm_source_value.toUpperCase() == 'APPLE' ||
-        utm_source_value.toUpperCase() == 'TABOOLA' ||
-        utm_source_value.toUpperCase() == 'FB' ||
-        utm_source_value.toUpperCase() == 'GOOGLE' ||
-        utm_source_value.toUpperCase() == 'UNDEFINED' ||
-        utm_source_value.toUpperCase() == '' ||
-        utm_source_value.toUpperCase() == 'GEMINI'
+        utm_source_uppercase == 'OUTBRAIN' ||
+        utm_source_uppercase == 'TABOOLA_NATIVE' ||
+        utm_source_uppercase == 'TABOOLA_ORGANIC' ||
+        utm_source_uppercase == 'REVCONTENT' ||
+        utm_source_uppercase == 'EDGE' ||
+        utm_source_uppercase == 'PINTEREST' ||
+        utm_source_uppercase == 'HA' ||
+        utm_source_uppercase == 'WF_RIGHTRAIL' ||
+        utm_source_uppercase == 'TWITTER' ||
+        utm_source_uppercase == 'BGARD' ||
+        utm_source_uppercase == 'SHRD' ||
+        utm_source_uppercase == 'G4' ||
+        utm_source_uppercase == '3LIFT' ||
+        utm_source_uppercase == 'APPLE' ||
+        utm_source_uppercase == 'TABOOLA' ||
+        utm_source_uppercase == 'FB' ||
+        utm_source_uppercase == 'GOOGLE' ||
+        utm_source_uppercase == 'UNDEFINED' ||
+        utm_source_uppercase == '' ||
+        utm_source_uppercase == 'GEMINI'
         )) {
-        Taboola.BelowEndSlideshow();
+        Taboola.BelowEndSlideshow(containerId);
     }
 }
 
@@ -373,31 +382,32 @@ function BelowEndSlideshow() {
  exit pop
  ******************************/
 function ExitPop() {
+    var utm_source_uppercase = utm_source_value.toUpperCase();
     if (
-        utm_source_value.toUpperCase() == 'OUTBRAIN' ||
-        utm_source_value.toUpperCase() == 'TABOOLA_NATIVE' ||
-        utm_source_value.toUpperCase() == 'TABOOLA_ORGANIC' ||
-        utm_source_value.toUpperCase() == 'REVCONTENT' ||
-        utm_source_value.toUpperCase() == 'EDGE' ||
-        utm_source_value.toUpperCase() == 'PINTEREST' ||
-        utm_source_value.toUpperCase() == 'HA' ||
-        utm_source_value.toUpperCase() == 'WF_RIGHTRAIL' ||
-        utm_source_value.toUpperCase() == 'TWITTER' ||
-        utm_source_value.toUpperCase() == 'BGARD' ||
-        utm_source_value.toUpperCase() == 'SHRD' ||
-        utm_source_value.toUpperCase() == 'G4' ||
-        utm_source_value.toUpperCase() == '3LIFT' ||
-        utm_source_value.toUpperCase() == 'APPLE'
+        utm_source_uppercase == 'OUTBRAIN' ||
+        utm_source_uppercase == 'TABOOLA_NATIVE' ||
+        utm_source_uppercase == 'TABOOLA_ORGANIC' ||
+        utm_source_uppercase == 'REVCONTENT' ||
+        utm_source_uppercase == 'EDGE' ||
+        utm_source_uppercase == 'PINTEREST' ||
+        utm_source_uppercase == 'HA' ||
+        utm_source_uppercase == 'WF_RIGHTRAIL' ||
+        utm_source_uppercase == 'TWITTER' ||
+        utm_source_uppercase == 'BGARD' ||
+        utm_source_uppercase == 'SHRD' ||
+        utm_source_uppercase == 'G4' ||
+        utm_source_uppercase == '3LIFT' ||
+        utm_source_uppercase == 'APPLE'
     ) {
         Revcontent.ExitPop();
     }
     else if (
-        utm_source_value.toUpperCase() == 'TABOOLA' ||
-        utm_source_value.toUpperCase() == 'FB' ||
-        utm_source_value.toUpperCase() == 'GOOGLE' ||
-        utm_source_value.toUpperCase() == 'UNDEFINED' ||
-        utm_source_value.toUpperCase() == '' ||
-        utm_source_value.toUpperCase() == 'GEMINI'
+        utm_source_uppercase == 'TABOOLA' ||
+        utm_source_uppercase == 'FB' ||
+        utm_source_uppercase == 'GOOGLE' ||
+        utm_source_value == 'UNDEFINED' ||
+        utm_source_uppercase == '' ||
+        utm_source_uppercase == 'GEMINI'
     ) {
         Revcontent.ExitPopInternal();
     }

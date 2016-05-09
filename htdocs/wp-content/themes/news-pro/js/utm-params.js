@@ -79,8 +79,8 @@ var post_tags =  post.tags;
 var post_id = post.id;
 var post_slug = post.slug;
 
-if(utm_source_value == ''){
-    utm_source_value = 'itv';
+if( ! utm_source_value ){
+    utm_source_value = 'undefined';
 }
 
 var explicitCheck;
