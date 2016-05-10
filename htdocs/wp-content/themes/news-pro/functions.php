@@ -406,11 +406,11 @@ function add_google_analytics(){
 		document.body.appendChild(adblockTest);
 		window.setTimeout(function() {
 			if (adblockTest.offsetHeight === 0) {
-				SP_OBJ.SESSION.adsBlocked = true;
+				SP_OBJ.SESSION.ADS_BLOCKED = true;
 				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 				ga('adblockTracker.send', 'event', 'Ads Blocked', utm_source, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			} else {
-				SP_OBJ.SESSION.adsBlocked = false;
+				SP_OBJ.SESSION.ADS_BLOCKED = false;
 				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'no Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			}
 			adblockTest.remove();

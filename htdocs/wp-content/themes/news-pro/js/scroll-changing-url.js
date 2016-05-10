@@ -49,7 +49,7 @@ jQuery( document ).ready(function( $ ) {
         });
     }
 
-    if(!SP_OBJ.SESSION.isMobile && typeof(refreshSidebarMidAd) == "function"){
+    if(!SP_OBJ.SESSION.IS_MOBILE && typeof(refreshSidebarMidAd) == "function"){
         setInterval(function(){
             //refreshSidebarMidAd(); - uncomment when ads are ready
         }, 10000);

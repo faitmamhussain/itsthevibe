@@ -1,8 +1,3 @@
-//querystring params
-
-var SP_OBJ = SP_OBJ || {};
-SP_OBJ.SESSION = {};
-
 //save utm params to cookies
 var itvtargeting = ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term', 'test'];
 for(var x = 0; x < itvtargeting.length; x++){
@@ -35,18 +30,7 @@ else{
     explicitCheck = 'false'
 }
 
-
-
-//viewport check
-SP_OBJ.SESSION.USER_ID = getAndUpdateUserId();
-SP_OBJ.SESSION.isMobile = isMobile();
-SP_OBJ.SESSION.isSmartPhone = isSmartPhone();
-SP_OBJ.SESSION.isTablet = isTablet();
-SP_OBJ.SESSION.isDesktop = isDesktop();
-
 var currentPageUrl = window.location.href.split('?')[0];
-
-
 
 (function ($) {
     $(document).on( "customAlmComplete", function( event, alm ) {
@@ -60,3 +44,23 @@ var currentPageUrl = window.location.href.split('?')[0];
         };
     });
 })(jQuery);
+
+var SP_OBJ = SP_OBJ || {};
+SP_OBJ.SESSION = {};
+SP_OBJ.SESSION.USER_ID = getAndUpdateUserId();
+SP_OBJ.SESSION.IS_MOBILE = isMobile();
+SP_OBJ.SESSION.IS_SMARTPHONE = isSmartPhone();
+SP_OBJ.SESSION.IS_TABLET = isTablet();
+SP_OBJ.SESSION.IS_DESKTOP = isDesktop();
+SP_OBJ.SESSION.IS_EXPLICIT = explicitCheck;
+SP_OBJ.SESSION.SOURCE = utm_source_value;
+SP_OBJ.SESSION.CAMPAIGN = utm_campaign_value;
+SP_OBJ.SESSION.MEDIUM = utm_medium_value;
+SP_OBJ.SESSION.TERM = utm_term_value;
+SP_OBJ.SESSION.CONTENT = utm_content_value;
+SP_OBJ.SESSION.TEST = test_value;
+SP_OBJ.SESSION.PAGE_TYPE = page_type;
+SP_OBJ.SESSION.TAGS = post_tags;
+SP_OBJ.SESSION.POST_ID = post_id;
+SP_OBJ.SESSION.POST_SLUG = post_slug;
+SP_OBJ.SESSION.PAGE_DEPTH = getAndIncrementSessionDepth();
