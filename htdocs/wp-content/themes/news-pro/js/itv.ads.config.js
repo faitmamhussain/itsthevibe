@@ -349,6 +349,8 @@ function BelowEndSlideshow(containerId) {
             utm_source_uppercase == 'GEMINI'
         ) {
             Taboola.BelowEndSlideshow(containerId);
+        } else {
+            Taboola.BelowEndSlideshow(containerId);
         }
 
     }
@@ -374,6 +376,8 @@ function BelowEndSlideshow(containerId) {
         utm_source_uppercase == '' ||
         utm_source_uppercase == 'GEMINI'
         )) {
+        Taboola.BelowEndSlideshow(containerId);
+    } else {
         Taboola.BelowEndSlideshow(containerId);
     }
 }
@@ -409,6 +413,8 @@ function ExitPop() {
         utm_source_uppercase == '' ||
         utm_source_uppercase == 'GEMINI'
     ) {
+        Revcontent.ExitPopInternal();
+    } else {
         Revcontent.ExitPopInternal();
     }
 }
