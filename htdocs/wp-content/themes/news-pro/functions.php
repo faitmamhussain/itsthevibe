@@ -41,7 +41,8 @@ function news_load_scripts() {
 	}
 
 	//JS code for setting utm-params, mobile detection and helpers.
-	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'jquery' ));
+	wp_register_script( 'sp-helpers', get_bloginfo( 'stylesheet_directory' ) . '/js/helpers.js', array( 'jquery' ));
+	wp_register_script( 'utm-params', get_bloginfo( 'stylesheet_directory' ) . '/js/utm-params.js', array( 'sp-helpers' ));
 	$translation_array = [
 		'id' => $post->ID,
 		'slug' => substr($post->post_name, 0, 40),
@@ -50,7 +51,7 @@ function news_load_scripts() {
 	];
 	wp_localize_script( 'utm-params', 'post', $translation_array );
 	wp_enqueue_script( 'utm-params');
-	wp_enqueue_script( 'itv.ads.config', get_bloginfo( 'stylesheet_directory' ) . '/js/itv.ads.config.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'itv.ads.config', get_bloginfo( 'stylesheet_directory' ) . '/js/sp.native.ads.config.js', array( 'jquery', 'utm-params' ), '1.0.0' );
 
 	wp_enqueue_style( 'dashicons' );
 
@@ -405,11 +406,11 @@ function add_google_analytics(){
 		document.body.appendChild(adblockTest);
 		window.setTimeout(function() {
 			if (adblockTest.offsetHeight === 0) {
-				ITV_OBJ.adsBlocked = true;
+				SP_OBJ.SESSION.adsBlocked = true;
 				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 				ga('adblockTracker.send', 'event', 'Ads Blocked', utm_source, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			} else {
-				ITV_OBJ.adsBlocked = false;
+				SP_OBJ.SESSION.adsBlocked = false;
 				ga('adblockTracker.send', 'event', 'Ad Blocker check', 'no Adblock', '<?php echo $_SERVER["REQUEST_URI"]; ?>');
 			}
 			adblockTest.remove();
