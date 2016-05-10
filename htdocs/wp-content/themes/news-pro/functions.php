@@ -120,15 +120,18 @@ add_action( 'genesis_doctype', function(){
 	<link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
 	<link rel="dns-prefetch" href="//cdn.taboola.com">
 	<link rel="dns-prefetch" href="//pixel.quantserve.com">
+	<link rel="dns-prefetch" href="//secure.quantserve.com">
+	<link rel="dns-prefetch" href="//edge.quantserve.com">
 	<link rel="dns-prefetch" href="//web.adblade.com">
 	<link rel="dns-prefetch" href="//www.facebook.com">
 	<link rel="dns-prefetch" href="//platform.twitter.com">
-	<link rel="dns-prefetch" href="//pixel.quantserve.com">
 	<link rel="dns-prefetch" href="//trends.revcontent.com">
 	<link rel="dns-prefetch" href="//cdn.revcontent.com">
 	<link rel="dns-prefetch" href="//labs-cdn.revcontent.com">
 	<link rel="dns-prefetch" href="//publishers.revcontent.com">
 	<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+	<link rel="dns-prefetch" href="//b.scorecardresearch.com">
+	<link rel="dns-prefetch" href="//sb.scorecardresearch.com">
 	<?php
 }, 5 );
 
@@ -287,6 +290,8 @@ add_shortcode('alm_repeater_preload', function($atts, $content){
 
 	$wp_query = $old_query;
 	$post = $old_post;
+
+	$output_string .= '<script>jQuery(document).trigger( "customAlmComplete", [false] );</script>';
 
 	return $output_string;
 });
