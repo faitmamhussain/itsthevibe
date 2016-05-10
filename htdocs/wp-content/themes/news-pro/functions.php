@@ -570,8 +570,14 @@ add_action('wp_head', function(){
 	include_once(get_stylesheet_directory() . '/lib/header.php');
 
 	if($thisPageType == 'ITV_Article'){
-		//Included only on article pages. JS code to fire virtual pageviews.
-		include_once(get_stylesheet_directory() . '/lib/virtual-pageview-js.php');
+		//JS code to fire virtual pageviews.
+		?><script type="text/javascript">
+			(function ($) {
+				$(document).on( "customAlmComplete", function( event, alm ) {
+					sendVirtualPageView(alm);
+				});
+			})(jQuery);
+		</script><?php
 	}
 }, 10);
 

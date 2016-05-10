@@ -132,3 +132,16 @@ function setupUtmParams(){
         }
     });
 }
+
+function sendVirtualPageView(alm){
+    if(alm){
+        var elem = jQuery(alm.content).find('.alm-reveal').last().find('article');
+        if(elem.length > 0){
+            dataLayer.push({
+                'event': 'VirtualPageview',
+                'virtualPageURL': elem.data('anchor-url'),
+                'virtualPageTitle' : elem.data('anchor-title')
+            });
+        }
+    }
+}
