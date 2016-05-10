@@ -87,10 +87,6 @@ add_theme_support( 'genesis-style-selector', array(
 	'news-pro-orange' => __( 'News Pro Orange', 'news' ),
 ) );
 
-//* Reposition the secondary navigation
-remove_action( 'genesis_after_header', 'genesis_do_subnav' );
-add_action( 'genesis_before_header', 'genesis_do_subnav' );
-
 //* Remove comment form allowed tags
 add_filter( 'comment_form_defaults', 'news_remove_comment_form_allowed_tags' );
 function news_remove_comment_form_allowed_tags( $defaults ) {
@@ -198,16 +194,39 @@ function itv_slideshow_layout( $opt ) {
 	return $opt;
 }
 
+//* Reposition the secondary navigation
+remove_action( 'genesis_after_header', 'genesis_do_subnav' );
+add_action('genesis_header', 'genesis_do_subnav', 9);
+
 //hide the main menu on first page load
-add_filter('wp_nav_menu', function($nav_menu, $args){
-	if( ! empty($args->menu)
-	    && is_object($args->menu)
-	    && ! empty($args->menu->slug)
-	    && $args->menu->slug == 'main-navigation'){
-		$nav_menu = '<style type="text/css">@media only screen and (max-width: 1023px){#menu-main-navigation{display: none;}}</style>'.$nav_menu;
+add_filter('wp_nav_menu', function($nav_menu, $args = []){
+	if( ! empty($args->menu) && is_object($args->menu) && ! empty($args->menu->slug) ) {
+
+		if($args->menu->slug == 'main-navigation') {
+			$nav_menu = '<style type="text/css">@media only screen and (max-width: 1023px){#menu-main-navigation, .nav-header .responsive-menu-icon{display: none !important;}}</style>' . $nav_menu;
+		} elseif($args->menu->slug == 'secondary-navigation') {
+			$nav_menu = '<style type="text/css">#menu-secondary-navigation{display: none;}</style>' . $nav_menu;
+		}
 	}
 	return $nav_menu;
 }, 15, 2);
+
+//add social icons to bottom
+add_filter( 'wp_nav_menu_secondary-navigation_items', function($items, $args = []){
+	$items .= '<li><div class="header-social-icons">
+		<a href="https://www.facebook.com/Its-The-Vibe-1064149386940758/" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+		<a href="https://www.instagram.com/its_the_vibe/" target="_blank"><i class="fa fa-fw fa-instagram"></i></a>
+		<a href="https://www.pinterest.com/itsthevibe/" target="_blank"><i class="fa fa-fw fa-pinterest"></i></a>
+		</div></li>';
+	return $items;
+}, 15, 2 );
+
+add_filter( 'genesis_search_form',function($form, $search_text, $button_text, $label){
+
+	$form .= '<div class="search-button"><i class="fa fa-search fa-fw" aria-hidden="true"></i></div>';
+
+	return $form;
+}, 11, 4);
 
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){

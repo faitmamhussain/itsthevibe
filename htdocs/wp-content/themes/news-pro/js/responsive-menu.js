@@ -21,6 +21,10 @@ jQuery(function( $ ){
 		});
 	});
 
+	$(".search-button").click(function(event){
+		$('.site-header .widget_search').toggleClass("open");
+	});
+
 	/* Scroling menu */
 	//var lastScrollTop = 0;
 
