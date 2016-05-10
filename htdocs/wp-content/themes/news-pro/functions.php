@@ -664,7 +664,7 @@ if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 	function mobile_nav(){
 
 		// For single post
-		if( is_single() ){
+		if( is_single() && ! has_category('slideshows') ){
 
 			?>
 			<div class="mobile-nav" >

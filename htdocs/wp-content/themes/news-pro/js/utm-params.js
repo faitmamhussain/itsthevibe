@@ -157,29 +157,35 @@ function isDesktop() {
     return !(isSmartPhone() || isTablet())
 }
 
+function setupUtmParams(){
+    jQuery("a.post-link-catchable").each(function() {
+        var _this = jQuery(this);
+        var pageType = post.type;
+        if(_this.data('url')){
+            if(utm_source_value == 'Undefined' && pageType == 'ITV_404'){
+                utm_source_value = pageType;
+            }
+            jQuery(this).attr("href", _this.data('url')
+                + '?utm_source=' + utm_source_value
+                + '&utm_medium=' + pageType
+                + '&utm_term=' + _this.data('term')
+                + '&utm_campaign=' + encodeURIComponent(currentPageUrl)
+                + '&utm_content=' + encodeURIComponent(_this.data('image'))
+            );
+        }
+    });
+}
+
 (function ($) {
+
+    $(document).on( "customAlmComplete", function( event, alm ) {
+        setupUtmParams();
+    });
+
     $(function() {
         //Callback function fired when the alm ajax request was finished.
-        //We use it to update the href attributes properly.
-        function setupParams(){
-            $("a.post-link-catchable").each(function() {
-                var _this = $(this);
-                var pageType = post.type;
-                if(_this.data('url')){
-                    if(utm_source_value == 'Undefined' && pageType == 'ITV_404'){
-                        utm_source_value = pageType;
-                    }
-                    $(this).attr("href", _this.data('url')
-                        + '?utm_source=' + utm_source_value
-                        + '&utm_medium=' + pageType
-                        + '&utm_term=' + _this.data('term')
-                        + '&utm_campaign=' + encodeURIComponent(currentPageUrl)
-                        + '&utm_content=' + encodeURIComponent(_this.data('image'))
-                    );
-                }
-            });
-        }
-
-        $.fn.almComplete = setupParams;
+        $.fn.almComplete = function(alm){
+            $(document).trigger( "customAlmComplete", [alm] );
+        };
     });
 })(jQuery);
