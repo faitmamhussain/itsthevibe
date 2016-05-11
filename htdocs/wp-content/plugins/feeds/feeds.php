@@ -10,10 +10,10 @@
 */
 
 
-register_activation_hook( __FILE__,  'activate' );
-register_deactivation_hook( __FILE__,  'deactivate' );
+register_activation_hook( __FILE__,  'sp_feeds_activate' );
+register_deactivation_hook( __FILE__,  'sp_feeds_deactivate' );
 
-function activate() {
+function sp_feeds_activate() {
 		
 	global $wpdb;	
 	
@@ -26,10 +26,17 @@ function activate() {
 	)";
 	
 	$wpdb->query($tbA);
+
+	//Use wp_next_scheduled to check if the event is already scheduled
+	$timestamp = wp_next_scheduled( 'sp_feeds_schedule' );
+
+	if( $timestamp == false ){
+		wp_schedule_event( time(), 'once_in_3_hours', 'sp_feeds_cron' );
+	}
 	
 }
 
-function deactivate() {
+function sp_feeds_deactivate() {
 	
 	global $wpdb;	
 	 
@@ -40,88 +47,34 @@ function deactivate() {
 	$wpdb->query($tba);
 }
 
-add_action('init','init_feeds');
-function init_feeds() {
-	add_action('admin_menu', 'feeds_menu');
-	add_shortcode('mypubslishfeeds', 'displayfeeds');
-	// register_cpt_practicearea();
-	
-	add_action( 'admin_enqueue_scripts', 'feeds_ui_scripts' );
+add_action('init','sp_feeds_init');
 
+function sp_feeds_init() {
+	add_action('admin_menu', 'sp_feeds_menu');
+	add_action( 'admin_enqueue_scripts', 'sp_feeds_ui_scripts' );
 }
 
-function feeds_menu(){
-	add_menu_page( 'Import Feeds', 'Import Feeds', 'manage_options', 'imp-feeds', 'addFeed','dashicons-rss' );
+add_action( 'sp_feeds_cron', 'sp_feeds_auto_import' );
+
+add_filter( 'cron_schedules', function($schedules) {
+	$schedules['once_in_3_hours'] = array(
+		'interval' => 3 * 60 * 60,
+		'display' => __( 'Once in three hours' )
+	);
+	return $schedules;
+});
+
+
+function sp_feeds_menu(){
+	add_menu_page( 'Import Feeds', 'Import Feeds', 'manage_options', 'imp-feeds', 'sp_feeds_add_menu','dashicons-rss' );
 }
 
-function feeds_ui_scripts() {
+function sp_feeds_ui_scripts() {
 	wp_enqueue_style( 'ui', plugins_url() . '/feeds/ui.css' );
 	wp_enqueue_script( 'ui-js', plugins_url() . '/feeds/addmore.js', array(), '0.1', true  );
 }
 
-/*
-function register_cpt_practicearea() {
-
-        $labels = array( 
-            'name' => _x( 'Feeds', 'feeds' ),
-            'singular_name' => _x( 'Feeds', 'feeds' ),
-            'add_new' => _x( 'Add New', 'feeds' ),
-            'add_new_item' => _x( 'Add New Feed', 'feeds' ),
-            'edit_item' => _x( 'Edit Feed', 'feeds' ),
-            'new_item' => _x( 'New Feed', 'feeds' ),
-            'view_item' => _x( 'View Feed', 'feeds' ),
-            'search_items' => _x( 'Search Feed', 'feeds' ),
-            'not_found' => _x( 'No Feed found', 'feeds' ),
-            'not_found_in_trash' => _x( 'No Feed found in Trash', 'feeds' ),
-            'parent_item_colon' => _x( 'Parent Feed:', 'feeds' ),
-            'menu_name' => _x( 'Feeds', 'feeds' ),
-        );
-
-        $args = array( 
-            'labels' => $labels,
-            'hierarchical' => true,
-            
-            'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'trackbacks', 'custom-fields', 'page-attributes' ),
-            'public' => true,
-            'show_ui' => true,
-            'show_in_menu' => true,
-            'show_in_nav_menus' => true,
-            'publicly_queryable' => true,
-            'exclude_from_search' => false,
-            'has_archive' => true,
-            'query_var' => true,
-            'can_export' => true,
-            'rewrite' => true,
-            'capability_type' => 'post'
-        );
-
-        register_post_type( 'feeds', $args );
-		create_pra_taxonomies();
-}
-
-// create texonoly for perticualr custom post type
-
-function create_pra_taxonomies() {
-    register_taxonomy(
-        'feeds_txnmy',
-        'feeds',
-        array(
-            'labels' => array(
-                'name' => 'Feeds Category',
-                'add_new_item' => 'Add New Category',
-                'new_item_name' => "New Category"
-            ),
-            'show_ui' => true,
-            'show_tagcloud' => false,
-            'hierarchical' => true
-        )
-    );
-}
-
-*/
-
-
-function addFeed() {
+function sp_feeds_add_menu() {
 	global $wpdb;
 	$args = array(
 		'hide_empty' => false, 
@@ -137,8 +90,8 @@ function addFeed() {
 		$m = $_GET['add'] == 1 ? "<div id='actionmsg' class='actionmsg'>Successfully Added Url</div>" : "<div id='actionmsg' class='actionmsg'>Database Error - Not Saved!</div>";
 		echo $m;
 	}
-	if(isset($_GET['craete'])){ 
-		$m = $_GET['craete'] == 1 ? "<div id='actionmsg' class='actionmsg'>Success! The post's created successfully</div>" : "<div id='actionmsg' class='actionmsg'>Database Error - Not craeted!</div>";
+	if(isset($_GET['create'])){
+		$m = $_GET['create'] == 1 ? "<div id='actionmsg' class='actionmsg'>Success! The post's created successfully</div>" : "<div id='actionmsg' class='actionmsg'>Database Error - Not created!</div>";
 		echo $m;
 	}
 	if(isset($_GET['exists'])){ 
@@ -192,78 +145,13 @@ function addFeed() {
 	</div>
 	<?php 
 	if(isset($_POST['import_feed'])){
-		// $cat_ids = implode(',', $_POST['feed_category']);
-		$content = file_get_contents($_POST['feed_url']);
-		$x = new SimpleXmlElement($content);
-		$msg = array();
-		foreach($x->channel->item as $entry) {
-			// check if posts already exists
-			$result = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE post_title = '" . $entry->title . "'", 'ARRAY_A');
-			if(!empty($result)){
-				$msg['message'] = "<script> window.location='?page=imp-feeds&exists=1'; </script>";
-			}else{
-				// insert posts
-                                $imagedownloadcontent = $entry->description;
-                                
-                                $content= $entry->description;
-                                $content = preg_replace("/<img[^>]+\>/i", " ", $content);
-                                $doc = new DOMDocument();
-				$doc->loadHTML($imagedownloadcontent);
-				$xpath = new DOMXPath($doc);
-				$src = $xpath->evaluate("string(//img/@src)");
-				
-				$post_id = wp_insert_post(array(
-					'post_type'       => "post",
-					'post_content'    => $content , // description
-					'post_title'      => $entry->title, // title
-					'post_name'       => $entry->title, // i.e. 'GA'; this is for the URL
-					'post_status'     => "pending",
-					'post_author' => 1
-				));
-				
-				$filename = $src;
-                                $uploads = wp_upload_dir();
-                                $upload_path = $uploads['basedir'];
-                                $uplfile = $upload_path."/".time().".jpg";
-                                
-                                $imgcontent = file_get_contents($filename);
-				//Store in the filesystem.
-				$fp = fopen($uplfile, "w");
-				fwrite($fp, $imgcontent);
-				fclose($fp);
 
-				$wp_filetype = wp_check_filetype(basename($uplfile), null );
-				$attachment = array(
-				'post_mime_type' => $wp_filetype['type'],
-				'post_title' => preg_replace('/\.[^.]+$/', '', basename($uplfile)),
-				'post_content' => '',
-				'post_status' => 'pending'
-				);
-				$attach_id = wp_insert_attachment( $attachment, $uplfile, $post_id );
-				$attach_data = wp_generate_attachment_metadata( $attach_id, $uplfile);
-				wp_update_attachment_metadata( $attach_id, $attach_data );
-				add_post_meta($post_id, '_thumbnail_id', $attach_id, true);
+		$status = sp_import_feeds($_POST['feed_url']);
 
-                                $wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 14), array('%d', '%d'));
-                                $wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 15), array('%d', '%d'));
-                                $wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
-
-				/**
-					set category to posts 
-					$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
-					$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
-					$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
-				*/
-				if ( is_wp_error( $post_id ) ) {
-					$msg['message'] = "<script> window.location='?page=imp-feeds&craete=0'; </script>";
-				} else {
-					$msg['message'] = "<script> window.location='?page=imp-feeds&craete=1'; </script>";
-				}
-			}
-		}
-		
-		if(!empty($msg)){
-			echo $msg['message']; 
+		if ( empty($status) ) {
+			echo "<script> window.location='?page=imp-feeds&create=0'; </script>";
+		} else {
+			echo "<script> window.location='?page=imp-feeds&create=1'; </script>";
 		}
 	}
 	
@@ -304,54 +192,89 @@ function addFeed() {
 	
 }
 
-function displayfeeds(){
+function sp_import_feeds($url) {
+	global $wpdb;
 
-	$args = array(
-		'post_type'=> 'post',
-		'order'    => 'ASC',
-		'post_status'  =>  'publish',
-		'numberposts' => -1
-    );
+	$content = file_get_contents($url);
+	$status = $content ? true : false;
 
-	$the_query = new WP_Query( $args );	
+	$x = new SimpleXmlElement($content);
 
-	if(!empty($the_query)) :
-		if($the_query->have_posts() ) : 
-			
-			ob_start();
-			echo "<style>.feeds > div {
-				background: #ccc none repeat scroll 0 0;
-				float: left;
-				margin: 5px;
-				padding: 10px;
-				width: 46%;
-			} .feeds h4 {
-				font-size: 16px ;
-				font-weight: 900;
-			} .feeds img {
-				
-			}
-                        .feeds p img {
-                           display: none;
-                         }</style>";
-			echo '<div class="feeds">';
-			$f=0;
-				while ( $the_query->have_posts() ) : 
-				$f++;
-					$the_query->the_post(); ?>
-					<div>
-						<h4><?php echo $f; ?>. <?php echo get_the_title(); ?></h4>
-                                                <?php the_post_thumbnail('full');?>
-						<p><?php echo apply_filters('the_content', substr(get_the_content(), 0, 153) ); ?> <a href="<?php echo the_permalink(); ?>"><?php _e(' Read More > ');?> </a></p>
-					</div> <?php 
-				endwhile;
-			echo '</div>';
-		endif;
-	else:
-		echo "No Post Found!";
-	endif;
-	$feeds = ob_get_clean();
-	
-	echo $feeds;
+	foreach($x->channel->item as $entry) {
+
+		//allow one minute per post
+		set_time_limit (60);
+
+		$slug = sanitize_title($entry->title);
+
+		// check if posts already exists
+		$result = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE post_name = '" . $slug . "'", 'ARRAY_A');
+		if(empty($result)){
+			// insert posts
+			$imagedownloadcontent = $entry->description;
+
+			$content= $entry->description;
+			$content = preg_replace("/<img[^>]+\>/i", " ", $content);
+			$doc = new DOMDocument();
+			$doc->loadHTML($imagedownloadcontent);
+			$xpath = new DOMXPath($doc);
+			$src = $xpath->evaluate("string(//img/@src)");
+
+			$post_id = wp_insert_post(array(
+				'post_type'       => "post",
+				'post_content'    => $content , // description
+				'post_title'      => $entry->title, // title
+				'post_name'       => $entry->title, // i.e. 'GA'; this is for the URL
+				'post_status'     => "pending",
+				'post_author' => 1
+			));
+
+			$filename = $src;
+			$uploads = wp_upload_dir();
+			$upload_path = $uploads['basedir'];
+			$uplfile = $upload_path."/".time().".jpg";
+
+			$imgcontent = file_get_contents($filename);
+			//Store in the filesystem.
+			$fp = fopen($uplfile, "w");
+			fwrite($fp, $imgcontent);
+			fclose($fp);
+
+			$wp_filetype = wp_check_filetype(basename($uplfile), null );
+			$attachment = array(
+				'post_mime_type' => $wp_filetype['type'],
+				'post_title' => preg_replace('/\.[^.]+$/', '', basename($uplfile)),
+				'post_content' => '',
+				'post_status' => 'pending'
+			);
+			$attach_id = wp_insert_attachment( $attachment, $uplfile, $post_id );
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $uplfile);
+			wp_update_attachment_metadata( $attach_id, $attach_data );
+			add_post_meta($post_id, '_thumbnail_id', $attach_id, true);
+
+			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 14), array('%d', '%d'));
+			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 15), array('%d', '%d'));
+			$wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
+
+			/**
+			set category to posts
+			$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
+			$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
+			$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
+			 */
+		}
+	}
+
+	return $status;
 }
-?>
+
+function sp_feeds_auto_import(){
+	global $wpdb;
+
+	$feeds = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."feeds_url");
+	if(!empty($feeds)){
+		foreach($feeds as $feed){
+			sp_import_feeds($feed->url);
+		}
+	}
+}
