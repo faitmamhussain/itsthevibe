@@ -194,7 +194,9 @@ SP_OBJ.ADS = {
             'mobile': SP_OBJ.ADS.adsIsMobile,
             'session_depth': SP_OBJ.ADS.currDepth
         };
-        bidProviderTimeouts['mobile'] = this.adsIsMobile;
+        SP_OBJ.ADS.BID_RESPONSE_TIMES = {};
+        SP_OBJ.ADS.BIDS = {};
+
         var bpTimeout;
         var auctionID;
         SP_OBJ.ADS.pf.observe(function(ev) {
@@ -209,6 +211,13 @@ SP_OBJ.ADS = {
                         bidProviderTimeouts['auction_id'] = auctionID;
                         for (var i = 0; i < targeting.length; i++) {
                             var slt = targeting[i];
+
+                            SP_OBJ.ADS.BIDS[slt.name] = {};
+                            try {
+                                SP_OBJ.ADS.BIDS[slt.name].aol = slt.targeting.aol_bid / 100;
+                            } catch (e) {}
+
+
                             var targetingDict = slt.targeting;
                             var bidProviderBid = {
                                 'ad_slot': slt.name,
@@ -248,6 +257,7 @@ SP_OBJ.ADS = {
 
                     if (ev.type == 'BID_COMPLETE') {
                         bpTimeout = ev.data + '_timeout';
+                        SP_OBJ.ADS.BID_RESPONSE_TIMES[ev.data] = elapsed;
                         bidProviderTimeouts[bpTimeout] = elapsed;
                     }
                 } catch (err) {}
@@ -305,8 +315,11 @@ SP_OBJ.ADS = {
                 SP_OBJ.ADS.aolCallbacks = {};
                 window.aolCallback = function (response, aolSlot) {
                     //if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') SP_OBJ.ADS.aolPixels[aolSlot] = response.ext.pixels;
+                    if (window.console) {
+                        console.log(1111111, response);
+                    }
                     try {
-                         var slot_resp = response.seatbid[0].bid[0];
+                        var slot_resp = response.seatbid[0].bid[0];
                         SP_OBJ.ADS.aolPixels[aolSlot] = response.ext.pixels;
                         SP_OBJ.ADS.aolBids[aolSlot] = slot_resp;
 
@@ -347,8 +360,6 @@ SP_OBJ.ADS = {
                     if (spAdConfig.slots[x].isMobile === SP_OBJ.ADS.adsIsMobile && spAdConfig.slots[x]["adZones"].indexOf(SP_OBJ.ADS.ZONE) !== -1){
                         for (var index in spAdConfig.aolConfig){
                             if(spAdConfig.aolConfig[index]["slotName"] === spAdConfig.slots[x].name && spAdConfig.aolConfig[index]["isMobile"] === SP_OBJ.ADS.adsIsMobile){
-                                // console.log(spAdConfig.slots[x]);
-                                // console.log(spAdConfig.aolConfig[index]);
 
                                 aol_alias = index;
                                 var aol_slot = spAdConfig.aolConfig[index];
@@ -458,14 +469,14 @@ spAdConfig = {
             bidProviders: arrayUnion(["aol"], enabledProviders)
         },
         /*LR*/
-        {
+        /*{
             name: '/76778142/Itsthevibe_Left_Sidebar_Ad_2',
             sizes: [[160, 600]],
             elementId: 'div-gpt-ad-1460507361888-9',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"]],
             bidProviders: arrayUnion(["aol"], enabledProviders)
-        },
+        },*/
         /*Slideshow Content ONLY SINGLE POST*/
         {
             name: '/76778142/Itsthevibe_InPost_Ad_Top',
@@ -743,14 +754,14 @@ spAdConfig = {
 };
 
 jQuery(document).ready(function() {
-    if(jQuery("#sidebar-wrapper.left").css("display") !== "none"){
+    if(jQuery(".sidebar-secondary").length && jQuery(".sidebar-secondary").css("display") !== "none"){
         spAdConfig.slots.push({
-            name: '/122041498/YDD_Left_Sidebar_Ad_1',
+            name: '/76778142/Itsthevibe_Left_Sidebar_Ad_2',
             sizes: [[160, 600]],
-            elementId: 'div-gpt-ad-1432516825682-6',
+            elementId: 'div-gpt-ad-1460507361888-9',
             isMobile: false,
-            adZones: ["ITV_Article", "ITV_Slideshow", "end-gallery"],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"]],
+             bidProviders: arrayUnion(["aol"], enabledProviders)
         });
     }
 });
