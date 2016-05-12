@@ -51,6 +51,8 @@ function news_load_scripts() {
 	];
 	wp_localize_script( 'utm-params', 'post', $translation_array );
 	wp_enqueue_script( 'utm-params');
+	//wp_enqueue_script( 'DAC', '//aka-cdn.adtechus.com/dt/common/DAC.js', array('utm-params'));
+	wp_enqueue_script( 'pubfood-common', get_bloginfo( 'stylesheet_directory' ) .'/js/pubfood-common.js', array('utm-params'));
 	wp_enqueue_script( 'itv.ads.config', get_bloginfo( 'stylesheet_directory' ) . '/js/sp.native.ads.config.js', array( 'jquery', 'utm-params' ), '1.0.0' );
 
 	wp_enqueue_style( 'dashicons' );

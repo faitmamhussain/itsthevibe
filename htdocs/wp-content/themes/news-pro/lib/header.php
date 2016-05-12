@@ -1,3 +1,4 @@
+<?php /*
 <script type='text/javascript'>
 	var googletag = googletag || {};
 	googletag.cmd = googletag.cmd || [];
@@ -46,7 +47,7 @@
 
 		if (page_type != 'article') {
 			<?php if(is_front_page()){ ?>
-			slots['headerAd'] = googletag.defineSlot('/76778142/Itsthevibe_Header_Ad', [[320, 100], [320, 50]], 'div-gpt-ad-1460507361888-3').defineSizeMapping(mapping1).addService(googletag.pubads());
+			slots['headerAd'] = googletag.defineSlot('/76778142/Itsthevibe_Header_Ad', [[320, 100], [320, 50], [728, 90]], 'div-gpt-ad-1460507361888-3').defineSizeMapping(mapping1).addService(googletag.pubads());
 			slots['belowFeaturedAd'] = googletag.defineSlot('/76778142/Itsthevibe_BelowFeatured_Ad', [[320, 100], [320, 50]], 'div-gpt-ad-1460507361888-0').defineSizeMapping(mapping2).addService(googletag.pubads());
 			<?php } ?>
 			<?php if(is_page('end-slideshow') || in_category('slideshows')){ ?>
@@ -83,7 +84,7 @@
 			googletag.pubads().refresh([slots['sidebarMidAd']]);
 		});
 	};
-</script>
+</script>*/ ?>
 <script type="text/javascript">
 	window._taboola = window._taboola || [];
 	<?php if(in_category('slideshows')): ?>

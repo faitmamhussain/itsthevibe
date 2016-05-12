@@ -64,3 +64,11 @@ SP_OBJ.SESSION.TAGS = post_tags;
 SP_OBJ.SESSION.POST_ID = post_id;
 SP_OBJ.SESSION.POST_SLUG = post_slug;
 SP_OBJ.SESSION.PAGE_DEPTH = getAndIncrementSessionDepth();
+SP_OBJ.SESSION.PAGE_TYPES = {
+    'home':'ITV_Home',
+    'gallery':'ITV_Slideshow',
+    'end_gallery':'ITV_End_Slideshow',
+    'article':'ITV_Article',
+    'category':'ITV_Category',
+    '404':'ITV_404'
+};
