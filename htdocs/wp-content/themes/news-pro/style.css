@@ -867,7 +867,7 @@ Plugins
 
 .slideshow-wrap .slideshow-navigation {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 0;
 	min-height: 46px;
 }
 
@@ -894,7 +894,7 @@ Plugins
 
 .slideshow-wrap .slideshow-button {
 	display: inline-block;
-	padding: 10px 12px;
+	padding: 4px 12px;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -1648,7 +1648,7 @@ Content Area
 --------------------------------------------- */
 
 .entry {
-	padding: 20px;
+	padding: 10px 20px;
 }
 
 .entry-content ol,
