@@ -1676,6 +1676,10 @@ Content Area
 	margin-bottom: 0;
 }
 
+.entry-content .entry-image {
+	margin-bottom: 20px;
+}
+
 .entry-content .search-form {
 	width: 50%;
 }
