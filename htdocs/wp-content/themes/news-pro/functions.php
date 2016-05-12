@@ -272,6 +272,44 @@ function add_infinite_scroll(){
 	}
 }
 
+//add infinite scroll instead of pagination in category, archive and search
+remove_action( 'genesis_after_endwhile', 'genesis_posts_nav' );
+add_action( 'genesis_after_endwhile', 'sp_add_alm_shortcode');
+
+
+function sp_add_alm_shortcode(){
+	if( is_singular() )
+		return;
+
+	global $wp_query;
+
+	if( $wp_query->max_num_pages <= 1 )
+		return;
+
+	$posts_per_page = get_query_var( 'posts_per_page' ) ? absint( get_query_var( 'posts_per_page' ) ) : 1;
+
+	$query_string = '';
+	$custom_args = '';
+
+	$alm_fields = array(
+		's' => 'search',
+		'category_name' => 'category',
+		'author_name' => 'author'
+	);
+
+	$repeater = $wp_query->is_category ? 'repeater1category' : ($wp_query->is_archive ? 'repeater1archive' : ($wp_query->is_search ? 'repeater1search' : 'repeater1category'));
+
+	foreach($wp_query->query as $key => $val){
+		if(array_key_exists($key, $alm_fields)){
+			$query_string .= ' '.$alm_fields[$key].'="'.$val.'"';
+		} else {
+			$custom_args .= $key.':'.$val.',';
+		}
+	}
+
+	echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="'.$posts_per_page.'" offset="'.$posts_per_page.'"'.$query_string.' custom_args="'.$custom_args.'" max_pages="0" container_type="div" repeater="'.$repeater.'"]');
+}
+
 if (!defined('ALM_REPEATER_PATH')){
 	define('ALM_REPEATER_PATH', get_stylesheet_directory().'/' );
 }
