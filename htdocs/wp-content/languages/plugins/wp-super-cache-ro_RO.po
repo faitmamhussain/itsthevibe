@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-04-04 19:13:29+0000\n"
+"PO-Revision-Date: 2016-05-09 15:03:30+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
-"X-Generator: GlotPress/1.1.0-alpha\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Stable (latest release)\n"
 
 #: wp-cache.php:1036
@@ -64,7 +64,7 @@ msgstr "Avertizare WP Super Cache!"
 
 #: wp-cache.php:2150
 msgid "All users of this site have been logged out to refresh their login cookies."
-msgstr "Toți utilizatorii acestui sit au fost deconectați pentru a le actualiza cookie-urile de conectare."
+msgstr "Toți utilizatorii acestui site au fost deconectați pentru a le actualiza cookie-urile de conectare."
 
 #: wp-cache.php:2156
 msgid "Your server is configured to show files and directories, which may expose sensitive data such as login cookies to attackers in the cache directories. That has been fixed by adding a file named index.html to each directory. If you use PHP or legacy caching, consider moving the location of the cache directory on the Advanced Settings page."
@@ -357,7 +357,7 @@ msgstr "Pentru următoarele tipuri de pagini nu doresc fișiere cache. Consultă
 
 #: wp-cache.php:1867
 msgid "Single Posts"
-msgstr "Articole"
+msgstr "Articole singulare"
 
 #: wp-cache.php:1868
 msgid "Pages"
@@ -554,11 +554,11 @@ msgstr "<h3>Constanta WP_CACHE a fost adăugată la wp-config.php</h3><p>Dacă v
 
 #: wp-cache.php:2450
 msgid "Cache Contents"
-msgstr "Cuprins cache"
+msgstr "Conținuturi cache"
 
 #: wp-cache.php:2453
 msgid "Object cache in use. No cache listing available."
-msgstr "Cache este în uz. Nicio listă cache disponibilă."
+msgstr "Obiectul cache este în uz. Nicio listă cache disponibilă."
 
 #: wp-cache.php:2477
 msgid "Deleting supercache file: <strong>%s</strong><br />"
@@ -651,10 +651,6 @@ msgstr "Șterge expirate"
 #: wp-cache.php:2707
 msgid "Delete Super Cache cached files (opens in new window)"
 msgstr "Șterge fișierele Super Cache (se deschide într-o fereastră nouă) "
-
-#: wp-cache.php:2874
-msgid "%1$s is Stephen Fry proof thanks to caching by %2$s"
-msgstr ""
 
 #: wp-cache.php:2907
 msgid "WP Super Cache must be configured. Go to <a href=\"%s\">the admin page</a> to enable and configure the plugin."
@@ -857,14 +853,6 @@ msgstr "Suport pentru WPTouch la %s"
 #: plugins/wptouch.php:45
 msgid "WPTouch plugin detected! Please go to the Supercache plugins page and enable the WPTouch helper plugin."
 msgstr "Modulul WPTouch a fost detectat! Te rog să mergi la pagina modulului Supercache și să activezi ajutorul modulului WPTouch."
-
-#: wp-cache-phase2.php:1334
-msgid "Cache expiry cron job failed. Job will run again in 10 seconds."
-msgstr ""
-
-#: wp-cache-phase2.php:1338
-msgid "Cache expiry cron job took more than 30 seconds. You should probably run the garbage collector more often."
-msgstr ""
 
 #: wp-cache-phase2.php:1347
 msgid "[%1$s] WP Super Cache GC Report"
@@ -1130,7 +1118,7 @@ msgstr "Preîncarcă etichete, categorii și alte taxonomii."
 
 #: wp-cache.php:948
 msgid "Send me status emails when files are refreshed."
-msgstr "Trimite-mi un email atunci când fișierele sunt împrospătate."
+msgstr "Trimite-mi un email privind starea atunci când fișierele sunt împrospătate."
 
 #: wp-cache.php:953
 msgid "Many emails, 2 emails per 100 posts."
@@ -1215,7 +1203,7 @@ msgstr "În mod implicit, comprimarea este dezactivată, deoarece unele sisteme 
 
 #: wp-cache.php:1033
 msgid "304 Not Modified browser caching. Indicate when a page has not been modified since it was last requested."
-msgstr "304 Not Modified browser caching. Indice când o pagină nu a fost modificat de la ultima solicitate."
+msgstr "304 nu a modificat cache în navigator. Se indică atunci când o pagină nu a fost modificată de la ultima solicitate."
 
 #: wp-cache.php:1038
 msgid "304 support is disabled by default because some hosts have had problems with the headers used in the past."
@@ -1236,10 +1224,6 @@ msgstr "Fă-ți utilizatorii cunoscuți anonimi, ca să li se servească fișier
 #: wp-cache.php:1043
 msgid "Cache rebuild. Serve a supercache file to anonymous users while a new file is being generated."
 msgstr "Reconstruiește cache. Servește un fișier supercache pentru utilizatorii anonimi în timp ce un alt fișier nou este generat."
-
-#: wp-cache.php:1044
-msgid "Proudly tell the world your server is <a href=\"%s\">Stephen Fry proof</a>! (places a message in your blog&#8217;s footer)"
-msgstr ""
 
 #: wp-cache.php:1050 wp-cache.php:1350 wp-cache.php:1982
 msgid "Advanced"
@@ -1540,7 +1524,7 @@ msgstr "CDN"
 
 #: wp-cache.php:1350
 msgid "Contents"
-msgstr "Conținut"
+msgstr "Conținuturi"
 
 #: wp-cache.php:1350
 msgid "Preload"
@@ -1622,10 +1606,6 @@ msgstr "Activează suport CDN"
 msgid "Off-site URL"
 msgstr "URL extern"
 
-#: ossdl-cdn.php:167
-msgid "The new URL to be used in place of %1$s for rewriting. No trailing <code>/</code> please.<br />Example: <code>%2$s</code>."
-msgstr ""
-
 #: ossdl-cdn.php:171
 msgid "Include directories"
 msgstr "Include directorii"
@@ -1652,7 +1632,7 @@ msgstr "Aceste <a href=\"http://en.wikipedia.org/wiki/CNAME_record\">CNAMES</a> 
 
 #: ossdl-cdn.php:192
 msgid "Skip https URLs to avoid \"mixed content\" errors"
-msgstr "Sări peste URL-urile https pentru a evita erorile pentru \"conținut mixt\""
+msgstr "Sari peste URL-urile https pentru a evita erorile \"conținut mixt\""
 
 #: ossdl-cdn.php:196
 msgid "Save Changes"
@@ -1719,7 +1699,7 @@ msgstr "Bad Behavior (modul)"
 
 #: plugins/badbehaviour.php:68
 msgid "(Only legacy caching supported, disabled compression and requires <a href=\"http://www.bad-behavior.ioerror.us/\">Bad Behavior</a> in \"%s/plugins/bad-behavior/\") "
-msgstr "(Numai cache moștenire permite, dezactivează compresia și necesită <a href=\"http://www.bad-behavior.ioerror.us/\">Bad Behavior</a> în \"%s/plugins/bad-behavior/\")"
+msgstr "(Numai cache moștenire este acceptat, dezactivează compresia și necesită <a href=\"http://www.bad-behavior.ioerror.us/\">Bad Behavior</a> în \"%s/plugins/bad-behavior/\")"
 
 #: plugins/badbehaviour.php:74
 msgid "Bad Behavior support is now %s"
@@ -1743,7 +1723,7 @@ msgstr "Suport pentru Domain Mapping la %s"
 
 #: plugins/domain-mapping.php:98
 msgid "Domain Mapping plugin detected! Please go to the Supercache plugins page and enable the domain mapping helper plugin."
-msgstr "Modulul Domain Mapping detectat! Te rog să mergi la pagina modulului Supercache și să activezi modul ajutător domain mapping."
+msgstr "Modulul Domain Mapping detectat! Te rog să mergi la pagina modulului Supercache și să activezi modul ajutător Domain Mapping."
 
 #: plugins/jetpack.php:25
 msgid "Jetpack Mobile Theme"
