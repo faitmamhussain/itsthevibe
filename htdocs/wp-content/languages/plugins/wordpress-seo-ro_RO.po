@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-04-28 12:37:47+0000\n"
+"PO-Revision-Date: 2016-05-05 17:44:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -119,27 +119,27 @@ msgstr "Ajutor pentru cuvânt / frază cheie"
 msgid "Content Analysis Help"
 msgstr "Ajutor pentru analiză de conținut"
 
-#: admin/views/partial-help-center-video.php:22
+#: admin/views/partial-help-center-video.php:27
 msgid "Need more help?"
 msgstr "Ai nevoie de mai mult ajutor?"
 
 #. translators: %s expands to Yoast SEO Premium
-#: admin/views/partial-help-center-video.php:24
+#: admin/views/partial-help-center-video.php:29
 msgid "If you buy %s you'll get access to our support team and bonus features!"
 msgstr "Dacă cumperi %s vei avea acces la echipa noastră pentru suport și la funcționalități suplimentare!"
 
 #. translators: %s expands to Yoast SEO
-#: admin/views/partial-help-center-video.php:32
+#: admin/views/partial-help-center-video.php:40
 msgid "Want to be a %s Expert?"
 msgstr "Vrei să fii un expert %s?"
 
 #. translators: %$1s expands to Yoast SEO
-#: admin/views/partial-help-center-video.php:34
+#: admin/views/partial-help-center-video.php:42
 msgid "Follow our %1$s for WordPress training and become a certified %1$s Expert!"
 msgstr "Urmează instrucțiunile noastre %1$s pentru formare WordPress și devii un expert %1$s certificat!"
 
 #. translators: %s expands to Yoast SEO for WordPress
-#: admin/views/partial-help-center-video.php:37
+#: admin/views/partial-help-center-video.php:45
 msgid "Enroll in the %s training &raquo;"
 msgstr "Înscrie-te la instruirea %s &raquo;"
 
@@ -183,7 +183,7 @@ msgstr "Înlătură"
 #: admin/views/tabs/metas/archives.php:30
 #: admin/views/tabs/metas/archives.php:34
 msgid "Author archives"
-msgstr "Arhivele autorului"
+msgstr "Arhive autor"
 
 #: admin/views/tabs/metas/archives.php:43
 #: admin/views/tabs/metas/archives.php:47
@@ -452,7 +452,7 @@ msgid "To be able to add and analyze multiple keywords for a post or page you ne
 msgstr "Pentru a putea adăuga și analiza cuvinte / fraze cheie multiple pentru un articol sau o pagină ai nevoie de %1$s. Poți cumpăra acest modul, inclusiv suport și actualizări timp de un an, de pe %2$s."
 
 #. translators: %s expands to Yoast SEO Premium
-#: admin/views/partial-help-center-video.php:27
+#: admin/views/partial-help-center-video.php:32
 msgid "Get %s &raquo;"
 msgstr "Obține %s &raquo;"
 
@@ -1093,7 +1093,7 @@ msgstr "Mai jos sunt scorurile SEO pentru articolele tale publicate. Acum este m
 
 #: admin/views/tabs/advanced/breadcrumbs.php:21
 msgid "Enable Breadcrumbs"
-msgstr "Activare firimituri"
+msgstr "Activează firimituri"
 
 #: admin/views/tabs/advanced/breadcrumbs.php:25
 msgid "Separator between breadcrumbs"
@@ -1988,7 +1988,7 @@ msgstr "Prima pagină"
 
 #: admin/pages/metas.php:28 admin/pages/xml-sitemaps.php:32
 msgid "Post Types"
-msgstr "Tipuri articole"
+msgstr "Tipuri de articol"
 
 #: admin/pages/metas.php:29 admin/pages/xml-sitemaps.php:34
 msgid "Taxonomies"
@@ -3062,7 +3062,7 @@ msgstr "Titlul paginii WP"
 
 #: admin/class-bulk-editor-list-table.php:921
 msgid "Post Type"
-msgstr "Tip Articol"
+msgstr "Tip de articol"
 
 #: admin/class-bulk-editor-list-table.php:922
 msgid "Post Status"

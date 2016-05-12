@@ -1,14 +1,14 @@
-# Translation of Development (4.5.x) in Romanian
-# This file is distributed under the same license as the Development (4.5.x) package.
+# Translation of 4.5.x in Romanian
+# This file is distributed under the same license as the 4.5.x package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-03-18 18:44:57+0000\n"
+"PO-Revision-Date: 2016-05-05 13:00:51+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
-"X-Generator: GlotPress/1.1.0-alpha\n"
-"Project-Id-Version: Development (4.5.x)\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
+"Project-Id-Version: 4.5.x\n"
 
 #. translators: Translate this to the correct language tag for your locale, see
 #. https://www.w3.org/International/articles/language-tags/ for reference. Do
@@ -172,7 +172,7 @@ msgstr "Flux %1$s %2$s %3$s %4$s"
 msgid "<strong>ERROR</strong>: Invalid username, email address or incorrect password."
 msgstr "<strong>EROARE</strong>: nume utilizator invalid, adresă email invalidă sau parolă incorectă."
 
-#: wp-includes/post-template.php:1539
+#: wp-includes/post-template.php:1536
 msgctxt "post password form"
 msgid "Enter"
 msgstr "Introdu"
@@ -212,11 +212,11 @@ msgstr "Alegere logo"
 
 #. translators: 1: PHP class name, 2: PHP parent class name, 3: version number,
 #. 4: __construct() method
-#: wp-includes/functions.php:3721
+#: wp-includes/functions.php:3717
 msgid "The called constructor method for %1$s in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead."
 msgstr "Metoda constructor apelată pentru %1$s în %2$s este <strong>învechită</strong> de la versiunea %3$s! Folosește în schimb %4$s."
 
-#: wp-includes/functions.php:5046
+#: wp-includes/functions.php:5042
 msgid "Close dialog"
 msgstr "Închidere dialog"
 
@@ -351,11 +351,11 @@ msgid "https://codex.wordpress.org/Debugging_a_WordPress_Network"
 msgstr "https://codex.wordpress.org/Debugging_a_WordPress_Network"
 
 #. translators: %s: Codex URL
-#: wp-includes/functions.php:3898
+#: wp-includes/functions.php:3894
 msgid "Please see <a href=\"%s\">Debugging in WordPress</a> for more information."
 msgstr "Te rog vezi <a href=\"%s\">Depanarea în WordPress</a> (en) pentru mai multe informații."
 
-#: wp-includes/functions.php:3899
+#: wp-includes/functions.php:3895
 msgid "https://codex.wordpress.org/Debugging_in_WordPress"
 msgstr "https://codex.wordpress.org/Debugging_in_WordPress"
 
@@ -564,38 +564,38 @@ msgstr "Limba sitului:"
 msgid "Author:"
 msgstr "Autor:"
 
-#: wp-includes/wp-db.php:1538
+#: wp-includes/wp-db.php:1546
 msgid "Are you sure that you have typed the correct hostname?"
 msgstr "Sigur ai scris corect numele serverului de găzduire (hostname)?"
 
-#: wp-includes/wp-db.php:1539 wp-includes/wp-db.php:1642
+#: wp-includes/wp-db.php:1547 wp-includes/wp-db.php:1650
 msgid "Are you sure that the database server is running?"
 msgstr "Sigur funcționează serverul de baze de date?"
 
 #. translators: %s: support forums URL
-#: wp-includes/wp-db.php:1544 wp-includes/wp-db.php:1648
+#: wp-includes/wp-db.php:1552 wp-includes/wp-db.php:1656
 msgid "If you&#8217;re unsure what these terms mean you should probably contact your host. If you still need help you can always visit the <a href=\"%s\">WordPress Support Forums</a>."
 msgstr "Dacă nu ai siguranța semnificației acestor termeni ar trebui probabil să contactezi serviciul tău de găzduire. Dacă ai nevoie în continuare de ajutor poți oricând vizita <a href=\"%s\">Forumurile de suport WordPress</a>."
 
-#: wp-includes/wp-db.php:1633
+#: wp-includes/wp-db.php:1641
 msgid "Error reconnecting to the database"
 msgstr "Eroare de reconectare la baza de date"
 
 #. translators: %s: database host
-#: wp-includes/wp-db.php:1637
+#: wp-includes/wp-db.php:1645
 msgid "This means that we lost contact with the database server at %s. This could mean your host&#8217;s database server is down."
 msgstr "Asta înseamnă că am pierdut conexiunea cu serverul de baze de date la %s. Asta poate să însemne că acesta a căzut."
 
-#: wp-includes/wp-db.php:1643
+#: wp-includes/wp-db.php:1651
 msgid "Are you sure that the database server is not under particularly heavy load?"
 msgstr "Sigur serverul de baze de date nu este sub o supraîncărcare anume?"
 
 #. translators: 1: wp-config.php. 2: database host
-#: wp-includes/wp-db.php:1531
+#: wp-includes/wp-db.php:1539
 msgid "This either means that the username and password information in your %1$s file is incorrect or we can&#8217;t contact the database server at %2$s. This could mean your host&#8217;s database server is down."
 msgstr "Asta poate să însemne fie că informațiile despre nume de utilizator și parolă din fișierul tău %1$s sunt incorecte, fie că nu putem contacta serverul bazei de date la %2$s. Asta poate însemna că serverul tău de baze de date e căzut."
 
-#: wp-includes/wp-db.php:1537
+#: wp-includes/wp-db.php:1545
 msgid "Are you sure you have the correct username and password?"
 msgstr "Sigur ai numele de utilizator și parola corecte?"
 
@@ -1262,7 +1262,7 @@ msgid "Preformatted"
 msgstr "Preformatat"
 
 #. translators: 1: PHP class name, 2: version number, 3: __construct() method
-#: wp-includes/functions.php:3725
+#: wp-includes/functions.php:3721
 msgid "The called constructor method for %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "Metoda apelată a constructorului pentru %1$s este <strong>abandonată</strong> de la versiunea %2$s! Folosește în schimb %3$s."
 
@@ -1845,7 +1845,7 @@ msgid "Site Preview"
 msgstr "Previzualizare sit"
 
 #. translators: revision date format, see http://php.net/date
-#: wp-includes/post-template.php:1628 wp-includes/post-template.php:1664
+#: wp-includes/post-template.php:1625 wp-includes/post-template.php:1661
 msgctxt "revision date format"
 msgid "F j, Y @ H:i:s"
 msgstr "j F Y @ G:i"
@@ -3208,7 +3208,7 @@ msgid "https://wordpress.org/"
 msgstr "https://ro.wordpress.org/"
 
 #: wp-includes/admin-bar.php:145 wp-includes/wp-db.php:1085
-#: wp-includes/wp-db.php:1545 wp-includes/wp-db.php:1649 wp-login.php:789
+#: wp-includes/wp-db.php:1553 wp-includes/wp-db.php:1657 wp-login.php:789
 msgid "https://wordpress.org/support/"
 msgstr "http://ro.forums.wordpress.org/"
 
@@ -3557,7 +3557,7 @@ msgstr "Directorul temei \"%s\" nu există."
 msgid "ERROR: This is not a valid feed template."
 msgstr "EROARE: Acesta nu este un șablon de flux valid."
 
-#: wp-includes/post-template.php:1538
+#: wp-includes/post-template.php:1535
 msgid "This content is password protected. To view it please enter your password below:"
 msgstr "Acest conținut este protejat prin parolă. Pentru a-l vizualiza vă rugăm să introduceți parola mai jos:"
 
@@ -3663,7 +3663,7 @@ msgstr[2] "%s de ani"
 msgid "#%d (no title)"
 msgstr "#%d (fără titlu)"
 
-#: wp-includes/post-template.php:1738
+#: wp-includes/post-template.php:1735
 msgid "JavaScript must be enabled to use this feature."
 msgstr "Trebui să ai JavaScript activat pentru a folosi această funcție."
 
@@ -3707,13 +3707,13 @@ msgid "<strong>ERROR</strong>: Couldn&#8217;t register you&hellip; please contac
 msgstr "<strong>EROARE</strong>: Nu s-a putut efectua înregistrarea&hellip; Contactează <a href=\"mailto:%s\">administratorul</a> !"
 
 #. translators: 1: date
-#: wp-includes/post-template.php:1630
+#: wp-includes/post-template.php:1627
 msgctxt "post revision title extra"
 msgid "%1$s [Autosave]"
 msgstr "%1$s [Salvare automată]"
 
 #. translators: 1: date
-#: wp-includes/post-template.php:1632
+#: wp-includes/post-template.php:1629
 msgctxt "post revision title extra"
 msgid "%1$s [Current Revision]"
 msgstr "%1$s [Versiune curentă]"
@@ -3736,13 +3736,13 @@ msgstr "Ai introdus corect adresa email? Ai introdus adresa %s, dacă este incor
 msgid "The site you were looking for, %s, does not exist, but you can create it now!"
 msgstr "Situl pe care îl cauți, %s, nu există, dar îl poți crea acum!"
 
-#: wp-includes/functions.php:5059
+#: wp-includes/functions.php:5055
 msgid "The login page will open in a new window. After logging in you can close it and return to this page."
 msgstr "Pagina de autentificare se va deschide într-o fereastră nouă. După autentificare o vei putea închide șî reveni la această pagină."
 
 #. translators: post revision title: 1: author avatar, 2: author name, 3: time
 #. ago, 4: date
-#: wp-includes/post-template.php:1674
+#: wp-includes/post-template.php:1671
 msgctxt "post revision title"
 msgid "%1$s %2$s, %3$s ago (%4$s)"
 msgstr "%1$s %2$s, acum %3$s (%4$s)"
@@ -3766,7 +3766,7 @@ msgctxt "submit button"
 msgid "Search"
 msgstr "Caută"
 
-#: wp-includes/functions.php:5057 wp-includes/script-loader.php:448
+#: wp-includes/functions.php:5053 wp-includes/script-loader.php:448
 msgid "Session expired"
 msgstr "Sesiune expirată"
 
@@ -4822,12 +4822,12 @@ msgstr "Forumuri asistență"
 msgid "&hellip;"
 msgstr "&hellip;"
 
-#: wp-includes/functions.php:3598
+#: wp-includes/functions.php:3594
 msgid "Database Error"
 msgstr "Eroare la baza de date"
 
-#: wp-includes/functions.php:3602 wp-includes/ms-load.php:286
-#: wp-includes/wp-db.php:1527
+#: wp-includes/functions.php:3598 wp-includes/ms-load.php:286
+#: wp-includes/wp-db.php:1535
 msgid "Error establishing a database connection"
 msgstr "Eroare la stabilirea unei conexiuni cu baza de date"
 
@@ -4997,11 +4997,11 @@ msgstr "Etichetele de interogare condiționale nu funcționează înainte ca int
 msgid "The user is already active."
 msgstr "Utilizatorul este deja activat."
 
-#: wp-includes/functions.php:3901
+#: wp-includes/functions.php:3897
 msgid "%1$s was called <strong>incorrectly</strong>. %2$s %3$s"
 msgstr "%1$s a fost denumit <strong>incorect</strong>. %2$s %3$s"
 
-#: wp-includes/functions.php:3896
+#: wp-includes/functions.php:3892
 msgid "(This message was added in version %s.)"
 msgstr "(Acest mesaj a fost adăugat în versiunea %s.)"
 
@@ -5298,7 +5298,7 @@ msgstr "Navighezi arhiva categoriei %s."
 
 #: wp-includes/theme-compat/comments.php:24
 msgid "This post is password protected. Enter the password to view comments."
-msgstr "Acest articol este protejat cu parolă. Introdu parolapentru a vedea comentariile."
+msgstr "Acest articol este protejat cu parolă. Introdu parola pentru a vedea comentariile."
 
 #: wp-includes/taxonomy.php:609
 msgid "Choose from the most used tags"
@@ -6208,7 +6208,7 @@ msgstr "Buclă WordPress nouă"
 msgid "Last updated"
 msgstr "Ultima actualizare"
 
-#: wp-includes/deprecated.php:1840 wp-includes/post-template.php:1442
+#: wp-includes/deprecated.php:1840 wp-includes/post-template.php:1439
 msgid "Missing Attachment"
 msgstr "Atașamentul lipsește"
 
@@ -6267,67 +6267,67 @@ msgstr ", "
 msgid "%s is a protected WP option and may not be modified"
 msgstr "%s este o opțiune protejată și nu poate fi modificată"
 
-#: wp-includes/functions.php:1891 wp-includes/functions.php:2151
+#: wp-includes/functions.php:1888 wp-includes/functions.php:2147
 msgid "Unable to create directory %s. Is its parent directory writable by the server?"
 msgstr "Nu s-a putut crea directorul %s. Directorul părinte are permisiuni de scriere pe server?"
 
-#: wp-includes/functions.php:2115
+#: wp-includes/functions.php:2111
 msgid "Empty filename"
 msgstr "Nume fișier lipsă"
 
-#: wp-includes/functions.php:2157
+#: wp-includes/functions.php:2153
 msgid "Could not write file %s"
 msgstr "Nu s-a putut scrie fișierul %s"
 
-#: wp-includes/functions.php:2498
+#: wp-includes/functions.php:2494
 msgid "You are attempting to log out of %s"
 msgstr "Încerci să te dezautentifici de pe %s"
 
-#: wp-includes/functions.php:2507
+#: wp-includes/functions.php:2503
 msgid "WordPress Failure Notice"
 msgstr "Notificare eșec WordPress"
 
-#: wp-includes/functions.php:2500
+#: wp-includes/functions.php:2496
 msgid "Do you really want to <a href='%s'>log out</a>?"
 msgstr "Ești sigur că vrei să te <a href='%s'>dezautentifici</a>?"
 
-#: wp-includes/functions.php:2504 wp-includes/ms-functions.php:1915
+#: wp-includes/functions.php:2500 wp-includes/ms-functions.php:1915
 msgid "Please try again."
 msgstr "Reîncearcă."
 
-#: wp-includes/functions.php:2626
+#: wp-includes/functions.php:2622
 msgid "&laquo; Back"
 msgstr "&laquo; Înapoi"
 
-#: wp-includes/functions.php:2638 wp-load.php:92
+#: wp-includes/functions.php:2634 wp-load.php:92
 msgid "WordPress &rsaquo; Error"
 msgstr "Eroare &rsaquo; WordPress"
 
-#: wp-includes/functions.php:3662 wp-includes/functions.php:3786
+#: wp-includes/functions.php:3658 wp-includes/functions.php:3782
 msgid "%1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "%1$s este <strong>învechită</strong> din versiunea %2$s! Folosește %3$s în loc."
 
-#: wp-includes/functions.php:3664 wp-includes/functions.php:3788
+#: wp-includes/functions.php:3660 wp-includes/functions.php:3784
 msgid "%1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "%1$s este <strong>învechită</strong> din versiunea %2$s fără alternative disponibile în loc."
 
-#: wp-includes/functions.php:3846
+#: wp-includes/functions.php:3842
 msgid "%1$s was called with an argument that is <strong>deprecated</strong> since version %2$s! %3$s"
 msgstr "%1$s s-a apelat cu un argument care s-a <strong>învechit</strong> odată cu versiunea %2$s! %3$s"
 
-#: wp-includes/functions.php:3848
+#: wp-includes/functions.php:3844
 msgid "%1$s was called with an argument that is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "%1$s s-a apelat cu un argument care s-a <strong>învechit</strong> odată cu versiunea %2$s și care nu oferă alternative."
 
-#: wp-includes/functions.php:4408
+#: wp-includes/functions.php:4404
 msgid "Select a city"
 msgstr "Alege un oraș"
 
-#: wp-includes/functions.php:4453 wp-includes/functions.php:4457
+#: wp-includes/functions.php:4449 wp-includes/functions.php:4453
 msgid "UTC"
 msgstr "UTC"
 
-#: wp-includes/functions.php:4461
+#: wp-includes/functions.php:4457
 msgid "Manual Offsets"
 msgstr "Completări manuale"
 
@@ -7011,23 +7011,23 @@ msgstr "Privat: %s"
 msgid "There is no excerpt because this is a protected post."
 msgstr "Nu există o descriere scurtă, acesta este un articol protejat."
 
-#: wp-includes/post-template.php:838
+#: wp-includes/post-template.php:835
 msgid "Next page"
 msgstr "Pagina următoare"
 
-#: wp-includes/post-template.php:839
+#: wp-includes/post-template.php:836
 msgid "Previous page"
 msgstr "Pagina precedentă"
 
-#: wp-includes/post-template.php:1277
+#: wp-includes/post-template.php:1274
 msgid "Home"
 msgstr "Ecranul de start"
 
-#: wp-includes/post-template.php:1681
+#: wp-includes/post-template.php:1678
 msgid "%1$s [Autosave]"
 msgstr "%1$s [Autosalvare]"
 
-#: wp-includes/post-template.php:1682
+#: wp-includes/post-template.php:1679
 msgid "%1$s [Current Revision]"
 msgstr "%1$s [Revizia curentă]"
 
@@ -7322,7 +7322,7 @@ msgstr "<strong>EROARE</strong>: Nu ai completat parola."
 msgid "<strong>ERROR</strong>: Your account has been marked as a spammer."
 msgstr "<strong>EROARE</strong>: Contul tău a fost marcat ca spammer."
 
-#: wp-includes/functions.php:5058 wp-includes/user.php:278
+#: wp-includes/functions.php:5054 wp-includes/user.php:278
 msgid "Please log in again."
 msgstr "Autentifică-te din nou."
 
@@ -7330,7 +7330,7 @@ msgstr "Autentifică-te din nou."
 msgid "Sidebar %d"
 msgstr "Bară laterală %d"
 
-#: wp-includes/wp-db.php:3142
+#: wp-includes/wp-db.php:3150
 msgid "<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher"
 msgstr "<strong>EROARE</strong>: WordPress %1$s are nevoie de MySQL %2$s sau mai recent"
 
@@ -7637,7 +7637,7 @@ msgid "Website"
 msgstr "Pagină web"
 
 #: wp-includes/admin-bar.php:734 wp-includes/class-wp-customize-widgets.php:418
-#: wp-includes/functions.php:3539
+#: wp-includes/functions.php:3535
 msgid "Widgets"
 msgstr "Piese"
 
@@ -7721,7 +7721,7 @@ msgstr "Etichete:"
 msgid "Comments (%s)"
 msgstr "Comentarii (%s)"
 
-#: wp-includes/post-template.php:832
+#: wp-includes/post-template.php:829
 msgid "Pages:"
 msgstr "Pagini:"
 
@@ -7834,7 +7834,7 @@ msgctxt "noun"
 msgid "Comment"
 msgstr "Comentariu"
 
-#: wp-includes/deprecated.php:3122 wp-includes/functions.php:2502
+#: wp-includes/deprecated.php:3122 wp-includes/functions.php:2498
 msgid "Are you sure you want to do this?"
 msgstr "Ești sigur că vrei să faci asta?"
 
@@ -7980,7 +7980,7 @@ msgstr "Anonim"
 msgid "RSS"
 msgstr "RSS"
 
-#: wp-includes/functions.php:2119
+#: wp-includes/functions.php:2115
 msgid "Invalid file type"
 msgstr "Tip de fișier invalid"
 
@@ -8219,7 +8219,7 @@ msgstr "Fără categorie"
 msgid "Email: %s"
 msgstr "Email: %s"
 
-#: wp-includes/post-template.php:1143 wp-includes/theme-compat/sidebar.php:90
+#: wp-includes/post-template.php:1140 wp-includes/theme-compat/sidebar.php:90
 #: wp-includes/widgets/class-wp-widget-pages.php:31
 #: wp-includes/widgets/class-wp-widget-pages.php:55
 msgid "Pages"
@@ -8276,7 +8276,7 @@ msgstr "A apărut o eroare în timpul activării"
 msgid "Username:"
 msgstr "Nume de utilizator:"
 
-#: wp-activate.php:116 wp-includes/post-template.php:1539
+#: wp-activate.php:116 wp-includes/post-template.php:1536
 msgid "Password:"
 msgstr "Parola:"
 
