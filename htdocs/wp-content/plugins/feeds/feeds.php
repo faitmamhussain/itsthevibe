@@ -14,9 +14,15 @@ register_activation_hook( __FILE__,  'sp_feeds_activate' );
 register_deactivation_hook( __FILE__,  'sp_feeds_deactivate' );
 
 function sp_feeds_activate() {
-		
-	global $wpdb;	
-	
+
+	global $wpdb;
+
+	$timestamp = wp_next_scheduled( 'sp_feeds_cron' );
+
+	if( ! $timestamp ){
+		wp_schedule_event( time(), 'once_in_3_hours', 'sp_feeds_cron' );
+	}
+
 	$feeds_url = $wpdb->prefix.'feeds_url';
 	
 	$tbA = "CREATE TABLE ".$feeds_url." (
@@ -24,22 +30,17 @@ function sp_feeds_activate() {
 		url varchar(200) NOT NULL,
 		UNIQUE KEY url_id (url_id)
 	)";
-	
+
 	$wpdb->query($tbA);
-
-	//Use wp_next_scheduled to check if the event is already scheduled
-	$timestamp = wp_next_scheduled( 'sp_feeds_schedule' );
-
-	if( $timestamp == false ){
-		wp_schedule_event( time(), 'once_in_3_hours', 'sp_feeds_cron' );
-	}
 	
 }
 
 function sp_feeds_deactivate() {
 	
-	global $wpdb;	
-	 
+	global $wpdb;
+
+	wp_clear_scheduled_hook( 'sp_feeds_cron' );
+
 	$feeds_url = $wpdb->prefix.'feeds_url';
 	
 	$tba = "DROP TABLE IF EXISTS $feeds_url";
@@ -203,7 +204,7 @@ function sp_import_feeds($url) {
 	foreach($x->channel->item as $entry) {
 
 		//allow one minute per post
-		set_time_limit (60);
+		set_time_limit(60);
 
 		$slug = sanitize_title($entry->title);
 
@@ -224,7 +225,7 @@ function sp_import_feeds($url) {
 				'post_type'       => "post",
 				'post_content'    => $content , // description
 				'post_title'      => $entry->title, // title
-				'post_name'       => $entry->title, // i.e. 'GA'; this is for the URL
+				'post_name'       => $slug, // i.e. 'GA'; this is for the URL
 				'post_status'     => "pending",
 				'post_author' => 1
 			));
@@ -247,21 +248,25 @@ function sp_import_feeds($url) {
 				'post_content' => '',
 				'post_status' => 'pending'
 			);
+
+			if( ! function_exists('wp_generate_attachment_metadata') ) {
+				require ( ABSPATH . 'wp-admin/includes/image.php');
+			}
+
 			$attach_id = wp_insert_attachment( $attachment, $uplfile, $post_id );
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $uplfile);
 			wp_update_attachment_metadata( $attach_id, $attach_data );
 			add_post_meta($post_id, '_thumbnail_id', $attach_id, true);
 
-			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 14), array('%d', '%d'));
-			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 15), array('%d', '%d'));
-			$wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
+//			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 14), array('%d', '%d'));
+//			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 15), array('%d', '%d'));
+//			$wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
 
-			/**
-			set category to posts
-			$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
-			$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
-			$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
-			 */
+			//set category to posts
+//			$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
+//			$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
+//			$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
+
 		}
 	}
 
