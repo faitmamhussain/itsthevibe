@@ -127,7 +127,7 @@ add_action( 'genesis_after_header', function(){
 
 	global $wp_registered_sidebars;
 
-	if ( is_front_page() && ( isset( $wp_registered_sidebars['after-header'] ) && is_active_sidebar( 'after-header' ) ) ) {
+	if ( (is_front_page() || is_page('apple')) && ( isset( $wp_registered_sidebars['after-header'] ) && is_active_sidebar( 'after-header' ) ) ) {
 
 		dynamic_sidebar( 'after-header' );
 
