@@ -5,7 +5,7 @@
             if (isDesktop() && $('.sidebar-primary').is(':visible')) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
-                if (($(window).height() + $(window).scrollTop() - 110) > sidebarElem.height()) {
+                if (($(window).height() + $(window).scrollTop() - 110) > sidebarElem.height() && sidebarElem.height() < mainContent.height() ) {
                     if (sidebarElem.css('position') !== 'fixed') {
                         sidebarElem.css({
                             'left': mainContent.offset().left + mainContent.width() + 3 + 'px',
