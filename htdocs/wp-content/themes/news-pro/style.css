@@ -2077,7 +2077,7 @@ Theme Colors
 }
 
 #revexitadpanel{
-    height: initial !important;
+    /*height: initial !important;*/
 }
 #revexitadpanel .revexitprovider{
     display: none;
