@@ -858,10 +858,6 @@ Plugins
 	text-align: left;
 }
 
-.alm-btn-wrap {
-	clear:both;
-}
-
 /* Custom slideshow
 --------------------------------------------- */
 
@@ -1281,7 +1277,7 @@ Site Header
 	min-width: 58px;
 	min-height: 58px;
 	font-size: 32px;
-	padding: 12px 8px;
+	padding: 0 8px;
 	background: #fff;
 }
 
