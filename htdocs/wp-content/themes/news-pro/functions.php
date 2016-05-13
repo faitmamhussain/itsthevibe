@@ -263,9 +263,9 @@ function add_infinite_scroll(){
 
 		if( class_exists('AjaxLoadMore') ){
 			if(isMobile()){
-				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="6" max_pages="1" scroll_distance="1" repeater="repeater"]');
+				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="6" max_pages="1" scroll_distance="-500" repeater="repeater"]');
 			} else {
-				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" scroll_distance="1" container_type="div"]');
+				echo do_shortcode('[ajax_load_more post_type="post" post__not_in="'.$post->ID.'" category="'.$cat->slug.'" posts_per_page="1" max_pages="0" scroll_distance="-500" container_type="div"]');
 			}
 		}
 	}
@@ -306,7 +306,7 @@ function sp_add_alm_shortcode(){
 		}
 	}
 
-	echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="'.$posts_per_page.'" offset="'.$posts_per_page.'"'.$query_string.' custom_args="'.$custom_args.'" max_pages="0" scroll_distance="1" container_type="div" repeater="'.$repeater.'"]');
+	echo do_shortcode('[ajax_load_more post_type="post" posts_per_page="'.$posts_per_page.'" offset="'.$posts_per_page.'"'.$query_string.' custom_args="'.$custom_args.'" max_pages="0" scroll_distance="-500" container_type="div" repeater="'.$repeater.'"]');
 }
 
 if (!defined('ALM_REPEATER_PATH')){
@@ -649,9 +649,11 @@ function get_permalink_with_utm(){
 
 	$url = get_permalink();
 
-	foreach($custom_utm_params as $target => $param){
-		if(!empty($param)){
-			$url = add_query_arg($target, $param, $url);
+	if( ! empty($custom_utm_params) && is_array($custom_utm_params) ) {
+		foreach($custom_utm_params as $target => $param){
+			if(!empty($param)){
+				$url = add_query_arg($target, $param, $url);
+			}
 		}
 	}
 

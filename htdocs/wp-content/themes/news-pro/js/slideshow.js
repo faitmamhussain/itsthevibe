@@ -5,7 +5,7 @@
             if (isDesktop() && $('.sidebar-primary').is(':visible')) {
                 var sidebarElem = $('.sidebar-primary');
                 var mainContent = $('main.content');
-                if ((document.body.clientHeight + $(window).scrollTop() - 110) > sidebarElem.height()) {
+                if (($(window).height() + $(window).scrollTop() - 110) > sidebarElem.height()) {
                     if (sidebarElem.css('position') !== 'fixed') {
                         sidebarElem.css({
                             'left': mainContent.offset().left + mainContent.width() + 3 + 'px',
@@ -15,7 +15,7 @@
                     }
                 }
 
-                if(document.body.clientHeight + $(window).scrollTop() + 400 < sidebarElem.height()){
+                if($(window).height() + $(window).scrollTop() + 400 < sidebarElem.height()){
                     sidebarElem.css({
                         'position': 'static'
                     });
