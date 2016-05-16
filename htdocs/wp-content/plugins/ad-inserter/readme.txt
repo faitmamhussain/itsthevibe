@@ -3,8 +3,8 @@ Contributors: spacetime
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LHGZEMRTR7WB4
 Tags: adsense, amazon, clickbank, ad, ads, html, javascript, php, code, widget, sidebar, responsive, rotating, banner, banner rotation, contextual, shortcodes, widgets, header, footer, users, logged in, not logged in, mobile, desktop, phone, tablet, custom css, category, tag, filter, url, skip
 Requires at least: 3.0
-Tested up to: 4.4.2
-Stable tag: 1.6.2
+Tested up to: 4.5.2
+Stable tag: 1.6.3
 License: GPLv3
 
 Insert any HTML/Javascript/PHP code into Wordpress. Perfect for AdSense or contextual Amazon ads. 16 code blocks, many display options.
@@ -35,7 +35,7 @@ Paragraphs can be counted from top or from bottom. It is also possible to count 
 
 You can also define paragraph tags. Normally only `<p>` tags are used. If you post contains also `<div>` or header tags you can define comma separated list of tags used to count paragraphs (e.g. **p, div, h2, h3**).
 **WARNING:** Each code block you insert on post adds one `<div>` block unelss you use **No wrapping** style. **Before Paragraph** will insert code before `<tag>`, **After Paragraph** will insert code after closing `</tag>`.
-**After Paragraph** display will not work if you specify tag names that have no closing tags!
+**After Paragraph** will not work if you specify tag names that have no closing tags!
 
 Additional Display Options:
 
@@ -427,6 +427,10 @@ AD CODE RIGHT
 
 == Changelog ==
 
+= 1.6.4 =
+- Fixed bug: For shortcodes in posts the url was not checked
+- Optimizations for device detection
+
 = 1.6.3 =
 - Removed deprecated code (fixes PHP 7 deprecated warnings)
 - Added support for paragraphs with div and other HTML tags (h1, h2, h3,...)
@@ -595,6 +599,10 @@ AD CODE RIGHT
 
 
 == Upgrade Notice ==
+
+= 1.6.4 =
+Fixed bug: For shortcodes in posts the url was not checked;
+Optimizations for device detection
 
 = 1.6.3 =
 Removed deprecated code (fixes PHP Fatal error Call to a member function get_display_type);
