@@ -14,45 +14,21 @@ register_activation_hook( __FILE__,  'sp_feeds_activate' );
 register_deactivation_hook( __FILE__,  'sp_feeds_deactivate' );
 
 function sp_feeds_activate() {
-
-	global $wpdb;
-
 	$timestamp = wp_next_scheduled( 'sp_feeds_cron' );
 
 	if( ! $timestamp ){
 		wp_schedule_event( time(), 'once_in_3_hours', 'sp_feeds_cron' );
 	}
-
-	$feeds_url = $wpdb->prefix.'feeds_url';
-	
-	$tbA = "CREATE TABLE ".$feeds_url." (
-		url_id int(11) NOT NULL AUTO_INCREMENT,
-		url varchar(200) NOT NULL,
-		UNIQUE KEY url_id (url_id)
-	)";
-
-	$wpdb->query($tbA);
-	
 }
 
 function sp_feeds_deactivate() {
-	
-	global $wpdb;
-
 	wp_clear_scheduled_hook( 'sp_feeds_cron' );
-
-	$feeds_url = $wpdb->prefix.'feeds_url';
-	
-	$tba = "DROP TABLE IF EXISTS $feeds_url";
-	
-	$wpdb->query($tba);
 }
 
-add_action('init','sp_feeds_init');
-
-function sp_feeds_init() {
-	add_action('admin_menu', 'sp_feeds_menu');
+if( is_admin() ){
 	add_action( 'admin_enqueue_scripts', 'sp_feeds_ui_scripts' );
+	add_action('admin_menu', 'sp_feeds_menu');
+	add_action( 'admin_init', 'register_sp_feeds_settings' );
 }
 
 add_action( 'sp_feeds_cron', 'sp_feeds_auto_import' );
@@ -75,15 +51,12 @@ function sp_feeds_ui_scripts() {
 	wp_enqueue_script( 'ui-js', plugins_url() . '/feeds/addmore.js', array(), '0.1', true  );
 }
 
-function sp_feeds_add_menu() {
-	global $wpdb;
-	$args = array(
-		'hide_empty' => false, 
-	);	
-	$taxonomy = 'category';
-	$terms = get_terms($taxonomy, $args); // Get all terms of a taxonomy
+function register_sp_feeds_settings(){
+	register_setting( 'sp-feeds-option-group', 'sp_feeds_urls' );
+}
 
-	if(isset($_GET['delete'])){ 
+function sp_feeds_add_menu() {
+	if(isset($_GET['delete'])){
 		$m = $_GET['delete'] == 1 ? "<div id='actionmsg' class='actionmsg'>Successfully Deleted Url</div>" : "<div id='actionmsg' class='actionmsg'>Database Error - Not Deleted!</div>";
 		echo $m;
 	}
@@ -103,45 +76,38 @@ function sp_feeds_add_menu() {
 	<div class="formstyle">
 		<div class="headtitle"><?php _e('Import feeds one time');?></div>
 		<form action="" method="post">
-			<label><?php _e('Please Enter the feed url whcih you want to import feeds :');?></label> 
+			<label><?php _e('Please Enter the feed url which you want to import feeds :');?></label>
 			<input type="text" name="feed_url" placeholder="Enter Feed Url" />
-			<?php 	
-			/* if ( $terms && !is_wp_error( $terms ) ) :
-			?>
-			<!--- <ul>
-				<?php foreach ( $terms as $term ) { ?>
-					<li><input type="checkbox" name="feed_category[]" value="<?php // echo $term->term_id;?>" /> <a href="<?php // echo get_term_link($term->slug, $taxonomy); ?>"><?php // echo $term->name; ?></a></li>
-				<?php }  ?>
-			</ul> -->
-			<?php endif; */
-			?>
 			<input type="submit" name="import_feed" value="Import feeds" />
 		</form>
 	</div>
 	
 	<div class="formstyle">
 		<div class="headtitle"><?php _e('Import feeds after every three hours interval');?></div>
-		<form action="" method="post" name="interval">
+		<form action="options.php" method="post">
+			<?php wp_nonce_field('update-options'); ?>
 			<label><?php _e('Please Enter the feed url whcih you want to import feeds :');?></label> 
 			<div class="input_fields_wrap">
 				<?php 
-				$datainput = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."feeds_url");
+				$datainput = get_option('sp_feeds_urls');
 				if(!empty($datainput)){
 				?>
 				<button class="add_field_button"><?php _e('Add More Fields');?></button>
 				<?php 
 				foreach($datainput as $inputurl){
-					echo '<div><input type="text" name="feed_url_int[]" value="'.$inputurl->url.'" /><a href="?page=imp-feeds&action=delete&id='.$inputurl->url_id.'" class="remove_field_int">Remove</a></div>';
+					echo '<div><input type="text" name="sp_feeds_urls[]" value="'.$inputurl.'" /><a href="?page=imp-feeds&action=delete&id='.$inputurl.'" class="remove_field_int">Remove</a></div>';
 				}
 				}else{
 					?>
 					<button class="add_field_button"><?php _e('Add More Fields');?></button>
-					<div><input type="text" name="feed_url_int[]" placeholder="Enter Feed Url" /></div>
+					<div><input type="text" name="sp_feeds_urls[]" placeholder="Enter Feed Url" /></div>
 					<?php 
 				}
 				?>
 			</div>
-			<input type="submit" name="import_feed_int" value="Save Urls" />
+			<input type="hidden" name="action" value="update" />
+			<input type="hidden" name="page_options" value="sp_feeds_urls" />
+			<input type="submit" value="Save Urls" />
 		</form>
 	</div>
 	<?php 
@@ -156,35 +122,19 @@ function sp_feeds_add_menu() {
 		}
 	}
 	
-	if(isset($_POST['import_feed_int'])){
-		$msg = array();
-		foreach($_POST['feed_url_int'] as $url){
-			$qry = "SELECT * FROM ".$wpdb->prefix."feeds_url WHERE url = '" . $url . "'"; 
-			$result = $wpdb->get_row($qry);
-			if(!empty($result)){
-				$msg['message'] = "<div style='display:none'>URL already exists.No Duplicate entries allowed</div>";
-			}else{
-				$url = htmlspecialchars($url);
-				$qry = $wpdb->insert($wpdb->prefix.'feeds_url', array('url' => $url), array('%s'));
-				if($qry){
-					$msg['message'] = "<script> window.location='?page=imp-feeds&add=1'; </script>";
-				}else{
-					$msg['message'] = "<script> window.location='?page=imp-feeds&add=0'; </script>";
-				}
-			}
-		}
-		
-		if(!empty($msg)){
-			echo $msg['message']; 
-		}
-	}
-	
 	if(isset($_GET['action'])){
 		$urlid = $_GET['id'];
-		$qry = "DELETE FROM ".$wpdb->prefix."feeds_url WHERE url_id = '".$urlid."'";
-		$d = $wpdb->query($qry);
+
+		$datainput = get_option('sp_feeds_urls');
+
+		$key = array_search($urlid, $datainput);
+
+		if( is_numeric($key) ) {
+			unset($datainput[$key]);
+			update_option('sp_feeds_urls', $datainput);
+		}
 		
-		if($d){
+		if(is_numeric($key)){
 			echo "<script> window.location='?page=imp-feeds&delete=1'; </script>";
 		}else{
 			echo "<script> window.location='?page=imp-feeds&delete=0'; </script>";
@@ -207,10 +157,13 @@ function sp_import_feeds($url) {
 		set_time_limit(60);
 
 		$slug = sanitize_title($entry->title);
+		$post_title = sanitize_post_field( 'post_title', $entry->title, 0, 'db' );
 
 		// check if posts already exists
-		$result = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE post_name = '" . $slug . "'", 'ARRAY_A');
-		if(empty($result)){
+		$by_title = get_page_by_title($post_title, ARRAY_A, 'post');
+		$by_slug = get_posts(array('post_name' => $slug, 'post_type' => 'post', 'numberposts' => 1));
+
+		if(empty($by_title) && empty($by_slug)){
 			// insert posts
 			$imagedownloadcontent = $entry->description;
 
@@ -274,12 +227,10 @@ function sp_import_feeds($url) {
 }
 
 function sp_feeds_auto_import(){
-	global $wpdb;
-
-	$feeds = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."feeds_url");
+	$feeds = get_option('sp_feeds_urls');
 	if(!empty($feeds)){
 		foreach($feeds as $feed){
-			sp_import_feeds($feed->url);
+			sp_import_feeds($feed);
 		}
 	}
 }
