@@ -101,6 +101,8 @@ SP_OBJ.ADS = {
                     // googletag.pubads().setTargeting("ybot",yieldbot.getPageCriteria());
                 });
                 googletag.cmd.push(function() {
+                    googletag.pubads().enableAsyncRendering();
+                    googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
                     done();
                 });
@@ -274,17 +276,6 @@ SP_OBJ.ADS = {
         SP_OBJ.ADS.pf.start(SP_OBJ.ADS.timeReference, onStart);
     },
 
-    refreshAuction: function () {
-        var onRefresh = function(hasErrors, details){
-            if(hasErrors){
-                console.log('error details', details);
-            }else {
-                //console.log('no error');
-            }
-        };
-        SP_OBJ.ADS.pf.refresh(SP_OBJ.ADS.timeReference, onRefresh);
-    },
-
     loadScript: function (scriptUrl) {
         var adScript = document.createElement('script');
         adScript.type = 'text/javascript';
@@ -391,115 +382,8 @@ SP_OBJ.ADS = {
                 }
             },
 
-            refresh: function (slots, pushBid, done) {
-                var aolTotal = 0;
-
-                for (var x in slots){
-                    if (slots[x].isMobile === SP_OBJ.ADS.adsIsMobile && slots[x].adZones.indexOf(SP_OBJ.ADS.ZONE) !== -1){
-                        for (var index in spAdConfig.aolConfig){
-                            if(spAdConfig.aolConfig[index]["slotName"] === slots[x].name && spAdConfig.aolConfig[index]["isMobile"] === SP_OBJ.ADS.adsIsMobile){
-                                aolTotal++;
-                            }
-                        }
-                    }
-                }
-
-                for (var x in slots){
-                    if (slots[x].isMobile === SP_OBJ.ADS.adsIsMobile && slots[x].adZones.indexOf(SP_OBJ.ADS.ZONE) !== -1){
-                        for (var index in spAdConfig.aolConfig){
-                            if(spAdConfig.aolConfig[index]["slotName"] === slots[x].name && spAdConfig.aolConfig[index]["isMobile"] === SP_OBJ.ADS.adsIsMobile){
-
-                                var aol_slot = spAdConfig.aolConfig[index];
-                                var aolSizeId = aol_slot.sizeId;
-
-                                SP_OBJ.ADS.aolCallbacks[index] = (function (inner_alias) {
-                                    return function (response) {
-                                        window.aolCallback(response, inner_alias)
-                                    };
-                                }(index));
-                                var req_url = 'adserver.adtechus.com/pubapi/3.0/10521.1/';
-                                req_url += aol_slot.placement;
-                                req_url += '/0/' + aolSizeId + '/ADTECH;cmd=bid;';
-                                req_url += 'callback=SP_OBJ.ADS.aolCallbacks.'+index+';';
-                                req_url += 'misc='+ 1e18 * Math.random();
-                                SP_OBJ.ADS.loadScript(req_url);
-                            }
-                        }
-                    }
-                }
-            }
+            refresh: function (slots, pushBid, done) {}
         }
-    },
-
-    initAjaxPageTopAd: function(elementId){
-        SP_OBJ.ADS.pf.mediator.slotMap = {};
-        var slots = [{
-            name: '/76778142/Itsthevibe_InPost_Ad_Top',
-            sizes: [[320, 50],[320, 100]],
-            elementId: elementId,
-            isMobile: true,
-            adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
-        },
-        {
-            name: '/76778142/Itsthevibe_InPost_Ad_Top',
-            sizes: [[728, 90]],
-            elementId: elementId,
-            isMobile: false,
-            adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
-        }];
-        for (var i in slots) {
-            if(slots[i].adZones.indexOf(SP_OBJ.ADS.ZONE) !== -1 && slots[i].isMobile === SP_OBJ.ADS.adsIsMobile){
-                var slot = slots[i];
-                SP_OBJ.ADS.pf.addSlot(slot);
-                if (window.console) {
-                    console.log(1111111, SP_OBJ.ADS.pf.mediator.slotMap);
-                }
-                googletag.cmd.push(function() {
-                    var gptslot = googletag.defineSlot(slot.name, slot.sizes, slot.elementId).addService(googletag.pubads());
-                    gptadslots[slot.elementId] = gptslot;
-                });
-            }
-            else{
-                delete slots[i];
-            }
-        }
-        SP_OBJ.ADS.pf.getBidProvider('aol').refresh(slots, null, function(){
-            SP_OBJ.ADS.refreshAuction();
-        });
-    },
-
-    initAjaxPageMidAd: function(elementId){
-        /*var slots = [{
-            name: '/76778142/Itsthevibe_InPost_Ad_Mid',
-            sizes: [[320, 50], [320, 100]],
-            elementId: elementId,
-            isMobile: true,
-            adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
-        },
-            {
-                name: '/76778142/Itsthevibe_InPost_Ad_Mid',
-                sizes: [[300, 250]],
-                elementId: elementId,
-                isMobile: false,
-                adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"]],
-                bidProviders: arrayUnion(["aol"], enabledProviders)
-            }];
-        for (var i = 0; i < slots.length; i++) {
-            if (slots[i].adZones.indexOf(SP_OBJ.ADS.ZONE) !== -1 && slots[i].isMobile === SP_OBJ.ADS.adsIsMobile) {
-                var slot = slots[i];
-                //SP_OBJ.ADS.pf.addSlot(slot);
-                googletag.cmd.push(function () {
-                    var gptslot = googletag.defineSlot(slot.name, slot.sizes, slot.elementId).addService(googletag.pubads());
-                    gptadslots[slot.elementId] = gptslot;
-                });
-            }
-        }
-        jQuery(document).ready(function() {
-            //SP_OBJ.ADS.runAuction();
-        });*/
     }
 };
 
