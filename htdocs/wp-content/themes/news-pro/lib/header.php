@@ -45,7 +45,7 @@
 			build();
 
 		if (page_type != 'article') {
-			<?php if(is_front_page()){ ?>
+			<?php if(is_front_page() || is_page('apple')){ ?>
 			slots['headerAd'] = googletag.defineSlot('/76778142/Itsthevibe_Header_Ad', [[320, 100], [320, 50]], 'div-gpt-ad-1460507361888-3').defineSizeMapping(mapping1).addService(googletag.pubads());
 			slots['belowFeaturedAd'] = googletag.defineSlot('/76778142/Itsthevibe_BelowFeatured_Ad', [[320, 100], [320, 50]], 'div-gpt-ad-1460507361888-0').defineSizeMapping(mapping2).addService(googletag.pubads());
 			<?php } ?>
