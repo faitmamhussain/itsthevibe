@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Ad Inserter
-Version: 1.6.3
+Version: 1.6.4
 Description: A simple solution to insert any code into Wordpress. Simply enter any HTML, Javascript or PHP code and select where and how you want to display it.
 Author: Spacetime
 Author URI: http://igorfuna.com/
@@ -10,6 +10,10 @@ Plugin URI: http://igorfuna.com/software/web/ad-inserter-wordpress-plugin
 
 /*
 Change Log
+
+Ad Inserter 1.6.4 - 15 May 2016
+- Fixed bug: For shortcodes in posts the url was not checked
+- Optimizations for device detection
 
 Ad Inserter 1.6.3 - 6 April 2016
 - Removed deprecated code (fixes PHP 7 deprecated warnings)
@@ -198,26 +202,42 @@ if (version_compare ($wp_version, "3.0", "<")) {
 require_once AD_INSERTER_PLUGIN_DIR.'class.php';
 require_once AD_INSERTER_PLUGIN_DIR.'constants.php';
 require_once AD_INSERTER_PLUGIN_DIR.'settings.php';
-require_once AD_INSERTER_PLUGIN_DIR.'includes/Mobile_Detect.php';
 
 $ad_interter_globals = array ();
 
-$detect = new ai_Mobile_Detect;
-
-define ('AI_MOBILE',   $detect->isMobile ());
-define ('AI_TABLET',   $detect->isTablet ());
-define ('AI_PHONE',    AI_MOBILE && !AI_TABLET);
-define ('AI_DESKTOP',  !AI_MOBILE);
-
 // Load options
 ai_load_options ();
+
+$device_detection = false;
+$client_side_detection = false;
 
 $block_object = array ();
 for ($counter = 1; $counter <= AD_INSERTER_BLOCKS; $counter ++) {
   $obj = new ai_Block ($counter);
   $obj->load_options ($counter);
   $block_object [$counter] = $obj;
+
+  if ($obj->get_display_for_devices() != AD_DISPLAY_ALL_DEVICES) {
+    $device_detection = true;
+    if ($obj->get_detection_client_side ()) $client_side_detection = true;
+  }
 }
+
+if ($device_detection) {
+  require_once AD_INSERTER_PLUGIN_DIR.'includes/Mobile_Detect.php';
+
+  $detect = new ai_Mobile_Detect;
+
+  define ('AI_MOBILE',   $detect->isMobile ());
+  define ('AI_TABLET',   $detect->isTablet ());
+  define ('AI_PHONE',    AI_MOBILE && !AI_TABLET);
+  define ('AI_DESKTOP',  !AI_MOBILE);
+} else {
+    define ('AI_MOBILE',   true);
+    define ('AI_TABLET',   true);
+    define ('AI_PHONE',    true);
+    define ('AI_DESKTOP',  true);
+  }
 
 $plugin_priority = get_plugin_priority ();
 
@@ -227,13 +247,16 @@ add_filter ('the_content',        'ai_content_hook', $plugin_priority);
 add_filter ('the_excerpt',        'ai_excerpt_hook', $plugin_priority);
 add_action ('loop_start',         'ai_loop_start_hook');
 add_action ('init',               'ai_init_hook');
-add_action ('admin_notices',      'ai_admin_notice_hook');
+//add_action ('admin_notices',      'ai_admin_notice_hook');
 add_action ('wp_head',            'ai_wp_head_hook');
 add_action ('wp_footer',          'ai_wp_footer_hook');
 add_action ('widgets_init',       'ai_widgets_init_hook');
 add_action ('add_meta_boxes',     'ai_add_meta_box_hook');
 add_action ('save_post',          'ai_save_meta_box_data_hook');
-add_action ('wp_enqueue_scripts', 'ai_enqueue_scripts_hook');
+
+if ($client_side_detection) {
+  add_action ('wp_enqueue_scripts', 'ai_enqueue_scripts_hook');
+}
 
 add_filter ('plugin_action_links_'.plugin_basename (__FILE__), 'ai_plugin_action_links');
 
@@ -241,26 +264,12 @@ add_filter ('plugin_action_links_'.plugin_basename (__FILE__), 'ai_plugin_action
 function ai_init_hook() {
   global $block_object;
 
-  // OLD WIDGETS - DEPRECATED
-//  for ($counter = 1; $counter <= AD_INSERTER_BLOCKS; $counter ++) {
-//    $obj = $block_object [$counter];
-//    if($obj->get_display_type() == AD_SELECT_WIDGET){
-//      // register widget
-//      $widget_options = array ('classname' => 'ad-inserter-widget', 'description' => "DEPRECATED - Use 'Ad Inserter' widget instead.");
-//      $widget_parameters = array ('block' => $counter);
-//      // Different callback functions because widgets that share callback functions don't get displayed
-//      if ($counter <= 16)
-//        wp_register_sidebar_widget ('ai_widget'.$counter, $obj->get_ad_name().' - DEPRECATED', 'ai_widget'.$counter, $widget_options, $widget_parameters);
-//    }
-//  }
-
   add_shortcode ('adinserter', 'process_shortcodes');
 }
 
 function ai_admin_menu_hook () {
   global $ai_settings_page;
 
-//  $ai_settings_page = add_submenu_page ('options-general.php', 'Ad Inserter Options', 'Ad Inserter', 8, basename(__FILE__), 'ai_settings');
   $ai_settings_page = add_submenu_page ('options-general.php', 'Ad Inserter Options', 'Ad Inserter', 'manage_options', basename(__FILE__), 'ai_settings');
   add_action ('admin_enqueue_scripts', 'ai_admin_enqueue_scripts');
 }
@@ -680,21 +689,6 @@ function filter_option_hf ($option, $value){
   return $value;
 }
 
-/*
-function ai_block_counter_check (&$obj) {
-  global $ad_interter_globals;
-
-  $global_name = 'BLOCK_' . $obj->number . '_COUNTER';
-  $max_insertions = $obj->get_maximum_insertions ();
-  if (!isset ($ad_interter_globals [$global_name])) {
-    $ad_interter_globals [$global_name] = 0;
-  }
-  if ($max_insertions != 0 && $ad_interter_globals [$global_name] >= $max_insertions) return false;
-  $ad_interter_globals [$global_name] ++;
-  return true;
-}
-*/
-
 function ai_settings () {
   global $ai_db_options, $block_object;
 
@@ -862,7 +856,7 @@ function adinserter ($ad_number = ""){
 
   $display_for_devices = $obj->get_display_for_devices ();
 
-  if ($obj->get_detection_server_side ()) {
+  if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
     if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) return "";
     if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) return "";
     if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) return "";
@@ -926,7 +920,7 @@ function adinserter ($ad_number = ""){
   $block_class_name = get_block_class_name ();
 
   $device_class = "";
-  if ($obj->get_detection_client_side ()) {
+  if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_client_side ()) {
         if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
     elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
     elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -964,7 +958,7 @@ function ai_content_hook ($content = ''){
 
     $display_for_devices = $obj->get_display_for_devices ();
 
-    if ($obj->get_detection_server_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
       if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) continue;
       if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) continue;
       if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) continue;
@@ -1032,9 +1026,6 @@ function ai_content_hook ($content = ''){
     }
   }
 
-   // Clean remaining deprecated tags
-//   $content = preg_replace ("/{adinserter (.*)}/", "", $content);
-
   return $content;
 }
 
@@ -1061,7 +1052,7 @@ function ai_excerpt_hook ($content = ''){
 
     $display_for_devices = $obj->get_display_for_devices ();
 
-    if ($obj->get_detection_server_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
       if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) continue;
       if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) continue;
       if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) continue;
@@ -1112,7 +1103,7 @@ function ai_excerpt_hook ($content = ''){
     $block_class_name = get_block_class_name ();
 
     $device_class = "";
-    if ($obj->get_detection_client_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_client_side ()) {
           if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
       elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
       elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -1158,7 +1149,7 @@ function ai_loop_start_hook ($query){
 
     $display_for_devices = $obj->get_display_for_devices ();
 
-    if ($obj->get_detection_server_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
       if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) continue;
       if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) continue;
       if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) continue;
@@ -1220,7 +1211,7 @@ function ai_loop_start_hook ($query){
     $block_class_name = get_block_class_name ();
 
     $device_class = "";
-    if ($obj->get_detection_client_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_client_side ()) {
           if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
       elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
       elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -1236,218 +1227,6 @@ function ai_loop_start_hook ($query){
   echo $ad_code;
 }
 
-/*
-function ai_isCategoryAllowed ($categories, $cat_type) {
-
-  $categories = trim (strtolower ($categories));
-
-//  echo ' listed categories: ' . $categories, "<br />\n";
-
-  if ($cat_type == AD_BLACK_LIST) {
-
-    if($categories == AD_EMPTY_DATA) {
-      return true;
-    }
-
-    $cats_listed = explode (",", $categories);
-
-    foreach((get_the_category()) as $post_category) {
-
-      //echo '<br/> post category name : ' . $post_category->cat_name;
-
-      foreach($cats_listed as $cat_disabled){
-
-        $cat_disabled = trim ($cat_disabled);
-
-        $post_category_name = strtolower ($post_category->cat_name);
-        $post_category_slug = strtolower ($post_category->slug);
-
-        //echo '<br/>Category disabled loop : ' . $cat_disabled . '<br/> category name : ' . $post_category_name;
-
-        if ($post_category_name == $cat_disabled || $post_category_slug == $cat_disabled) {
-          //echo ' match';
-          return false;
-        }else{
-          //echo ' not match';
-        }
-      }
-    }
-    return true;
-
-  } else {
-
-      if ($categories == AD_EMPTY_DATA){
-        return false;
-      }
-
-      $cats_listed = explode (",", $categories);
-
-      foreach((get_the_category()) as $post_category) {
-
-        //echo '<br/> post category name : ' . $post_category->cat_name;
-
-        foreach($cats_listed as $cat_enabled){
-
-          $cat_enabled = trim ($cat_enabled);
-
-          $post_category_name = strtolower ($post_category->cat_name);
-          $post_category_slug = strtolower ($post_category->slug);
-
-//          echo '<br/>Category enabled loop : ' . $cat_enabled . '<br/> category name : ' . $post_category_name . '<br/> category slug: ' . $post_category_slug;
-
-          if ($post_category_name == $cat_enabled || $post_category_slug == $cat_enabled) {
-//            echo '#match';
-            return true;
-          }else{
-//            echo '#no match';
-          }
-        }
-      }
-      return false;
-    }
-}
-
-function ai_isTagAllowed ($tags, $tag_type){
-
-  $tags = trim (strtolower ($tags));
-  $tags_listed = explode (",", $tags);
-  foreach ($tags_listed as $index => $tag_listed) {
-    $tags_listed [$index] = trim ($tag_listed);
-  }
-  $has_any_of_the_given_tags = has_tag ($tags_listed);
-
-//  echo ' listed tags: ' . $tags, "\n";
-
-  if ($tag_type == AD_BLACK_LIST) {
-
-    if ($tags == AD_EMPTY_DATA) {
-      return true;
-    }
-
-    if (is_tag()) {
-      foreach ($tags_listed as $tag_listed) {
-        if (is_tag ($tag_listed)) return false;
-      }
-      return true;
-    }
-
-    return !$has_any_of_the_given_tags;
-
-  } else {
-
-      if ($tags == AD_EMPTY_DATA){
-        return false;
-      }
-
-      if (is_tag()) {
-        foreach ($tags_listed as $tag_listed) {
-          if (is_tag ($tag_listed)) return true;
-        }
-        return false;
-      }
-
-      return $has_any_of_the_given_tags;
-    }
-}
-
-function ai_isUrlAllowed ($urls, $url_type){
-
-  $page_url = $_SERVER ['REQUEST_URI'];
-
-  $urls = trim ($urls);
-  $urls_listed = explode (" ", $urls);
-  foreach ($urls_listed as $index => $url_listed) {
-    if ($url_listed == "") unset ($urls_listed [$index]); else
-      $urls_listed [$index] = trim ($url_listed);
-  }
-
-//  print_r ($urls_listed);
-//  echo "<br />\n";
-//  echo ' page url: ' . $page_url, "<br />\n";
-//  echo ' listed urls: ' . $urls, "\n";
-//  echo "<br />\n";
-
-  if ($url_type == AD_BLACK_LIST) $return = false; else $return = true;
-
-  if ($urls == AD_EMPTY_DATA) {
-    return !$return;
-  }
-
-  foreach ($urls_listed as $url_listed) {
-    if ($url_listed [0] == '') continue;
-    if ($url_listed == '*') return $return;
-
-    if ($url_listed [0] == '*') {
-      if ($url_listed [strlen ($url_listed) - 1] == '*') {
-        $url_listed = substr ($url_listed, 1, strlen ($url_listed) - 2);
-        if (strpos ($page_url, $url_listed) !== false) return $return;
-      } else {
-          $url_listed = substr ($url_listed, 1);
-          if (substr ($page_url, - strlen ($url_listed)) == $url_listed) return $return;
-        }
-    }
-    elseif ($url_listed [strlen ($url_listed) - 1] == '*') {
-      $url_listed = substr ($url_listed, 0, strlen ($url_listed) - 1);
-      if (strpos ($page_url, $url_listed) === 0) return $return;
-    }
-    else if ($url_listed == $page_url) return $return;
-  }
-  return !$return;
-}
-
-function ai_isDisplayDisabled ($obj, $content){
-
-  $ad_name = $obj->get_ad_name();
-
-  if (preg_match ("/<!-- +Ad +Inserter +Ad +".($obj->number)." +Disabled +-->/i", $content)) return true;
-
-  if (preg_match ("/<!-- +disable +adinserter +\* +-->/i", $content)) return true;
-
-  if (preg_match ("/<!-- +disable +adinserter +".($obj->number)." +-->/i", $content)) return true;
-
-//  if (preg_match ("/<!-- +disable +adinserter +".(trim ($obj->get_ad_name()))." +-->/i", $content)) return true;
-  if (strpos ($content, "<!-- disable adinserter " . $ad_name . " -->") != false) return true;
-
-  return false;
-}
-
-function ai_isDisplayDateAllowed ($obj, $publish_date){
-
-  $after_days = trim ($obj->get_ad_after_day());
-
-  // If 0 display immediately
-  if($after_days == AD_ZERO || $after_days == AD_EMPTY_DATA){
-    return true;
-  }
-
-  return (date ('U', time ()) >= $publish_date + $after_days * 86400);
-}
-
-function ai_isRefererAllowed ($obj) {
-
-  $domain_list_type = $obj->get_ad_domain_list_type ();
-
-  if (isset ($_SERVER['HTTP_REFERER'])) {
-      $http_referer = $_SERVER['HTTP_REFERER'];
-  } else $http_referer = '';
-
-  if ($domain_list_type == AD_BLACK_LIST) $return = false; else $return = true;
-
-  $domains = trim ($obj->get_ad_domain_list ());
-  if ($domains == "") return !$return;
-  $domains = explode (",", $domains);
-
-  foreach ($domains as $domain) {
-    $domain = trim ($domain);
-    if ($domain == "") continue;
-
-    if ($domain == "#") {
-      if ($http_referer == "") return $return;
-    } elseif (preg_match ("/" . $domain . "/i", $http_referer)) return $return;
-  }
-  return !$return;
-}
-*/
 
 function ai_getCode ($obj){
   $code = $obj->get_ad_data();
@@ -1477,292 +1256,8 @@ function ai_getAdCode ($obj){
     $ad_code = $ads [rand (0, sizeof ($ads) - 1)];
   }
 
-// No shortcode processing if recursion is detected
-//  if (preg_match ("/\[adinserter block=\"".$obj->number."\"[^\]]*\]/", $ad_code, $adinserter_shortcodes)) return $ad_code;
-//  if (preg_match ("/\[adinserter name=\"".$obj->get_ad_name()."\"[^\]]*\]/", $ad_code, $adinserter_shortcodes)) return $ad_code;
-
   return do_shortcode ($ad_code);
 }
-
-/*
-
-function ai_generateBeforeParagraph ($block, $content, $obj){
-
-  $paragraph_positions = array ();
-  $last_position = - 1;
-
-  $paragraph_start = "<p";
-
-  while (stripos ($content, $paragraph_start, $last_position + 1) !== false) {
-    $last_position = stripos ($content, $paragraph_start, $last_position + 1);
-    if ($content [$last_position + 2] == ">" || $content [$last_position + 2] == " ")
-      $paragraph_positions [] = $last_position;
-  }
-
-  $paragraph_min_words = $obj->get_minimum_paragraph_words();
-  if ($paragraph_min_words != 0) {
-    $filtered_paragraph_positions = array ();
-    foreach ($paragraph_positions as $index => $paragraph_position) {
-      $paragraph_code = $index == count ($paragraph_positions) - 1 ? substr ($content, $paragraph_position) : substr ($content, $paragraph_position, $paragraph_positions [$index + 1] - $paragraph_position);
-      $number_of_words = sizeof (explode (" ", strip_tags ($paragraph_code)));
-      if ($number_of_words >= $paragraph_min_words) $filtered_paragraph_positions [] = $paragraph_position;
-    }
-    $paragraph_positions = $filtered_paragraph_positions;
-  }
-
-  $paragraph_texts = explode (",", html_entity_decode ($obj->get_paragraph_text()));
-  if ($obj->get_paragraph_text() != "" && count ($paragraph_texts != 0)) {
-
-    $filtered_paragraph_positions = array ();
-    $paragraph_text_type = $obj->get_paragraph_text_type ();
-
-    foreach ($paragraph_positions as $index => $paragraph_position) {
-      $paragraph_code = $index == count ($paragraph_positions) - 1 ? substr ($content, $paragraph_position) : substr ($content, $paragraph_position, $paragraph_positions [$index + 1] - $paragraph_position);
-
-      if ($paragraph_text_type == AD_CONTAIN) {
-        $found = true;
-        foreach ($paragraph_texts as $paragraph_text) {
-          if (stripos ($paragraph_code, trim ($paragraph_text)) === false) {
-            $found = false;
-            break;
-          }
-        }
-        if ($found) $filtered_paragraph_positions [] = $paragraph_position;
-      } elseif ($paragraph_text_type == AD_DO_NOT_CONTAIN) {
-          $found = false;
-          foreach ($paragraph_texts as $paragraph_text) {
-            if (stripos ($paragraph_code, trim ($paragraph_text)) !== false) {
-              $found = true;
-              break;
-            }
-          }
-          if (!$found) $filtered_paragraph_positions [] = $paragraph_position;
-        }
-    }
-
-    $paragraph_positions = $filtered_paragraph_positions;
-  }
-
-  // Nothing to do
-  if (sizeof ($paragraph_positions) == 0) return $content;
-
-  $position = $obj->get_paragraph_number();
-
-  if ($position > 0 && $position < 1) {
-    $position = intval ($position * (sizeof ($paragraph_positions) - 1) + 0.5);
-  }
-  elseif ($position <= 0) {
-    $position = rand (0, sizeof ($paragraph_positions) - 1);
-  } else $position --;
-
-  if ($obj->get_direction_type() == AD_DIRECTION_FROM_BOTTOM) {
-    $paragraph_positions = array_reverse ($paragraph_positions);
-  }
-
-  $text = str_replace (array ("\n", "  "), " ", $content);
-  $text = strip_tags ($text);
-  $number_of_words = sizeof (explode (" ", $text));
-
-  if (sizeof ($paragraph_positions) > $position && sizeof ($paragraph_positions) >= $obj->get_paragraph_number_minimum() && $number_of_words >= $obj->get_minimum_words()) {
-    $content_position = $paragraph_positions [$position];
-
-    $block_class_name = get_block_class_name ();
-
-    $display_for_devices = $obj->get_display_for_devices ();
-
-    $device_class = "";
-    if ($obj->get_detection_client_side ()) {
-          if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
-      elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
-      elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_PHONE_DEVICES) $device_class = " ai-phone";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_TABLET_DEVICES) $device_class = " ai-desktop-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_PHONE_DEVICES) $device_class = " ai-desktop-phone";
-    }
-
-    if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) $content = substr_replace ($content, ai_getAdCode ($obj), $content_position, 0); else
-      $content = substr_replace ($content, "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>", $content_position, 0);
-  }
-
-  return $content;
-}
-
-function ai_generateAfterParagraph ($block, $content, $obj){
-
-  $paragraph_positions = array ();
-  $last_position = - 1;
-
-  $paragraph_end = "</p>";
-
-  while (stripos ($content, $paragraph_end, $last_position + 1) !== false){
-    $last_position = stripos ($content, $paragraph_end, $last_position + 1) + 3;
-    $paragraph_positions [] = $last_position;
-  }
-
-  $paragraph_min_words = $obj->get_minimum_paragraph_words();
-  if ($paragraph_min_words != 0) {
-    $filtered_paragraph_positions = array ();
-    foreach ($paragraph_positions as $index => $paragraph_position) {
-      $paragraph_code = $index == 0 ? substr ($content, 0, $paragraph_position + 1) : substr ($content, $paragraph_positions [$index - 1] + 1, $paragraph_position - $paragraph_positions [$index - 1]);
-      $number_of_words = sizeof (explode (" ", strip_tags ($paragraph_code)));
-      if ($number_of_words >= $paragraph_min_words) $filtered_paragraph_positions [] = $paragraph_position;
-    }
-    $paragraph_positions = $filtered_paragraph_positions;
-  }
-
-  $paragraph_texts = explode (",", html_entity_decode ($obj->get_paragraph_text()));
-  if ($obj->get_paragraph_text() != "" && count ($paragraph_texts != 0)) {
-
-    $filtered_paragraph_positions = array ();
-    $paragraph_text_type = $obj->get_paragraph_text_type ();
-
-    foreach ($paragraph_positions as $index => $paragraph_position) {
-      $paragraph_code = $index == 0 ? substr ($content, 0, $paragraph_position + 1) : substr ($content, $paragraph_positions [$index - 1] + 1, $paragraph_position - $paragraph_positions [$index - 1]);
-
-      if ($paragraph_text_type == AD_CONTAIN) {
-        $found = true;
-        foreach ($paragraph_texts as $paragraph_text) {
-          if (stripos ($paragraph_code, trim ($paragraph_text)) === false) {
-            $found = false;
-            break;
-          }
-        }
-        if ($found) $filtered_paragraph_positions [] = $paragraph_position;
-      } elseif ($paragraph_text_type == AD_DO_NOT_CONTAIN) {
-          $found = false;
-          foreach ($paragraph_texts as $paragraph_text) {
-            if (stripos ($paragraph_code, trim ($paragraph_text)) !== false) {
-              $found = true;
-              break;
-            }
-          }
-          if (!$found) $filtered_paragraph_positions [] = $paragraph_position;
-        }
-    }
-
-    $paragraph_positions = $filtered_paragraph_positions;
-  }
-
-  // Nothing to do
-  if (sizeof ($paragraph_positions) == 0) return $content;
-
-  $position = $obj->get_paragraph_number();
-
-  if ($position > 0 && $position < 1) {
-    $position = intval ($position * (sizeof ($paragraph_positions) - 1) + 0.5);
-  }
-  elseif ($position <= 0) {
-    $position = rand (0, sizeof ($paragraph_positions) - 1);
-  } else $position --;
-
-  if ($obj->get_direction_type() == AD_DIRECTION_FROM_BOTTOM) {
-    $paragraph_positions = array_reverse ($paragraph_positions);
-  }
-
-  $text = str_replace (array ("\n", "  "), " ", $content);
-  $text = strip_tags ($text);
-  $number_of_words = sizeof (explode (" ", $text));
-
-  if (sizeof ($paragraph_positions) > $position && sizeof ($paragraph_positions) >= $obj->get_paragraph_number_minimum() && $number_of_words >= $obj->get_minimum_words()) {
-    $content_position = $paragraph_positions [$position];
-
-    $block_class_name = get_block_class_name ();
-
-    $display_for_devices = $obj->get_display_for_devices ();
-
-    $device_class = "";
-    if ($obj->get_detection_client_side ()) {
-          if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
-      elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
-      elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_PHONE_DEVICES) $device_class = " ai-phone";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_TABLET_DEVICES) $device_class = " ai-desktop-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_PHONE_DEVICES) $device_class = " ai-desktop-phone";
-    }
-
-    if ($content_position >= strlen ($content) - 1) {
-      if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) $content = $content = $content . ai_getAdCode ($obj); else
-        $content = $content . "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>";
-    } else {
-        if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) $content = substr_replace ($content, ai_getAdCode ($obj), $content_position + 1, 0); else
-          $content = substr_replace ($content, "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>", $content_position + 1, 0);
-      }
-  }
-
-  return $content;
-}
-
-function ai_generateDivBefore ($block, $content, $obj){
-  $block_class_name = get_block_class_name ();
-
-  $display_for_devices = $obj->get_display_for_devices ();
-
-  $device_class = "";
-  if ($obj->get_detection_client_side ()) {
-        if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
-    elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
-    elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
-    elseif ($display_for_devices == AD_DISPLAY_PHONE_DEVICES) $device_class = " ai-phone";
-    elseif ($display_for_devices == AD_DISPLAY_DESKTOP_TABLET_DEVICES) $device_class = " ai-desktop-tablet";
-    elseif ($display_for_devices == AD_DISPLAY_DESKTOP_PHONE_DEVICES) $device_class = " ai-desktop-phone";
-  }
-
-  if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) return ai_getAdCode ($obj) . $content; else
-    return "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>" . $content;
-}
-
-function ai_generateDivAfter ($block, $content, $obj){
-  $block_class_name = get_block_class_name ();
-
-  $display_for_devices = $obj->get_display_for_devices ();
-
-  $device_class = "";
-  if ($obj->get_detection_client_side ()) {
-        if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
-    elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
-    elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
-    elseif ($display_for_devices == AD_DISPLAY_PHONE_DEVICES) $device_class = " ai-phone";
-    elseif ($display_for_devices == AD_DISPLAY_DESKTOP_TABLET_DEVICES) $device_class = " ai-desktop-tablet";
-    elseif ($display_for_devices == AD_DISPLAY_DESKTOP_PHONE_DEVICES) $device_class = " ai-desktop-phone";
-  }
-
-  if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) return $content . ai_getAdCode ($obj); else
-    return $content . "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>";
-}
-
-function ai_generateDivManual ($block, $content, $obj, $ad_number){
-
-  if (preg_match_all("/{adinserter (.+?)}/", $content, $tags)){
-
-    $block_class_name = get_block_class_name ();
-
-    $display_for_devices = $obj->get_display_for_devices ();
-
-    $device_class = "";
-    if ($obj->get_detection_client_side ()) {
-          if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
-      elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
-      elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_PHONE_DEVICES) $device_class = " ai-phone";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_TABLET_DEVICES) $device_class = " ai-desktop-tablet";
-      elseif ($display_for_devices == AD_DISPLAY_DESKTOP_PHONE_DEVICES) $device_class = " ai-desktop-phone";
-    }
-
-    foreach ($tags [1] as $tag) {
-       $ad_tag = strtolower (trim ($tag));
-       $ad_name = strtolower (trim ($obj->get_ad_name()));
-       if ($ad_tag == $ad_name || $ad_tag == $ad_number) {
-        if ($obj->get_alignment_type() == AD_ALIGNMENT_NO_WRAPPING) $ad_code = ai_getAdCode ($obj); else
-          $ad_code = "<div class='" . $block_class_name . " " . $block_class_name . "-" . $block . $device_class . "' style='" . $obj->get_alignmet_style() . "'>" . ai_getAdCode ($obj) . "</div>";
-        $content = preg_replace ("/{adinserter " . $tag . "}/", $ad_code, $content);
-       }
-    }
-  }
-
-  return $content;
-}
-
-*/
 
 
 function process_shortcodes ($atts) {
@@ -1798,7 +1293,7 @@ function process_shortcodes ($atts) {
 
       $display_for_devices = $obj->get_display_for_devices ();
 
-      if ($obj->get_detection_server_side ()) {
+      if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
         if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) return "";
         if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) return "";
         if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) return "";
@@ -1813,10 +1308,18 @@ function process_shortcodes ($atts) {
         if (!$obj->check_date ()) return "";
       }
 
+      if (!$obj->check_url ()) return "";
+
+      if (!$obj->check_referer ()) return "";
+
+      if (!$obj->check_category ()) return "";
+
+      if (!$obj->check_tag ()) return "";
+
       $block_class_name = get_block_class_name ();
 
       $device_class = "";
-      if ($obj->get_detection_client_side ()) {
+      if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_client_side ()) {
             if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
         elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
         elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -1839,7 +1342,7 @@ class ai_widget extends WP_Widget {
   function __construct () {
     parent::__construct (
       false,                                  // Base ID
-      'Ad Inserter',               // Name
+      'Ad Inserter',                          // Name
       array (                                 // Args
         'classname'   => 'ai_widget',
         'description' => 'Ad Inserter code block widget.')
@@ -1906,85 +1409,6 @@ class ai_widget extends WP_Widget {
 }
 
 
-// OLD WIDGETS - DEPRECATED
-
-//function ai_widget ($args, $parameters) {
-//  global $block_object;
-
-//  $block = $parameters ['block'];
-//  $ad = $block_object [$block];
-//  ai_widget_draw ($block, $ad, $args);
-//}
-
-
-// Fix because widgets that share callback functions don't get displayed
-
-function ai_widget1 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget2 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget3 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget4 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget5 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget6 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget7 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget8 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget9 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget10 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget11 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget12 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget13 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget14 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget15 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-
-function ai_widget16 ($args, $parameters) {
-  ai_widget ($args, $parameters);
-}
-// OLD WIDGETS END
-
-
 function ai_widget_draw ($block, $obj, $args, $title = '') {
 
   $display_for_users = $obj->get_display_for_users ();
@@ -1994,7 +1418,7 @@ function ai_widget_draw ($block, $obj, $args, $title = '') {
 
   $display_for_devices = $obj->get_display_for_devices ();
 
-  if ($obj->get_detection_server_side ()) {
+  if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_server_side ()) {
     if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES && !AI_DESKTOP) return;
     if ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES && !AI_MOBILE) return;;
     if ($display_for_devices == AD_DISPLAY_TABLET_DEVICES && !AI_TABLET) return;
@@ -2064,7 +1488,7 @@ function ai_widget_draw ($block, $obj, $args, $title = '') {
   $block_class_name = get_block_class_name ();
 
   $device_class = "";
-  if ($obj->get_detection_client_side ()) {
+  if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $obj->get_detection_client_side ()) {
         if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = "ai-desktop";
     elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = "ai-tablet-phone";
     elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = "ai-tablet";

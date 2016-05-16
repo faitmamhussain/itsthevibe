@@ -59,23 +59,23 @@
           <h2 style="text-align: center;">Monitor Google AdSense and Amazon Associates earnings</h2>
           <p style="text-align: justify;">
             Tiny Monitor for
-            <a href="http://tinymonitor.com/adsense-monitor-documentation" target="_blank">AdSense</a>,
-            <a href="http://tinymonitor.com/amazon-monitor-documentation" target="_blank">Amazon</a> and
-            <a href="http://tinymonitor.com/paypal-monitor-documentation" target="_blank">PayPal</a> is a perfect solution to track your online earnings.
-            This is a small PHP script that can be installed on any <a href="http://tinymonitor.com/installing-web-server" target="_blank">home web server</a> or commercial web hosting.
+            <a href="http://tinymonitor.com/adsense-monitor-documentation" target="_blank" rel="nofollow">AdSense</a>,
+            <a href="http://tinymonitor.com/amazon-monitor-documentation" target="_blank" rel="nofollow">Amazon</a> and
+            <a href="http://tinymonitor.com/paypal-monitor-documentation" target="_blank" rel="nofollow">PayPal</a> is a perfect solution to track your online earnings.
+            This is a small PHP script that can be installed on any <a href="http://tinymonitor.com/installing-web-server" target="_blank" rel="nofollow">home web server</a> or commercial web hosting.
             If you already have some website (very likely as you are using Ad Inserter plugin) then you can simply put it into a folder.
           </p>
           <p style="text-align: justify;">
             Tiny Monitor automatically downloads data from Google, Amazon or PayPal and presents it in a simple single-page form.
             This way you can have all the data easily accessible without the need to log into many websites just to check today's earnings.
           </p>
-          <a href="http://tinymonitor.com/" target="_blank"><img style="display: block;margin: 0 auto;" src="images/tinymonitor-logo.png" alt="Tiny Monitor"></a>
-          <a href="http://tinymonitor.com/" target="_blank"><img style="display: block;margin: 0 auto;" src="images/tiny-monitor.png" alt="Amazon Associates"></a>
+          <a href="http://tinymonitor.com/" target="_blank" rel="nofollow"><img style="display: block;margin: 0 auto;" src="images/tinymonitor-logo.png" alt="Tiny Monitor"></a>
+          <a href="http://tinymonitor.com/" target="_blank" rel="nofollow"><img style="display: block;margin: 0 auto;" src="images/tiny-monitor.png" alt="Amazon Associates"></a>
           <p style="text-align: justify;">
-            And if you have more than one domain then you can monitor them with <a href="http://tinymonitor.com/domain-monitor-documentation" target="_blank">Tiny Domain Monitor</a>.
+            And if you have more than one domain then you can monitor them with <a href="http://tinymonitor.com/domain-monitor-documentation" target="_blank" rel="nofollow">Tiny Domain Monitor</a>.
             This PHP script is a simple yet effective solution to track expiration dates of your own domains or any other domains you would like to register as soon as they expire.
           </p>
-          <a href="http://tinymonitor.com/domainmonitor/" target="_blank"><img style="display: block;margin: 0 auto;" src="images/domain-monitor.png" alt="Domain Monitor Script"></a>
+          <a href="http://tinymonitor.com/domainmonitor/" target="_blank" rel="nofollow"><img style="display: block;margin: 0 auto;" src="images/domain-monitor.png" alt="Domain Monitor Script"></a>
         </div>
       </div>
     <body>

@@ -229,7 +229,7 @@ add_filter( 'genesis_search_form',function($form, $search_text, $button_text, $l
 
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
-	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
+	if( is_page() && (is_front_page() || is_page('end-slideshow') || is_page('apple')) ) {
 		itv_remove_page_title();
 	}
 }, 3);
@@ -548,7 +548,7 @@ function revcontent_exit_pop() {
 	$url = $_SERVER['REQUEST_URI'];
 	$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
 
-	if(!is_home() && !(in_category('slideshows') && !is_numeric($last_url_segment) && in_array($utm_source, $exclude_utm_source))){
+	if(!is_home() && !is_front_page() && !is_page('apple') && !(in_category('slideshows') && !is_numeric($last_url_segment) && in_array($utm_source, $exclude_utm_source))){
 		echo '<script>if(typeof(ExitPop) == "function"){ExitPop();}</script>';
 	}
 }

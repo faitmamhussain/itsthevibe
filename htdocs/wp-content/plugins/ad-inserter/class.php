@@ -842,7 +842,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
       $display_for_devices = $this->get_display_for_devices ();
 
       $device_class = "";
-      if ($this->get_detection_client_side ()) {
+      if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $this->get_detection_client_side ()) {
             if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
         elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
         elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -958,7 +958,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
       $display_for_devices = $this->get_display_for_devices ();
 
       $device_class = "";
-      if ($this->get_detection_client_side ()) {
+      if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $this->get_detection_client_side ()) {
             if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
         elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
         elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -985,7 +985,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
     $display_for_devices = $this->get_display_for_devices ();
 
     $device_class = "";
-    if ($this->get_detection_client_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $this->get_detection_client_side ()) {
           if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
       elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
       elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -1010,7 +1010,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
     $display_for_devices = $this->get_display_for_devices ();
 
     $device_class = "";
-    if ($this->get_detection_client_side ()) {
+    if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $this->get_detection_client_side ()) {
           if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
       elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
       elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
@@ -1039,7 +1039,7 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
       $display_for_devices = $this->get_display_for_devices ();
 
       $device_class = "";
-      if ($this->get_detection_client_side ()) {
+      if ($display_for_devices != AD_DISPLAY_ALL_DEVICES && $this->get_detection_client_side ()) {
             if ($display_for_devices == AD_DISPLAY_DESKTOP_DEVICES) $device_class = " ai-desktop";
         elseif ($display_for_devices == AD_DISPLAY_MOBILE_DEVICES) $device_class = " ai-tablet-phone";
         elseif ($display_for_devices == AD_DISPLAY_TABLET_DEVICES) $device_class = " ai-tablet";
