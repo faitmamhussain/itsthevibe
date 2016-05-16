@@ -161,7 +161,7 @@ function sp_import_feeds($url) {
 
 		// check if posts already exists
 		$by_title = get_page_by_title($post_title, ARRAY_A, 'post');
-		$by_slug = get_posts(array('post_name' => $slug, 'post_type' => 'post', 'numberposts' => 1));
+		$by_slug = get_posts(array('name' => $slug, 'post_type' => 'post', 'numberposts' => 1, 'post_status' => 'any'));
 
 		if(empty($by_title) && empty($by_slug)){
 			// insert posts
