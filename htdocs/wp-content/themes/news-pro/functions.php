@@ -32,12 +32,11 @@ function news_load_scripts() {
 	if( !isMobile() || ( in_category('slideshows') && is_single() ) )
 		wp_enqueue_script( 'slideshow-custom-menu', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow-custom-menu.js', array( 'jquery' ));
 
-	if(!is_page('end-slideshow') && is_single() && !in_category('slideshows')){
+	if(!is_page('end-slideshow') && is_single() && !in_category('slideshows') && !is_page('apple')){
 		wp_enqueue_script( 'ScrollMagic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js' );
 		wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/scroll-changing-url.js', array( 'jquery' ));
-	}
-	else{
-		wp_enqueue_script( 'scroll-changing-url', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow.js', array( 'jquery' ));
+	} elseif( ! is_page('apple') ) {
+		wp_enqueue_script( 'slideshow-js', get_bloginfo( 'stylesheet_directory' ) . '/js/slideshow.js', array( 'jquery' ));
 	}
 
 	//JS code for setting utm-params, mobile detection and helpers.
@@ -711,6 +710,32 @@ add_shortcode('slideshow-share', function($atts, $content){
 	$html = ob_get_clean();
 	return $html;
 });
+
+//-------------------------Apple news hooks--------------------------------
+
+//Add utm_source to link
+add_filter( 'apple_news_metadata', function($meta, $id){
+
+	$apple_utm = '?utm_source=apple&utm_medium=cpc';
+
+	if( ! empty($meta['canonicalURL']) ) {
+		if( $pos = strpos($meta['canonicalURL'], '?') ) {
+			$meta['canonicalURL'] = substr_replace($meta['canonicalURL'], $apple_utm, $pos);
+		} else {
+			$meta['canonicalURL'] .= $apple_utm;
+		}
+	}
+
+	return $meta;
+}, 10, 2 );
+
+//automatically add published posts to apple category
+add_action( 'publish_post', function($ID, $post){
+	if( ! has_category('slideshows', $ID) ){
+		$cat_id = get_term_by( 'slug', 'apple', 'category' );
+		wp_set_post_categories( $ID, array($cat_id->term_id), true );
+	}
+}, 10, 2);
 
 if( isMobile() && $_SERVER['REQUEST_URI'] !== '/' ){
 
