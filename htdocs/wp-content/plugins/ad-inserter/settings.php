@@ -637,7 +637,7 @@ function print_settings_form (){
         <h2>Monitor Google AdSense and Amazon Associates earnings with <a href="http://tinymonitor.com/" target="_blank">Tiny Monitor</a></h2>
         <a href="http://tinymonitor.com/" target="_blank"><img src="<?php echo AD_INSERTER_PLUGIN_IMAGES_URL; ?>tinymonitor-logo.png" alt="Tiny Monitor" /></a>
         <a href="http://tinymonitor.com/" target="_blank"><img src="<?php echo AD_INSERTER_PLUGIN_IMAGES_URL; ?>tiny-monitor.png" alt="Amazon Associates" /></a>
-        <p style="text-align: justify;">TinyMonitor is a PHP application that can montor your Google AdSense earnings, Amazon Associates earnings and PayPal transactions.
+        <p style="text-align: justify;">TinyMonitor is a PHP application that can monitor your Google AdSense earnings, Amazon Associates earnings and PayPal transactions.
            The purpose of TinyMonitor is to download data from original sources and present them in a compact way on a single web page.
            With TinyMonitor you have all the data at one place so you dont have to log in to various pages just to check earnings.
            TinyMonitor displays some data also in the page title and favicon so you still have simple access to current monitor status while you work with other applications.</p>

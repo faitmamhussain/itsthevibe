@@ -146,6 +146,8 @@ function sp_feeds_add_menu() {
 function sp_import_feeds($url) {
 	global $wpdb;
 
+	$news_cat = get_cat_id('News');
+
 	$content = file_get_contents($url);
 	$status = $content ? true : false;
 
@@ -161,7 +163,7 @@ function sp_import_feeds($url) {
 
 		// check if posts already exists
 		$by_title = get_page_by_title($post_title, ARRAY_A, 'post');
-		$by_slug = get_posts(array('post_name' => $slug, 'post_type' => 'post', 'numberposts' => 1));
+		$by_slug = get_posts(array('name' => $slug, 'post_type' => 'post', 'numberposts' => 1, 'post_status' => 'any'));
 
 		if(empty($by_title) && empty($by_slug)){
 			// insert posts
@@ -174,14 +176,29 @@ function sp_import_feeds($url) {
 			$xpath = new DOMXPath($doc);
 			$src = $xpath->evaluate("string(//img/@src)");
 
-			$post_id = wp_insert_post(array(
-				'post_type'       => "post",
-				'post_content'    => $content , // description
-				'post_title'      => $entry->title, // title
-				'post_name'       => $slug, // i.e. 'GA'; this is for the URL
-				'post_status'     => "pending",
-				'post_author' => 1
-			));
+			if( ! empty($news_cat) ) {
+				$post_id = wp_insert_post(array(
+					'post_type'       => "post",
+					'post_content'    => $content , // description
+					'post_title'      => $entry->title, // title
+					'post_name'       => $slug, // i.e. 'GA'; this is for the URL
+					'post_status'     => "pending",
+					'post_category' => array($news_cat),
+					'post_author' => 1
+				));
+
+				update_post_meta($post_id, '_yoast_wpseo_primary_category', $news_cat);
+				
+			} else {
+				$post_id = wp_insert_post(array(
+					'post_type'       => "post",
+					'post_content'    => $content , // description
+					'post_title'      => $entry->title, // title
+					'post_name'       => $slug, // i.e. 'GA'; this is for the URL
+					'post_status'     => "pending",
+					'post_author' => 1
+				));
+			}
 
 			$filename = $src;
 			$uploads = wp_upload_dir();
@@ -210,15 +227,6 @@ function sp_import_feeds($url) {
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $uplfile);
 			wp_update_attachment_metadata( $attach_id, $attach_data );
 			add_post_meta($post_id, '_thumbnail_id', $attach_id, true);
-
-//			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 14), array('%d', '%d'));
-//			$wpdb->insert($wpdb->prefix.'term_relationships', array('object_id' => $post_id, 'term_taxonomy_id' => 15), array('%d', '%d'));
-//			$wpdb->update($wpdb->prefix.'term_relationships', array('term_taxonomy_id' => 0), array('term_taxonomy_id' => 1));
-
-			//set category to posts
-//			$term_taxonomy_ids = wp_set_post_categories( $post_ID, array($cat_ids), 'category');
-//			$term_taxonomy_ids = wp_set_object_terms( $post_ID, array($cat_ids ), 'category', true );
-//			$term_taxonomy_ids = wp_set_post_terms( $post_ID, array($cat_ids ), 'category');
 
 		}
 	}

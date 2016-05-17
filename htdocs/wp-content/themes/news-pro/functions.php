@@ -229,7 +229,7 @@ add_filter( 'genesis_search_form',function($form, $search_text, $button_text, $l
 
 //hide page titles on some pages
 add_action( 'genesis_entry_header', function(){
-	if( is_page() && (is_front_page() || is_page('end-slideshow')) ) {
+	if( is_page() && (is_front_page() || is_page('end-slideshow') || is_page('apple')) ) {
 		itv_remove_page_title();
 	}
 }, 3);
@@ -528,10 +528,16 @@ function itv_get_primary_category($post = null){
 	$primary_category = get_post_meta($post->ID, '_yoast_wpseo_primary_category', true);
 
 	if( empty($primary_category) ){
-		$primary_category = wp_get_post_categories($post->ID)[0];
+		if(has_category('news', $post->ID)) {
+			$cat = get_category_by_slug('news');
+		} elseif(has_category('entertainment', $post->ID)) {
+			$cat = get_category_by_slug('entertainment');
+		} else {
+			$cat = get_the_category($post->ID)[0];
+		}
+	} else {
+		$cat = get_category($primary_category);
 	}
-
-	$cat = get_category($primary_category);
 
 	return $cat;
 }
@@ -548,7 +554,7 @@ function revcontent_exit_pop() {
 	$url = $_SERVER['REQUEST_URI'];
 	$last_url_segment = basename(parse_url($url, PHP_URL_PATH));
 
-	if(!is_home() && !(in_category('slideshows') && !is_numeric($last_url_segment) && in_array($utm_source, $exclude_utm_source))){
+	if(!is_home() && !is_front_page() && !is_page('apple') && !(in_category('slideshows') && !is_numeric($last_url_segment) && in_array($utm_source, $exclude_utm_source))){
 		echo '<script>if(typeof(ExitPop) == "function"){ExitPop();}</script>';
 	}
 }
@@ -615,6 +621,7 @@ add_action('genesis_doctype', function(){
 		'ITV_Category'		=> is_category(),
 		'ITV_Slideshow' 	=> in_category('slideshows'),
 		'ITV_End_Slideshow' => is_page('End Slideshow'),
+		'ITV_Apple'         => is_page('apple'),
 		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page() && !is_404())
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));

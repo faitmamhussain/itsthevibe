@@ -1389,7 +1389,7 @@ Site Header
 
 .slideshow-header a.slideshow-button{
 	display: inline-block;
-	padding: 3px 5px 0px;
+	padding: 0 5px;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -2325,6 +2325,12 @@ Media Queries
 	.slideshow-header .slideshow-menu-right{
 		width: 100%;
 	}
+
+	.site-header.slideshow-header section.widget.widget_text .slideshow-menu {
+		line-height: 12px;
+		max-height: 58px;
+	}
+
 	.content .entry-content img,
 	.content .entry-content .itv_ad_widget{
 		float: none !important;
@@ -2608,7 +2614,7 @@ Media Queries
 	}
 	.site-header .header-social-icons{
 		font-size: 32px;
-		padding: 3px 0;
+		padding: 0 0;
 	}
 	.facebook-icon{
 		margin: 6px 10px !important;
