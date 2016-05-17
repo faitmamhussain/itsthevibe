@@ -443,7 +443,7 @@ SP_OBJ.ADS = {
 
             init: function (slots, pushBid, done) {
                 amznads.asyncParams = {
-                    'id': 'XXXX',
+                    'id': '3388',
                     'callbackFn': function() {
                         try {
                             amznads.setTargetingForGPTAsync('amznslots');
