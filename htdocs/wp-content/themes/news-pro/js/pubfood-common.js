@@ -118,8 +118,6 @@ SP_OBJ.ADS = {
                     // googletag.pubads().setTargeting("ybot",yieldbot.getPageCriteria());
                 });
                 googletag.cmd.push(function() {
-                    googletag.pubads().enableAsyncRendering();
-                    googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
                     done();
                 });
@@ -127,6 +125,33 @@ SP_OBJ.ADS = {
             refresh: function(targeting, done) {}
         });
     },
+    
+    	getCookie: function (cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+
+		for(var i=0; i<ca.length; i++) {
+		  var c = ca[i];
+		  while (c.charAt(0)==' ') c = c.substring(1);
+		  if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+		}
+		return "";
+	},
+
+	getAndIncrementSessionDepth: function () {
+		var now = new Date();
+		now.setTime(now.getTime() + 3600 * 1000);
+		var expiration = now.toUTCString();
+
+		var currSessDepth = this.getCookie('SP_session_depth');
+		if (currSessDepth == '') {
+		  document.cookie = 'SP_session_depth=1; expires=' + expiration + ';path=/';
+		  currSessDepth = '0';
+		}
+		var new_depth = parseInt(currSessDepth) + 1;
+		document.cookie = 'SP_session_depth=' + new_depth + '; expires=' + expiration + ';path=/';
+		return currSessDepth;
+	},
 
     calcBidVal: function (bid_price, rev_share, penny_amount) {
         rev_share = typeof rev_share !== 'undefined' ? rev_share : 1;
