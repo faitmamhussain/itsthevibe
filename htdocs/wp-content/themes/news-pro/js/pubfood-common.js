@@ -141,7 +141,6 @@ SP_OBJ.ADS = {
         return final_bid;
     },
 
-
     setupBidProviders: function () {
         for (var bidder in this.bidders) {
             if (this.bidders.hasOwnProperty(bidder) && enabledProviders.indexOf(bidder) != -1) {
@@ -149,7 +148,6 @@ SP_OBJ.ADS = {
             }
         }
     },
-
 
     defineBidProviders: function () {
         for (var bidder in this.bidders) {
@@ -163,7 +161,6 @@ SP_OBJ.ADS = {
             }
         }
     },
-
 
     defineRenderFunctions: function () {
 
@@ -186,8 +183,35 @@ SP_OBJ.ADS = {
                 logBWToNR('aol', bid_obj.final_bid, slt, unit);
             } catch (err) {}
         };
-    },
 
+        window.amazon_render = function (e, t) {
+            try {
+                var i = SP_OBJ.ADS.amazonBids[t];
+                logBWToNR("amazon", i.bid, t)
+            } catch (o) {}
+        };
+
+        window.appnexus_render = function(e,adid,bid,slt) {
+            try {
+                var anslot = aolConfig.appnexusConfig[slt];
+                var ad_url = aolConfig.appnexusBids[slt].ad;
+                var bid_dims = aolConfig.appnexusBids[slt].dims;
+                e.write('<IFRAME SRC="' + ad_url + '" FRAMEBORDER="0" SCROLLING="no" MARGINHEIGHT="0" MARGINWIDTH="0" TOPMARGIN="0" LEFTMARGIN="0" ALLOWTRANSPARENCY="true" WIDTH="' + bid_dims.width + '" HEIGHT="' + bid_dims.height + '"></IFRAME>');
+                e.close();
+
+                if (e.defaultView && e.defaultView.frameElement) {
+                    e.defaultView.frameElement.width = bid_dims.width;
+                    e.defaultView.frameElement.height = bid_dims.height;
+                }
+            } catch (err) {}
+
+            try {
+                var unit = anslot.slotName;
+                var an_bid = aolConfig.appnexusBids[slt].bid;
+                logBWToNR('an', an_bid, slt, unit);
+            } catch (err) {}
+        };
+    },
 
     setupPubfoodLogging: function () {
         var bidProviderTimeouts = {
@@ -215,6 +239,12 @@ SP_OBJ.ADS = {
                             SP_OBJ.ADS.BIDS[slt.name] = {};
                             try {
                                 SP_OBJ.ADS.BIDS[slt.name].aol = slt.targeting.aol_bid / 100;
+                            } catch (e) {}
+                            try {
+                                SP_OBJ.ADS.BIDS[slt.name].amazon = slt.targeting.amazon_bid;
+                            } catch (e) {}
+                            try {
+                                SP_OBJ.ADS.BIDS[slt.name].appnexus = slt.targeting.an_bid / 100;
                             } catch (e) {}
 
 
@@ -376,6 +406,142 @@ SP_OBJ.ADS = {
                                 req_url += 'callback=SP_OBJ.ADS.aolCallbacks.'+index+';';
                                 req_url += 'misc='+ 1e18 * Math.random();
                                 SP_OBJ.ADS.loadScript(req_url);
+                            }
+                        }
+                    }
+                }
+            },
+
+            refresh: function (slots, pushBid, done) {}
+        },
+
+        'amazon': {
+            setup: function () {
+                window.amznads = window.amznads || [], SP_OBJ.ADS.amazonBids = {};
+            },
+
+            getScriptPath: function () {
+                return '//c.amazon-adsystem.com/aax2/amzn_ads.js';
+            },
+
+            init: function (slots, pushBid, done) {
+                amznads.asyncParams = {
+                    'id': 'XXXX',
+                    'callbackFn': function() {
+                        try {
+                            amznads.setTargetingForGPTAsync('amznslots');
+                            done();
+                        } catch (e) {
+                            done();
+                        }
+                    },
+                    'timeout': 2e3
+                };
+            },
+
+            refresh: function (slots, pushBid, done) {}
+        },
+
+        'appnexus': {
+            setup: function () {
+                SP_OBJ.ADS.appnexusBids = {}
+            },
+
+            getScriptPath: function () {
+                return ' '
+            },
+
+            init: function (slots, pushBid, done) {
+                window.appnexuscallback = function (response) {
+                    var slt = response.callback_uid;
+                    var result = response.result;
+                    var an_bid = result.cpm / 10000;
+                    an_bid = SP_OBJ.ADS.calcBidVal(an_bid);
+                    var anSlot = spAdConfig.appnexusConfig[slt];
+                    var sizes = [result.width, result.height];
+
+                    SP_OBJ.ADS.appnexusBids[slt] = {
+                        'ad': result.ad,
+                        'bid': an_bid,
+                        'dims': {
+                            'width': result.width,
+                            'height': result.height
+                        }
+                    };
+
+                    var slotTargeting = {};
+                    slotTargeting[slt] = an_bid;
+
+                    slotTargeting['an_slot'] = slt;
+                    slotTargeting['an_bid'] = an_bid;
+                    slotTargeting['an_adid'] = '';
+                    slotTargeting['an_size'] = result.width+'x'+result.height;
+
+                    var bidObject = {
+                        slot: anSlot.slotName,
+                        value: an_bid,
+                        sizes: sizes,
+                        targeting: slotTargeting
+                    };
+                    pushBid(bidObject);
+                    anCounter++;
+
+                    if (anCounter == anTotal) {
+                        done();
+                    }
+                };
+
+                var anCounter = 0;
+                var anTotal = 0;
+
+                for (var x in spAdConfig.slots){
+                    if (spAdConfig.slots[x].isMobile === SP_OBJ.ADS.adsIsMobile && spAdConfig.slots[x]["adZones"].indexOf(SP_OBJ.ADS.ZONE) !== -1){
+                        for (var index in spAdConfig.appnexusConfig){
+                            if(spAdConfig.appnexusConfig[index]["slotName"] === spAdConfig.slots[x].name && spAdConfig.appnexusConfig[index]["isMobile"] === SP_OBJ.ADS.adsIsMobile){
+                                anTotal++;
+                            }
+                        }
+                    }
+                }
+
+                for (var x=0; x < spAdConfig.slots.length; x++) {
+                    if (spAdConfig.slots[x].isMobile === SP_OBJ.ADS.adsIsMobile && spAdConfig.slots[x]["adZones"].indexOf(SP_OBJ.ADS.ZONE) !== -1) {
+                        for (var slt in spAdConfig.appnexusConfig) {
+                            if (spAdConfig.appnexusConfig[slt]["slotName"] === spAdConfig.slots[x].name && spAdConfig.appnexusConfig[slt]["isMobile"] === SP_OBJ.ADS.adsIsMobile) {
+                                var anSlot = spAdConfig.appnexusConfig[slt];
+
+                                var slSizes;
+                                for (var as = 0; as < spAdConfig.slots.length; as++) {
+                                    var asl = spAdConfig.slots[as];
+                                    if (asl.name == anSlot.slotName) {
+                                        slSizes = asl.sizes;
+                                        break;
+                                    }
+                                }
+
+                                var primarySize = slSizes[0];
+
+                                var referrer = encodeURI(location.href);
+                                var size = primarySize[0] + 'x' + primarySize[1];
+
+                                var promo_sizes = [];
+                                for (var sz = 1; sz < slSizes.length; sz++) {
+                                    var siz = slSizes[sz];
+                                    promo_sizes.push(siz[0] + 'x' + siz[1]);
+                                }
+                                promo_sizes.join(',');
+
+                                var requrl = 'ib.adnxs.com/jpt?id='+
+                                    anSlot.placement+
+                                    '&psa=0&size='+size+
+                                    '&promo_sizes='+promo_sizes+
+                                    '&referrer='+referrer+
+                                    '&callback=window.appnexuscallback&callback_uid='+slt+
+                                    '&misc='+ 1e18 * Math.random();
+                                if (window.console) {
+                                    console.log(requrl);
+                                }
+                                SP_OBJ.ADS.loadScript(requrl);
                             }
                         }
                     }
@@ -718,7 +884,111 @@ spAdConfig = {
     },
 
     appnexusConfig: {
-
+        "an728x90ipt": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Top"
+        },
+        "an320x50mipt": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Top"
+        },
+        "an320x50mipm": {
+            "placement": 5823309,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Mid"
+        },
+        "an300x250mipm": {
+            "placement": 5823281,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Mid"
+        },
+        "an300x250ipml": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Mid_Left"
+        },
+        "an300x250ipmr": {
+            "placement": 5823309,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Mid_Right"
+        },
+        "an728x90ipb": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Bottom"
+        },
+        "an320x50mipb": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Bottom"
+        },
+        "an300x250mipb": {
+            "placement": 5823309,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_InPost_Ad_Bottom"
+        },
+        "an728x90bp": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_BelowPost_Ad"
+        },
+        "an320x50mbp": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_BelowPost_Ad"
+        },
+        "an320x250mbp": {
+            "placement": 5823309,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_BelowPost_Ad"
+        },
+        "an728x90bf": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_BelowFeatured_Ad"
+        },
+        "an320x50mbf": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_BelowFeatured_Ad"
+        },
+        "an320x250mbf": {
+            "placement": 5823309,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_BelowFeatured_Ad"
+        },
+        "an728x90h": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_Header_Ad"
+        },
+        "an320x50mh": {
+            "placement": 5823300,
+            "isMobile": true,
+            "slotName": "/76778142/Itsthevibe_Header_Ad"
+        },
+        "an160x600lr": {
+            "placement": 5823309,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_Left_Sidebar_Ad_2"
+        },
+        "an300x250rrt": {
+            "placement": 5823281,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_Sidebar_Ad_Top"
+        },
+        "an300x600rrm": {
+            "placement": 5823300,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_Sidebar_Ad_Mid"
+        },
+        "an300x250rrb": {
+            "placement": 5823309,
+            "isMobile": false,
+            "slotName": "/76778142/Itsthevibe_Sidebar_Ad_Bottom"
+        }
     }
 };
 
