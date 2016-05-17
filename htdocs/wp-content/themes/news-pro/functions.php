@@ -614,6 +614,7 @@ add_action('genesis_doctype', function(){
 		'ITV_Category'		=> is_category(),
 		'ITV_Slideshow' 	=> in_category('slideshows'),
 		'ITV_End_Slideshow' => is_page('End Slideshow'),
+		'ITV_Apple'         => is_page('apple'),
 		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page() && !is_404())
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));
