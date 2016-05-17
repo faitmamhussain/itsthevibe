@@ -47,7 +47,7 @@ add_action('genesis_before_entry', function(){
 function add_start_slideshow_link($content){
 	if ( is_singular() && ! is_page() ){
 		$content = preg_replace_callback("/<img[^>]+>/i", function($matches){
-			return '<a href="1">'.$matches[0].'</a>';
+			return '<a href="'.get_permalink().'1">'.$matches[0].'</a>';
 		}, $content);
 	}
 	return $content;
