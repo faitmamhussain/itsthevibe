@@ -528,10 +528,16 @@ function itv_get_primary_category($post = null){
 	$primary_category = get_post_meta($post->ID, '_yoast_wpseo_primary_category', true);
 
 	if( empty($primary_category) ){
-		$primary_category = wp_get_post_categories($post->ID)[0];
+		if(has_category('news', $post->ID)) {
+			$cat = get_category_by_slug('news');
+		} elseif(has_category('entertainment', $post->ID)) {
+			$cat = get_category_by_slug('entertainment');
+		} else {
+			$cat = get_the_category($post->ID)[0];
+		}
+	} else {
+		$cat = get_category($primary_category);
 	}
-
-	$cat = get_category($primary_category);
 
 	return $cat;
 }
@@ -615,6 +621,7 @@ add_action('genesis_doctype', function(){
 		'ITV_Category'		=> is_category(),
 		'ITV_Slideshow' 	=> in_category('slideshows'),
 		'ITV_End_Slideshow' => is_page('End Slideshow'),
+		'ITV_Apple'         => is_page('apple'),
 		'ITV_Article'		=> (is_single() && !in_category('slideshows') && !is_page() && !is_404())
 	);
 	$thisPageType = array_shift(array_keys(array_filter($pageChecks)));

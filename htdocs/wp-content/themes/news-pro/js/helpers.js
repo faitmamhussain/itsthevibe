@@ -119,8 +119,10 @@ function setupUtmParams(){
         var _this = jQuery(this);
         var pageType = post.type;
         if(_this.data('url')){
-            if(utm_source_value == 'Undefined' && pageType == 'SP_404'){
+            if(utm_source_value == 'Undefined' && pageType == 'ITV_404'){
                 utm_source_value = pageType;
+            } else if(pageType == 'ITV_Apple') {
+                utm_source_value = 'Apple';
             }
             jQuery(this).attr("href", _this.data('url')
                 + '?utm_source=' + utm_source_value
