@@ -108,33 +108,6 @@ SP_OBJ.ADS = {
             refresh: function(targeting, done) {}
         });
     },
-    
-    	getCookie: function (cname) {
-		var name = cname + "=";
-		var ca = document.cookie.split(';');
-
-		for(var i=0; i<ca.length; i++) {
-		  var c = ca[i];
-		  while (c.charAt(0)==' ') c = c.substring(1);
-		  if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-		}
-		return "";
-	},
-
-	getAndIncrementSessionDepth: function () {
-		var now = new Date();
-		now.setTime(now.getTime() + 3600 * 1000);
-		var expiration = now.toUTCString();
-
-		var currSessDepth = this.getCookie('SP_session_depth');
-		if (currSessDepth == '') {
-		  document.cookie = 'SP_session_depth=1; expires=' + expiration + ';path=/';
-		  currSessDepth = '0';
-		}
-		var new_depth = parseInt(currSessDepth) + 1;
-		document.cookie = 'SP_session_depth=' + new_depth + '; expires=' + expiration + ';path=/';
-		return currSessDepth;
-	},
 
     calcBidVal: function (bid_price, rev_share, penny_amount) {
         rev_share = typeof rev_share !== 'undefined' ? rev_share : 1;
@@ -355,7 +328,7 @@ SP_OBJ.ADS = {
 
                 SP_OBJ.ADS.aolCallbacks = {};
                 window.aolCallback = function (response, aolSlot) {
-                    if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') AddktHeader.aolPixels[aolSlot] = response.ext.pixels;
+                    if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') SP_OBJ.ADS.aolPixels[aolSlot] = response.ext.pixels;
                     try {
                         var slot_resp = response.seatbid[0].bid[0];
                         if (typeof slot_resp.ext !== 'undefined' && typeof slot_resp.ext.pixels !== 'undefined') {
@@ -438,7 +411,7 @@ SP_OBJ.ADS = {
 
             init: function (slots, pushBid, done) {
                 amznads.asyncParams = {
-                    'id': '3284',
+                    'id': '3388',
                     'callbackFn': function() {
                         try {
                             var pfSlots = SP_OBJ.ADS.pf.getSlots();
@@ -454,9 +427,6 @@ SP_OBJ.ADS = {
                                         value: azbid,
                                         sizes: azsize
                                     };
-                                    if (window.console) {
-                                        console.log(2222222, bidObject);
-                                    }
                                     SP_OBJ.ADS.amazonBids[azbidkey] = {
                                         bid: bidObject
                                     };
