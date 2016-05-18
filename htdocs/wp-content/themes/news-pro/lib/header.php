@@ -48,5 +48,5 @@
 		f.parentNode.insertBefore(e, f);
 	}(document.createElement('script'),
 		document.getElementsByTagName('script')[0],
-		'//cdn.taboola.com/libtrc/itsthevibe/loader.js');
+		'//cdn.taboola.com/libtrc/payee-standardnews/loader.js');
 </script>
