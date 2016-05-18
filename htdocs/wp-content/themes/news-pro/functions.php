@@ -126,6 +126,36 @@ add_action( 'genesis_meta', function(){
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="//b.scorecardresearch.com">
 <link rel="dns-prefetch" href="//sb.scorecardresearch.com">
+<link rel="dns-prefetch" href="//apex.go.sonobi.com">
+<link rel="dns-prefetch" href="//acdn.adnxs.com">
+<link rel="dns-prefetch" href="//cdn.yldbt.com">
+<link rel="dns-prefetch" href="//c.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//aka-cdn.adtechus.com">
+<link rel="dns-prefetch" href="//adserver.adtechus.com">
+<link rel="dns-prefetch" href="//ap.lijit.com">
+<link rel="dns-prefetch" href="//gslbeacon.lijit.com">
+<link rel="dns-prefetch" href="//ads.pubmatic.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="dns-prefetch" href="//google-analytics.com">
+<link rel="dns-prefetch" href="//googletagservices.com">
+<link rel="dns-prefetch" href="//ad.doubleclick.net">
+<link rel="dns-prefetch" href="//partner.googleadservices.com">
+<link rel="dns-prefetch" href="//i.yldbt.com">
+<link rel="dns-prefetch" href="//cdn.yldbt.com">
+<link rel="dns-prefetch" href="//aka-cdn.adtechus.com">
+<link rel="dns-prefetch" href="//aka-cdn-ns.adtechus.com">
+<link rel="dns-prefetch" href="//js.indexww.com">
+<link rel="dns-prefetch" href="//as.casalemedia.com/">
+<link rel="dns-prefetch" href="//c.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//fls-na.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//z-na.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//rcm-na.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//ecx.images-amazon.com">
+<link rel="dns-prefetch" href="//aax.amazon-adsystem.com/">
+<link rel="dns-prefetch" href="//ws-na.amazon-adsystem.com/">
+<link rel="dns-prefetch" href="//z-na.amazon-adsystem.com">
+<link rel="dns-prefetch" href="//ib.adnxs.com">
+<link rel="dns-prefetch" href="//web.adblade.com">
 <?php
 }, 5 );
 
