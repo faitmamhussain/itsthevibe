@@ -34,7 +34,7 @@ var arrayUnion = function(a,b) {
 
 // START common ad variable initializations
 var spAdConfig;
-var enabledProviders = ["aol"];
+var enabledProviders = ["aol","amazon"];
 window.googletag = window.googletag || {};
 googletag.cmd = googletag.cmd || [];
 var gptadslots = [];
@@ -615,7 +615,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-3',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["home"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         /*Below Featured*/
         {
@@ -632,7 +632,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-0',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["home"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         /*Article RR*/
         {
@@ -641,7 +641,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1461545772821-22',
             isMobile: false,
             adZones: [],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_PostPage_Ad_Mid',
@@ -658,7 +658,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1461545772821-2',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"], SP_OBJ.SESSION.PAGE_TYPES["category"], SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"], SP_OBJ.SESSION.PAGE_TYPES["404"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_Sidebar_Ad_Mid',
@@ -666,7 +666,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1461545772821-1',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["article"], SP_OBJ.SESSION.PAGE_TYPES["category"], SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"], SP_OBJ.SESSION.PAGE_TYPES["404"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_Sidebar_Ad_Bottom',
@@ -674,7 +674,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-2',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["category"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         /*Slideshow Content ONLY SINGLE POST*/
         {
@@ -691,7 +691,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-8',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_InPost_Ad_Mid_Left',
@@ -699,7 +699,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-10',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_InPost_Ad_Mid_Right',
@@ -707,7 +707,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1461545772821-0',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         },
         {
             name: '/76778142/Itsthevibe_InPost_Ad_Mid',
@@ -731,7 +731,7 @@ spAdConfig = {
             elementId: 'div-gpt-ad-1460507361888-1',
             isMobile: false,
             adZones: [SP_OBJ.SESSION.PAGE_TYPES["gallery"], SP_OBJ.SESSION.PAGE_TYPES["end-gallery"]],
-            bidProviders: arrayUnion(["aol"], enabledProviders)
+            bidProviders: arrayUnion(["aol","amazon"], enabledProviders)
         }
     ],
 
