@@ -611,6 +611,9 @@ add_action('genesis_before', 'itv_facebook_init');
 //remove genesis footer
 remove_action( 'genesis_footer', 'genesis_do_footer' );
 add_action('genesis_footer', function(){
+
+	do_action('before_footer_menu');
+
 	echo '<div class="footer-menu-wrap">';
 	genesis_nav_menu( array(
 		'theme_location' => 'footer',
@@ -621,6 +624,23 @@ add_action('genesis_footer', function(){
 	) );
 	echo '</div>';
 });
+
+//add footer widget area (for Mailchimp)
+genesis_register_widget_area( array(
+	'id' => 'before-footer-menu',
+	'name' => 'Before footer menu'
+) );
+
+add_action( 'before_footer_menu', function(){
+
+	global $wp_registered_sidebars;
+
+	if ( isset( $wp_registered_sidebars['before-footer-menu'] ) && is_active_sidebar( 'before-footer-menu' ) ) {
+
+		dynamic_sidebar( 'before-footer-menu' );
+
+	}
+}, 14 );
 
 //connect AjaxLoadMore with MyPostsOrder
 add_filter('alm_modify_query_args', function($args){

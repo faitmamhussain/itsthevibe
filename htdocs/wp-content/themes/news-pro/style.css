@@ -1862,6 +1862,39 @@ Sidebars
 	color: #fff;
 }
 
+.sidebar .mc4wp-form {
+	text-align: left;
+	margin-right: 10px;
+}
+
+.sidebar .mc4wp-form label {
+	display: block;
+	color: #000;
+}
+
+.sidebar .mc4wp-form input {
+	display: inline-block;
+	width: auto;
+	padding: 6px;
+	color: #333;
+	font-size: 16px;
+	border-radius: 4px;
+}
+
+.sidebar .mc4wp-form input[type="submit"] {
+	padding: 8px;
+	background-color: #f00;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 4px;
+	margin-left: 8px;
+}
+
+.sidebar .mc4wp-form input[type="submit"]:hover {
+	color: #fff;
+	background-color: #000;
+}
+
 /*
 Site Footer
 ---------------------------------------------------------------------------------------------------- */
@@ -1885,17 +1918,50 @@ Site Footer
 	margin-bottom: 0;
 }
 
-.site-footer .wrap {
+.site-footer > .wrap {
     background-color: #000;
     border-top: 1px solid #333;
     width: 780px;
 }
-.full-width-content .site-footer .wrap{
+.full-width-content .site-footer > .wrap{
     width: 100%;
 }
 
-.site-footer .wrap > * {
+.site-footer > .wrap > * {
 	display: inline-block;
+}
+
+.site-footer .mc4wp-form {
+	text-align: left;
+	margin-right: 10px;
+}
+
+.site-footer .mc4wp-form label {
+	display: block;
+	color: #ddd;
+}
+
+.site-footer .mc4wp-form input {
+	display: inline-block;
+	width: auto;
+	padding: 6px;
+	color: #333;
+	font-size: 16px;
+	border-radius: 4px;
+}
+
+.site-footer .mc4wp-form input[type="submit"] {
+	padding: 9px;
+	color: #000;
+	background-color: #ddd;
+	font-size: 16px;
+	border-radius: 4px;
+	margin-left: 8px;
+}
+
+.site-footer .mc4wp-form input[type="submit"]:hover {
+	background-color: #f00;
+	color: #fff;
 }
 
 /*
