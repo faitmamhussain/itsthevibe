@@ -160,12 +160,15 @@ function sp_import_feeds($url) {
 
 		$slug = sanitize_title($entry->title);
 		$post_title = sanitize_post_field( 'post_title', $entry->title, 0, 'db' );
+		$sanitized_slug = sanitize_title($post_title);
 
 		// check if posts already exists
-		$by_title = get_page_by_title($post_title, ARRAY_A, 'post');
+		$by_title = get_page_by_title($entry->title, ARRAY_A, 'post');
+		$by_sanitized_title = ($post_title != $entry->title) ? get_page_by_title($post_title, ARRAY_A, 'post') : $by_title;
 		$by_slug = get_posts(array('name' => $slug, 'post_type' => 'post', 'numberposts' => 1, 'post_status' => 'any'));
+		$by_sanitized_slug = ($slug != $sanitized_slug) ? get_posts(array('name' => $sanitized_slug, 'post_type' => 'post', 'numberposts' => 1, 'post_status' => 'any')) : $by_slug;
 
-		if(empty($by_title) && empty($by_slug)){
+		if(empty($by_title) && empty($by_slug) && empty($by_sanitized_slug) && empty($by_sanitized_title)){
 			// insert posts
 			$imagedownloadcontent = $entry->description;
 
