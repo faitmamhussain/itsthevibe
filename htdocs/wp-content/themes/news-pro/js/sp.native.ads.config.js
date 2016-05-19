@@ -48,15 +48,15 @@ function TaboolaAds() {
             jQuery('#' + containerId).append('<div id="taboola-below-article-thumbnails-' + rand + '"></div>' +
             '<script type="text/javascript">' +
             'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-a",container:"taboola-below-article-thumbnails-' + rand + '",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + '",target_type:"mix"});' +
-            '</script>');
+            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + '",target_type:"mix"}); '
+            + ' _taboola.push({flush: true});</script>');
         }
         else {
             jQuery('#' + containerId).append('<div id="mobile-taboola-below-article-thumbnails-' + rand + '"></div>' +
             '<script type="text/javascript">' +
             'window._taboola=window._taboola||[],_taboola.push({mode:"thumbnails-e",container:"mobile-taboola-below-article-thumbnails-' + rand + '",placement:"ITV - '
-            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + ' - Mobile",target_type:"mix"});' +
-            '</script>');
+            + this_utm_source_value + ' - Below ' + this_page_type + ' - Sponsored - ' + term + ' - Mobile",target_type:"mix"});'
+            + ' _taboola.push({flush: true});</script>');
         }
     };
 
