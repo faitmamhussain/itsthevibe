@@ -107,8 +107,8 @@ SP_OBJ.ADS = {
                     // googletag.pubads().setTargeting("ybot",yieldbot.getPageCriteria());
                 });
                 googletag.cmd.push(function() {
-                    /*googletag.pubads().enableAsyncRendering();
-                    googletag.pubads().enableSingleRequest();*/
+                    googletag.pubads().enableAsyncRendering();
+                    /*googletag.pubads().enableSingleRequest();*/
                     googletag.enableServices();
                     done();
                 });
@@ -475,7 +475,6 @@ SP_OBJ.ADS = {
                     'id': '3388',
                     'ev': true,
                     'callbackFn': function() {
-
                         try {
                             //var azbids = amznads.getTargeting().amznslots;
                             var azbids = ['a3x2t1', 'a3x2t2', 'a7x9t1', 'a7x9t2'];
@@ -502,10 +501,15 @@ SP_OBJ.ADS = {
                                 console.log("!!!!ERROR", err);
                             }
                         }
-
+                        try {
+                            amznads.setTargetingForGPTAsync('amznslots');
+                            done();
+                        } catch (e) {
+                            done();
+                        }
                         done();
                     },
-                    'timeout': 2e3
+                    'timeout': SP_OBJ.ADS.providerTimeout
                 };
             },
 
