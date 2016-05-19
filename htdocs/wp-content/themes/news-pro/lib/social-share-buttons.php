@@ -42,7 +42,8 @@
 	.post-share-buttons .pinterest-share-button,
 	.post-share-buttons .whatsapp-share-button{
 		font-size: 34px;
-	    padding: 10px;
+	    vertical-align: middle;
+		padding: 0 7px;
 	    display: none;
 	}
 	.post-share-buttons .share-button-toggle-icon{
