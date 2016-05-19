@@ -108,33 +108,6 @@ SP_OBJ.ADS = {
             refresh: function(targeting, done) {}
         });
     },
-    
-    	getCookie: function (cname) {
-		var name = cname + "=";
-		var ca = document.cookie.split(';');
-
-		for(var i=0; i<ca.length; i++) {
-		  var c = ca[i];
-		  while (c.charAt(0)==' ') c = c.substring(1);
-		  if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-		}
-		return "";
-	},
-
-	getAndIncrementSessionDepth: function () {
-		var now = new Date();
-		now.setTime(now.getTime() + 3600 * 1000);
-		var expiration = now.toUTCString();
-
-		var currSessDepth = this.getCookie('SP_session_depth');
-		if (currSessDepth == '') {
-		  document.cookie = 'SP_session_depth=1; expires=' + expiration + ';path=/';
-		  currSessDepth = '0';
-		}
-		var new_depth = parseInt(currSessDepth) + 1;
-		document.cookie = 'SP_session_depth=' + new_depth + '; expires=' + expiration + ';path=/';
-		return currSessDepth;
-	},
 
     calcBidVal: function (bid_price, rev_share, penny_amount) {
         rev_share = typeof rev_share !== 'undefined' ? rev_share : 1;
@@ -243,9 +216,7 @@ SP_OBJ.ADS = {
             'mobile': SP_OBJ.ADS.adsIsMobile,
             'session_depth': SP_OBJ.ADS.currDepth
         };
-        SP_OBJ.ADS.BID_RESPONSE_TIMES = {};
-        SP_OBJ.ADS.BIDS = {};
-
+        bidProviderTimeouts['mobile'] = this.adsIsMobile;
         var bpTimeout;
         var auctionID;
         SP_OBJ.ADS.pf.observe(function(ev) {
@@ -259,20 +230,7 @@ SP_OBJ.ADS = {
                         auctionID = ev.auctionId;
                         bidProviderTimeouts['auction_id'] = auctionID;
                         for (var i = 0; i < targeting.length; i++) {
-
                             var slt = targeting[i];
-                            SP_OBJ.ADS.BIDS[slt.name] = {};
-                            try {
-                                SP_OBJ.ADS.BIDS[slt.name].aol = slt.targeting.aol_bid / 100;
-                            } catch (e) {}
-                            try {
-                                SP_OBJ.ADS.BIDS[slt.name].amazon = slt.targeting.amazon_bid;
-                            } catch (e) {}
-                            try {
-                                SP_OBJ.ADS.BIDS[slt.name].appnexus = slt.targeting.an_bid / 100;
-                            } catch (e) {}
-
-
                             var targetingDict = slt.targeting;
                             var bidProviderBid = {
                                 'ad_slot': slt.name,
@@ -288,7 +246,8 @@ SP_OBJ.ADS = {
                                 }
                             }
                             try {
-                                var centbids = ["aol_bid", "sovrn_bid", "openx_bid", "yieldbot_bid", "an_bid"];
+                                // console.log(bidProviderBid);
+                                var centbids = ["aol_bid", "sovrn_bid", "openx_bid", "yieldbot_bid", "appnexus_bid"];
                                 var dollarbids = ["sonobi_bid", "amazon_bid", "pubmatic_bid"];
                                 var allbids = centbids.concat(dollarbids);
                                 for(var key in bidProviderBid){
@@ -312,7 +271,6 @@ SP_OBJ.ADS = {
 
                     if (ev.type == 'BID_COMPLETE') {
                         bpTimeout = ev.data + '_timeout';
-                        SP_OBJ.ADS.BID_RESPONSE_TIMES[ev.data] = elapsed;
                         bidProviderTimeouts[bpTimeout] = elapsed;
                     }
                 } catch (err) {}
@@ -370,7 +328,7 @@ SP_OBJ.ADS = {
 
                 SP_OBJ.ADS.aolCallbacks = {};
                 window.aolCallback = function (response, aolSlot) {
-                    if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') AddktHeader.aolPixels[aolSlot] = response.ext.pixels;
+                    if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') SP_OBJ.ADS.aolPixels[aolSlot] = response.ext.pixels;
                     try {
                         var slot_resp = response.seatbid[0].bid[0];
                         if (typeof slot_resp.ext !== 'undefined' && typeof slot_resp.ext.pixels !== 'undefined') {
@@ -456,29 +414,31 @@ SP_OBJ.ADS = {
                     'id': '3388',
                     'callbackFn': function() {
                         try {
-                            for (var e = amznads.getTargeting().amznslots, o = 0; o < e.length; o++) {
-                                var n = e[o].toString(),
-                                    r = spAdConfig.amazonConfig.price["p" + n.split("p")[1]],
-                                    s = spAdConfig.amazonConfig.size[n.split("p")[0]].split("x");
-                                    SP_OBJ.ADS.amazonBids[n] = {
-                                    bid: r
-                                };
-                                var a = {
-                                    value: r,
-                                    sizes: s,
-                                    targeting: {
-                                        amznslots: n
-                                    }
-                                };
-                                t(a)
+                            var pfSlots = SP_OBJ.ADS.pf.getSlots();
+                            //var azbids = amznads.getTargeting().amznslots;
+                            var azbids = ['a3x2t1', 'a3x2t2', 'a7x9t1', 'a7x9t2'];
+                            for (var x in pfSlots){
+                                for (var y in azbids){
+                                    var azbidkey = azbids[y];
+                                    var azbid = spAdConfig.amazonConfig.price["t" + azbidkey.split("t")[1]]
+                                    var azsize = spAdConfig.amazonConfig.size[azbidkey.split("t")[0]];
+                                    var bidObject = {
+                                        slot: pfSlots[x].name,
+                                        value: azbid,
+                                        sizes: azsize
+                                    };
+                                    SP_OBJ.ADS.amazonBids[azbidkey] = {
+                                        bid: bidObject
+                                    };
+                                    pushBid(bidObject);
+                                }
                             }
                         } catch (d) {
                         }
                         try {
-                            amznads.setTargetingForGPTAsync("amznslots"), i()
-                        } catch (d) {
-                            i()
-                        }
+                            amznads.setTargetingForGPTAsync("amznslots");
+                        } catch (d) {}
+                        done();
                     },
                     'timeout': 2e3
                 };
