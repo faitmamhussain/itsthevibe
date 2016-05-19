@@ -191,9 +191,9 @@ SP_OBJ.ADS = {
 
         window.appnexus_render = function(e,adid,bid,slt) {
             try {
-                var anslot = aolConfig.appnexusConfig[slt];
-                var ad_url = aolConfig.appnexusBids[slt].ad;
-                var bid_dims = aolConfig.appnexusBids[slt].dims;
+                var anslot = SP_OBJ.ADS.appnexusConfig[slt];
+                var ad_url = SP_OBJ.ADS.appnexusBids[slt].ad;
+                var bid_dims = SP_OBJ.ADS.appnexusBids[slt].dims;
                 e.write('<IFRAME SRC="' + ad_url + '" FRAMEBORDER="0" SCROLLING="no" MARGINHEIGHT="0" MARGINWIDTH="0" TOPMARGIN="0" LEFTMARGIN="0" ALLOWTRANSPARENCY="true" WIDTH="' + bid_dims.width + '" HEIGHT="' + bid_dims.height + '"></IFRAME>');
                 e.close();
 
@@ -205,7 +205,7 @@ SP_OBJ.ADS = {
 
             try {
                 var unit = anslot.slotName;
-                var an_bid = aolConfig.appnexusBids[slt].bid;
+                var an_bid = SP_OBJ.ADS.appnexusBids[slt].bid;
                 logBWToNR('an', an_bid, slt, unit);
             } catch (err) {}
         };
@@ -834,7 +834,7 @@ spAdConfig = {
         },
         "itvaol728x90h": {
             "placement": 3997274,
-            "banner": {"w": 728, "h": 90},
+            "banner": {w: 728, h: 90},
             "sizeId": 225,
             "isMobile": false,
             "slotName": '/76778142/Itsthevibe_Header_Ad',
