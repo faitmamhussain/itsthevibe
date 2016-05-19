@@ -12,11 +12,17 @@ var logBWToNR = function(bdr,bd,slt,unt) {
         'unit': unt
     };
     try {
-        newrelic.addPageAction('Pubfood_Bid_Win', bw_datas);
+        if (typeof newrelic == 'object') {
+            newrelic.addPageAction('Pubfood_Bid_Win', bw_datas);
+        }
         console.log("logged nr PubFood_Bid_Win = ");
         console.log(bw_datas);
 
-    } catch (err) {}
+    } catch (err) {
+        if (window.console) {
+            console.log("!!!!ERROR", err);
+        }
+    }
 };
 
 
@@ -34,7 +40,7 @@ var arrayUnion = function(a,b) {
 
 // START common ad variable initializations
 var spAdConfig;
-var enabledProviders = ["aol","amazon"];
+var enabledProviders = ["aol","amazon","appnexus"];
 window.googletag = window.googletag || {};
 googletag.cmd = googletag.cmd || [];
 var gptadslots = [];
@@ -101,6 +107,8 @@ SP_OBJ.ADS = {
                     // googletag.pubads().setTargeting("ybot",yieldbot.getPageCriteria());
                 });
                 googletag.cmd.push(function() {
+                    googletag.pubads().enableAsyncRendering();
+                    googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
                     done();
                 });
@@ -167,26 +175,42 @@ SP_OBJ.ADS = {
                 var bid_obj = SP_OBJ.ADS.aolBids[slt];
                 var aol_ad = decodeURIComponent(bid_obj.adm);
                 e.write(aol_ad);
-            } catch (err) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
 
             try {
                 var pxls = decodeURIComponent(SP_OBJ.ADS.aolPixels[slt]);
                 if (pxls != 'undefined') {
                     e.write(pxls);
                 }
-            } catch (err) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
 
             try {
                 var unit = spAdConfig.aolConfig[slt].slotName;
                 logBWToNR('aol', bid_obj.final_bid, slt, unit);
-            } catch (err) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
         };
 
         window.amazon_render = function (e, t) {
             try {
                 var i = SP_OBJ.ADS.amazonBids[t];
                 logBWToNR("amazon", i.bid, t)
-            } catch (o) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
         };
 
         window.appnexus_render = function(e,adid,bid,slt) {
@@ -201,13 +225,21 @@ SP_OBJ.ADS = {
                     e.defaultView.frameElement.width = bid_dims.width;
                     e.defaultView.frameElement.height = bid_dims.height;
                 }
-            } catch (err) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
 
             try {
                 var unit = anslot.slotName;
                 var an_bid = SP_OBJ.ADS.appnexusBids[slt].bid;
                 logBWToNR('an', an_bid, slt, unit);
-            } catch (err) {}
+            } catch (err) {
+                if (window.console) {
+                    console.log("!!!!ERROR", err);
+                }
+            }
         };
     },
 
@@ -242,7 +274,11 @@ SP_OBJ.ADS = {
                                 if (targetingDict.hasOwnProperty(key)) {
                                     try {
                                         bidProviderBid[key] = JSON.parse(targetingDict[key]);
-                                    } catch (err) {}
+                                    } catch (err) {
+                                        if (window.console) {
+                                            console.log("!!!!ERROR", err);
+                                        }
+                                    }
                                 }
                             }
                             try {
@@ -257,23 +293,39 @@ SP_OBJ.ADS = {
                                     // if(allbids.indexOf(key) !== -1){
                                     console.log("logged nr PubFood_Bid = ");
                                     console.log(bidProviderBid);
-                                    newrelic.addPageAction('PubFood_Bid', bidProviderBid);
+                                    if (typeof newrelic == 'object') {
+                                        newrelic.addPageAction('PubFood_Bid', bidProviderBid);
+                                    }
                                     // }
                                 }
-                            } catch (err) {}
+                            } catch (err) {
+                                if (window.console) {
+                                    console.log("!!!!ERROR", err);
+                                }
+                            }
                         }
                         try {
                             console.log("logged nr PubFood_Timeouts = ");
                             console.log(bidProviderTimeouts);
-                            newrelic.addPageAction('PubFood_Timeouts', bidProviderTimeouts);
-                        } catch (err) {}
+                            if (typeof newrelic == 'object') {
+                                newrelic.addPageAction('PubFood_Timeouts', bidProviderTimeouts);
+                            }
+                        } catch (err) {
+                            if (window.console) {
+                                console.log("!!!!ERROR", err);
+                            }
+                        }
                     }
 
                     if (ev.type == 'BID_COMPLETE') {
                         bpTimeout = ev.data + '_timeout';
                         bidProviderTimeouts[bpTimeout] = elapsed;
                     }
-                } catch (err) {}
+                } catch (err) {
+                    if (window.console) {
+                        console.log("!!!!ERROR", err);
+                    }
+                }
             }
         });
     },
@@ -330,6 +382,9 @@ SP_OBJ.ADS = {
                 window.aolCallback = function (response, aolSlot) {
                     if (typeof response.ext !== 'undefined' && typeof response.ext.pixels !== 'undefined') SP_OBJ.ADS.aolPixels[aolSlot] = response.ext.pixels;
                     try {
+                        if (window.console) {
+                            console.log(1111, response);
+                        }
                         var slot_resp = response.seatbid[0].bid[0];
                         if (typeof slot_resp.ext !== 'undefined' && typeof slot_resp.ext.pixels !== 'undefined') {
                             SP_OBJ.ADS.aolPixels[aolSlot] = slot_resp.ext.pixels;
@@ -349,19 +404,22 @@ SP_OBJ.ADS = {
                             }
                         }
 
-                        var slotTargeting = {};
-                        slotTargeting.mpalias = aolSlot;
-                        slotTargeting.aolbid = aol_bid;
-
                         var bidObject = {
                             slot: auction_slot,
                             value: aol_bid,
                             sizes: sizes,
-                            targeting: slotTargeting
+                            targeting: {
+                                mpalias: aolSlot,
+                                aolbid: aol_bid
+                            }
                         };
                         pushBid(bidObject);
 
-                    } catch (err) {}
+                    } catch (err) {
+                        if (window.console) {
+                            console.log("!!!!ERROR", err);
+                        }
+                    }
 
                     aolCounter++;
                     if (aolCounter == aolTotal) {
@@ -406,38 +464,42 @@ SP_OBJ.ADS = {
             },
 
             getScriptPath: function () {
-                return '//c.amazon-adsystem.com/aax2/amzn_ads.js';
+                return "//c.amazon-adsystem.com/aax2/amzn_ads.js"
             },
 
             init: function (slots, pushBid, done) {
                 amznads.asyncParams = {
                     'id': '3388',
+                    'ev': true,
                     'callbackFn': function() {
+
                         try {
-                            var pfSlots = SP_OBJ.ADS.pf.getSlots();
                             //var azbids = amznads.getTargeting().amznslots;
                             var azbids = ['a3x2t1', 'a3x2t2', 'a7x9t1', 'a7x9t2'];
-                            for (var x in pfSlots){
-                                for (var y in azbids){
-                                    var azbidkey = azbids[y];
-                                    var azbid = spAdConfig.amazonConfig.price["t" + azbidkey.split("t")[1]]
-                                    var azsize = spAdConfig.amazonConfig.size[azbidkey.split("t")[0]];
-                                    var bidObject = {
-                                        slot: pfSlots[x].name,
-                                        value: azbid,
-                                        sizes: azsize
-                                    };
-                                    SP_OBJ.ADS.amazonBids[azbidkey] = {
-                                        bid: bidObject
-                                    };
-                                    pushBid(bidObject);
-                                }
+                            for (var y in azbids){
+                                var azbidkey = azbids[y].toString();
+                                var azbid = spAdConfig.amazonConfig.price["t" + azbidkey.split("t")[1]];
+                                var azsize = spAdConfig.amazonConfig.size[azbidkey.split("t")[0]];
+
+                                var bidObject = {
+                                    value: azbid,
+                                    sizes: azsize,
+                                    targeting: {
+                                        amznslots: azbidkey
+                                    }
+                                };
+
+                                SP_OBJ.ADS.amazonBids[azbidkey] = {
+                                    bid: bidObject
+                                };
+                                pushBid(bidObject);
                             }
-                        } catch (d) {
+                        } catch (err) {
+                            if (window.console) {
+                                console.log("!!!!ERROR", err);
+                            }
                         }
-                        try {
-                            amznads.setTargetingForGPTAsync("amznslots");
-                        } catch (d) {}
+
                         done();
                     },
                     'timeout': 2e3
@@ -1044,5 +1106,11 @@ else{
 }
 try{
     console.log("logged nr AdBlockerCheck" + eAction);
-    newrelic.addPageAction('AdBlockerCheck', eAction);
-} catch (err) {}
+    if (typeof newrelic == 'object') {
+        newrelic.addPageAction('AdBlockerCheck', eAction);
+    }
+} catch (err) {
+    if (window.console) {
+        console.log("!!!!ERROR", err);
+    }
+}
