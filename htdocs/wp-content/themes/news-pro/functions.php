@@ -129,9 +129,6 @@ add_action( 'genesis_meta', function(){
 <link rel="dns-prefetch" href="//sb.scorecardresearch.com">
 <link rel="dns-prefetch" href="//apex.go.sonobi.com">
 <link rel="dns-prefetch" href="//acdn.adnxs.com">
-<link rel="dns-prefetch" href="//cdn.yldbt.com">
-<link rel="dns-prefetch" href="//c.amazon-adsystem.com">
-<link rel="dns-prefetch" href="//aka-cdn.adtechus.com">
 <link rel="dns-prefetch" href="//adserver.adtechus.com">
 <link rel="dns-prefetch" href="//ap.lijit.com">
 <link rel="dns-prefetch" href="//gslbeacon.lijit.com">
@@ -149,14 +146,12 @@ add_action( 'genesis_meta', function(){
 <link rel="dns-prefetch" href="//as.casalemedia.com/">
 <link rel="dns-prefetch" href="//c.amazon-adsystem.com">
 <link rel="dns-prefetch" href="//fls-na.amazon-adsystem.com">
-<link rel="dns-prefetch" href="//z-na.amazon-adsystem.com">
 <link rel="dns-prefetch" href="//rcm-na.amazon-adsystem.com">
 <link rel="dns-prefetch" href="//ecx.images-amazon.com">
 <link rel="dns-prefetch" href="//aax.amazon-adsystem.com/">
 <link rel="dns-prefetch" href="//ws-na.amazon-adsystem.com/">
 <link rel="dns-prefetch" href="//z-na.amazon-adsystem.com">
 <link rel="dns-prefetch" href="//ib.adnxs.com">
-<link rel="dns-prefetch" href="//web.adblade.com">
 <?php
 }, 5 );
 
